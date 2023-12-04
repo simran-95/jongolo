@@ -1,0 +1,270 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+        <title>View Product  User Jongolo Home Page</title>
+        <link rel="shortcut icon" type="image/x-icon" href="{% static 'vender/img/favicon.png' %}">
+        <link rel="stylesheet" href="{% static 'vender/css/bootstrap.min.css' %}">		
+        <link rel="stylesheet" href="{% static 'vender/css/font-awesome.min.css' %}">		
+        <link rel="stylesheet" href="{% static 'vender/css/feathericon.min.css' %}">
+        <link rel="stylesheet" href="{% static 'vender/css/style.css' %}">
+         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+
+    </head>
+    <body>
+	
+		<!-- Main Wrapper -->
+        <div class="main-wrapper">
+		
+			<!-- Header -->
+            <div class="header">
+			
+				<!-- Logo -->
+                <div class="header-left">
+                    <a href="index.html" class="logo">
+						<img src="{% static 'vender/img/logo.png' %}" alt="Logo">
+					</a>
+					<a href="index.html" class="logo logo-small">
+						<img src="{% static 'vender/img/logo-small.png' %}" alt="Logo" width="30" height="30">
+					</a>
+                </div>
+				<!-- /Logo -->
+				
+				<a href="javascript:void(0);" id="toggle_btn">
+					<i class="fe fe-text-align-left"></i>
+				</a>
+				
+				
+				<!-- Mobile Menu Toggle -->
+				<a class="mobile_btn" id="mobile_btn">
+					<i class="fa fa-bars"></i>
+				</a>
+				<!-- /Mobile Menu Toggle -->
+				
+				<!-- Header Right Menu -->
+				<ul class="nav user-menu">
+
+					<!-- App Lists -->
+					<li class="nav-item dropdown app-dropdown">
+						<a class="nav-link dropdown-toggle" aria-expanded="false" role="button" data-toggle="dropdown" href="#"><i class="fe fe-app-menu"></i></a>
+						<ul class="dropdown-menu app-dropdown-menu">
+							<li>
+								<div class="app-list">
+									<div class="row">
+										<div class="col"><a class="app-item" href="inbox.html"><i class="fa fa-envelope"></i><span>Email</span></a></div>
+										<div class="col"><a class="app-item" href="calendar.html"><i class="fa fa-calendar"></i><span>Calendar</span></a></div>
+										<div class="col"><a class="app-item" href="#"><i class="fa fa-comments"></i><span>Chat</span></a></div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</li>
+					<!-- /App Lists -->
+					
+					<!-- User Menu -->
+					<li class="nav-item dropdown has-arrow">
+						<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+							<span class="user-img"><img class="rounded-circle" src="{% static 'vender/img/profiles/avatar-01.jpg' %}" width="31" alt="Ryan Taylor"></span>
+						</a>
+						<div class="dropdown-menu">
+							<div class="user-header">
+								<div class="avatar avatar-sm">
+									<img src="{% static 'vender/img/profiles/avatar-01.jpg' %}" alt="User Image" class="avatar-img rounded-circle">
+								</div>
+								<div class="user-text">
+									<h6>Ryan Taylor</h6>
+									<p class="text-muted mb-0">Administrator</p>
+								</div>
+							</div>
+							<a class="dropdown-item" href="profile.html">My Profile</a>
+							<a class="dropdown-item" href="login.html">Logout</a>
+						</div>
+					</li>
+					<!-- /User Menu -->
+					
+				</ul>
+				<!-- /Header Right Menu -->
+				
+            </div>
+			<!-- /Header -->
+			
+			<!-- Sidebar -->
+            <div class="sidebar" id="sidebar">
+                <div class="sidebar-inner slimscroll">
+					<div id="sidebar-menu" class="sidebar-menu">
+						<ul>
+							<li class="menu-title"> 
+								<span>Main</span>
+							</li>
+							<li > 
+								<a href="index.html"><i class="fe fe-home"></i> <span>Dashboard</span></a>
+							</li>
+							<!--<li class="submenu">-->
+							<!--	<a href="#" class=""><i class="fa fa-users "></i> <span> User </span> <span class="menu-arrow"></span></a>-->
+							<!--	<ul style="display: none;">-->
+							<!--		<li><a href="user_add_user.html"> <i class="fa fa-angle-double-right" ></i> Add User </a></li>-->
+							<!--		<li><a href="user_view_user.html"> <i class="fa fa-angle-double-right" ></i> View User  </a></li>-->
+							<!--	</ul>-->
+							<!--</li>-->
+							<li class="submenu active">
+								<a href="#" class=""><i class="fa fa-tasks"></i> <span> Product </span> <span class="menu-arrow"></span></a>
+								<ul style="display: none;">
+									<li><a href="/add_product"> <i class="fa fa-angle-double-right" ></i> Add Product </a></li>
+									<li><a href="/view_product"> <i class="fa fa-angle-double-right" ></i> View Product </a></li>
+								</ul>
+							</li>
+							<!--<li class="submenu">-->
+							<!--	<a href="#" class=""><i class="fa fa-bandcamp "></i> <span> Vendor </span> <span class="menu-arrow"></span></a>-->
+							<!--	<ul style="display: none;">-->
+							<!--		<li><a href="vendor_add_user.html"> <i class="fa fa-angle-double-right" ></i> Add Vendor </a></li>-->
+							<!--		<li><a href="vendor_view_user.html"> <i class="fa fa-angle-double-right" ></i> View Vendor  </a></li>-->
+							<!--	</ul>-->
+							<!--</li>-->
+							<li> 
+								<a href="Earning.html"><i class="fa fa-money"></i> <span>Earning</span></a>
+							</li>	
+								<li> 
+								<a href="View_Order.html"><i class="fa fa-money"></i> <span>View Order</span></a>
+							</li>
+							<!--<li> -->
+							<!--	<a href="Product_review.html"><i class="fa fa-address-card"></i> <span>Product Review</span></a>-->
+							<!--</li>-->
+							<!--<li> -->
+							<!--	<a href="Notification.html"><i class="fa fa-question"></i> <span>Notification</span></a>-->
+							<!--</li>-->
+							<!--<li> -->
+							<!--	<a href="privacy_policy.html"><i class="fa fa-briefcase"></i> <span>privacy policy</span></a>-->
+							<!--</li>-->
+							<!--<li> -->
+							<!--	<a href="terms_condition.html"><i class="fa fa-briefcase"></i> <span>Terms Condition</span></a>-->
+							<!--</li>-->
+						</ul>
+					</div>
+                </div>
+            </div>
+			<!-- /Sidebar -->
+			
+			<!-- Page Wrapper -->
+            <div class="page-wrapper">
+                <div class="content container-fluid">
+				
+					<!-- Page Header -->
+					<div class="page-header">
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="card full-header">
+									<div class="users">
+										<h3 class="page-title">Add User </h3>
+									</div>
+									<div class="user-box">
+								<div class="datatables">
+                                    <table id="example" class="display nowrap" style="width:100%">
+						        <thead>
+						            <tr>
+						            	<th>S.no</th>
+						                <th>Product name</th>
+						                <th>Product Price</th>
+						                <th>Product Category</th>
+						                <th>Product Description</th>
+						                <th>Product Discription</th>
+						                <th>Action</th> 
+						            </tr>
+						        </thead>
+						        <tbody>
+									{% for r in user %}
+									<tr>
+										<!-- <td>  <div>
+											<input type="checkbox" class="list-checkbox" name="selected_reception" value="{{ r.id }}">
+											<label for="id_selected_items_{{ forloop.counter }}">{{ r.name }}</label>
+											</div></td> -->
+										 <td>{{r.id}}</td>
+										 <td>{{r.name}}</td>
+										 <td>{{r.price}}</td>
+										 <td>{{r.category}}</td>
+										 <td>{{r.description}}</td>
+										 <!-- <td>{{r.city}}</td> -->
+										 <td><img src="{{r.image.url}}" alt="" class="img1" height='60px' width='80px'>
+										 </td>
+										
+										  <td>    
+											<div class="dropdown">
+											<button class="dropdown-toggle" type="button" data-toggle="dropdown" data-original-title="settings"
+											   style="border: none;background: #fff0;"><img src=" {% static 'setting.png'%}"
+												  style="width:30px;height:30px;">
+											</button>
+											<ul class="dropdown-menu">
+											   <li><a href="/delete_product/{{r.pk}}" data-toggle="tooltip" title="" onclick="return confirm('Are you sure you want to delete this?')"
+														data-original-title="remove"><img src=" {% static 'delete.png'%}"
+														   style="width:30px;height:30px;"></a></li>
+					
+										   <li><a href="/update_product/{{r.pk}}" data-toggle="tooltip" title=""
+														data-original-title="edit"><img src=" {% static 'edit.png'%}"
+														   style="width:30px;height:30px;"></a></li> 
+											</ul>
+										 </div>
+									  </td> 
+									</tr>
+									{% endfor %}
+	                               
+						        </tbody>
+						    </table>
+                                   </div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /Page Header -->
+					
+					<div class="row">
+						<div class="col-sm-12">
+							
+						</div>			
+					</div>
+					
+				</div>			
+			</div>
+			<!-- /Page Wrapper -->
+		
+        </div>
+		<!-- /Main Wrapper -->
+		
+		<!-- jQuery -->
+        <script src="{% static 'vender/js/jquery-3.6.0.min.js' %}"></script>
+		
+		<!-- Bootstrap Core JS -->
+        <script src="{% static 'vender/js/bootstrap.bundle.min.js' %}"></script>
+		
+		<!-- Slimscroll JS -->
+        <script src="{% static 'vender/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+		
+		<!-- Custom JS -->
+		<script  src="{% static 'vender/js/script.js' %}"></script>
+		<!-- DATATABLES  -->
+		<!--DATATABLES SCRIPT START -->
+        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+          <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+           <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+             <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+              <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+               <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+        <script>
+            $(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    } );
+} );
+        </script>
+    </body>
+</html>

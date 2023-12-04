@@ -1,0 +1,93 @@
+
+{% extends 'base.html'%}
+{% load widget_tweaks %}
+{% load static %}
+{% block content%}
+
+			
+			<!-- Page Wrapper -->
+            <div class="page-wrapper">
+                <div class="content container-fluid">
+				
+					<!-- Page Header -->
+					<div class="page-header">
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="card full-header">
+									<div class="users">
+										<h3 class="page-title">Add User </h3>
+									</div>
+									<div class="user-box">
+									<form method='post' action="{% url 'add_user'%}" enctype='multipart/form-data' novalidate>
+										{% csrf_token %}
+
+										<div class="form-group col-sm-12">
+											<!-- <label>Username</label> -->
+											<!-- <input type="text" class="form-control" placeholder="Username"> -->
+											<label for="{{ userForm.username.id_for_label }}">UserName </label>
+											{% render_field userForm.username class="form-control" placeholder="username" %}
+										</div>
+
+										<div class="form-group col-sm-12">
+											<!-- <label>Email</label> -->
+											<!-- <input type="email" class="form-control" placeholder="Email"> -->
+												<label for="{{ userForm.email.id_for_label }}">Enter Email</label>
+												{% render_field userForm.email class="form-control" placeholder="Enter Your Email" %}
+										</div>
+										<div class="form-group col-sm-12">
+											<!-- <label>Password</label> -->
+											<!-- <input type="text" class="form-control" placeholder="Password"> -->
+												<label for="{{ userForm.password.id_for_label }}">Password </label>
+												{% render_field userForm.password class="form-control" placeholder="Full name" %}
+										</div>
+										<div class="form-group col-sm-12">
+									
+											<!-- <input type="number" class="form-control" placeholder="Number"> -->
+												<label for="{{ receptionForm.contact.id_for_label }}">Contact Number </label>
+												{% render_field receptionForm.contact class="form-control" placeholder="Full name" %}
+										</div>
+										<div class="form-group col-sm-12">
+											<!-- <label>City</label> -->
+											<!-- <input type="text" class="form-control" placeholder="City"> -->
+												<label for="{{ receptionForm.city.id_for_label }}">City Name </label>
+												{% render_field receptionForm.city class="form-control" placeholder="Enter City Name" %}
+										</div>
+											<div class="form-group col-sm-12">
+											<!-- <label>Email</label> -->
+											<!-- <input type="email" class="form-control" placeholder="Email"> -->
+												<label for="{{ receptionForm.address.id_for_label }}">Address</label>
+												{% render_field receptionForm.address class="form-control" placeholder="Enter Your Address" %}
+										</div>
+										<div class="form-group col-sm-12">
+											<!-- <label>Email</label> -->
+											<!-- <input type="email" class="form-control" placeholder="Email"> -->
+												<label for="{{ receptionForm.profile_pic.id_for_label }}">Profile Picture </label>
+												{% render_field receptionForm.profile_pic class="form-control" %}
+										</div>
+										<div class="form-group col-sm-12">
+											<div class="submit">
+												<button type="submit" class="form-control bg-submits">Submit</button>
+											</div>
+										</div>
+									</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /Page Header -->
+					
+					<div class="row">
+						<div class="col-sm-12">
+							
+						</div>			
+					</div>
+					
+				</div>			
+			</div>
+			<!-- /Page Wrapper -->
+		
+        </div>
+		<!-- /Main Wrapper -->
+		{% endblock %}
+

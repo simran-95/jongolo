@@ -1,0 +1,63 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title>jongolo home page</title>
+    
+    <link rel="stylesheet" href="{% static 'admin/css/font-awesome.min.css'%}">	
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'admin/img/favicon.png'%}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'admin/css/bootstrap.min.css' %}">
+
+    <!-- Fontawesome CSS -->
+
+    <!-- Feathericon CSS -->
+    <link rel="stylesheet" href="{% static 'admin/css/feathericon.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'admin/plugins/morris/morris.css' %}">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{% static 'admin/css/style.css' %}">
+</head>
+
+<body>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+
+        {% include 'header.html'%}
+        {% block content %}
+    
+        {% endblock %}
+        {% include 'sidebar.html'%}
+
+
+        
+    </div>
+    <!-- /Main Wrapper -->
+
+    <!-- jQuery -->
+    <script src="{% static 'admin/js/jquery-3.6.0.min.js' %}"></script>
+
+    <!-- Bootstrap Core JS -->
+    <script src="{% static 'admin/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Slimscroll JS -->
+    <script src="{% static 'admin/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+
+    <script src="{% static 'admin/plugins/raphael/raphael.min.js' %}"></script>
+    <script src="{% static 'admin/plugins/morris/morris.min.js' %}"></script>
+    <script src="{% static 'admin/js/chart.morris.js' %}"></script>
+
+    <!-- Custom JS -->
+    <script src="{% static 'admin/js/script.js' %}"></script>
+
+</body>
+
+</html>

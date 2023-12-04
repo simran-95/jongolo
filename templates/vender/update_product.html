@@ -1,0 +1,242 @@
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title>Add Product Jongolo Home Page</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'vender/img/favicon.png' %}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'vender/css/bootstrap.min.css' %}">
+
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="{% static 'vender/css/font-awesome.min.css' %}">
+
+    <!-- Feathericon CSS -->
+    <link rel="stylesheet" href="{% static 'vender/css/feathericon.min.css' %}">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{% static 'vender/css/style.css' %}">
+
+</head>
+
+<body>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+
+        <!-- Header -->
+        <div class="header">
+
+            <!-- Logo -->
+            <div class="header-left">
+                <a href="index.html" class="logo">
+                    <img src="{% static 'vender/img/logo.png' %}" alt="Logo">
+                </a>
+                <a href="index.html" class="logo logo-small">
+                    <img src="{% static 'vender/img/logo-small.png' %}" alt="Logo" width="30" height="30">
+                </a>
+            </div>
+            <!-- /Logo -->
+
+            <a href="javascript:void(0);" id="toggle_btn">
+                <i class="fe fe-text-align-left"></i>
+            </a>
+
+
+            <!-- Mobile Menu Toggle -->
+            <a class="mobile_btn" id="mobile_btn">
+                <i class="fa fa-bars"></i>
+            </a>
+            <!-- /Mobile Menu Toggle -->
+
+            <!-- Header Right Menu -->
+            <ul class="nav user-menu">
+
+                <!-- App Lists -->
+                <li class="nav-item dropdown app-dropdown">
+                    <a class="nav-link dropdown-toggle" aria-expanded="false" role="button" data-toggle="dropdown"
+                        href="#"><i class="fe fe-app-menu"></i></a>
+                    <ul class="dropdown-menu app-dropdown-menu">
+                        <li>
+                            <div class="app-list">
+                                <div class="row">
+                                    <div class="col"><a class="app-item" href="inbox.html"><i
+                                                class="fa fa-envelope"></i><span>Email</span></a></div>
+                                    <div class="col"><a class="app-item" href="calendar.html"><i
+                                                class="fa fa-calendar"></i><span>Calendar</span></a></div>
+                                    <div class="col"><a class="app-item" href="#"><i
+                                                class="fa fa-comments"></i><span>Chat</span></a></div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <!-- /App Lists -->
+
+                <!-- User Menu -->
+                <li class="nav-item dropdown has-arrow">
+                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                        <span class="user-img"><img class="rounded-circle"
+                                src="{% static 'vender/img/profiles/avatar-01.jpg' %}" width="31"
+                                alt="Ryan Taylor"></span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="user-header">
+                            <div class="avatar avatar-sm">
+                                <img src="{% static 'vender/img/profiles/avatar-01.jpg' %}" alt="User Image"
+                                    class="avatar-img rounded-circle">
+                            </div>
+                            <div class="user-text">
+                                <h6>Ryan Taylor</h6>
+                                <p class="text-muted mb-0">Administrator</p>
+                            </div>
+                        </div>
+                        <a class="dropdown-item" href="profile.html">My Profile</a>
+                        <a class="dropdown-item" href="login.html">Logout</a>
+                    </div>
+                </li>
+                <!-- /User Menu -->
+
+            </ul>
+            <!-- /Header Right Menu -->
+
+        </div>
+        <!-- /Header -->
+
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-inner slimscroll">
+                <div id="sidebar-menu" class="sidebar-menu">
+                    <ul>
+                        <li class="menu-title">
+                            <span>Main</span>
+                        </li>
+                        <li>
+                            <a href="index.html"><i class="fe fe-home"></i> <span>Dashboard</span></a>
+                        </li>
+
+                        <li class="submenu active">
+                            <a href="#" class=""><i class="fa fa-tasks"></i> <span> Product </span> <span
+                                    class="menu-arrow"></span></a>
+                            <ul style="display: none;">
+                                <li><a href="/add_user"> <i class="fa fa-angle-double-right"></i> Add Product </a></li>
+                                <li><a href="/view_product"> <i class="fa fa-angle-double-right"></i> View Product </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="Earning.html"><i class="fa fa-money"></i> <span>Earning</span></a>
+                        </li>
+                        <li>
+                            <a href="View_Order.html"><i class="fa fa-money"></i> <span>View Order</span></a>
+                        </li>
+                        <!--<li> -->
+                        <!--	<a href="Product_review.html"><i class="fa fa-address-card"></i> <span>Product Review</span></a>-->
+                        <!--</li>-->
+                        <!--<li> -->
+                        <!--	<a href="Notification.html"><i class="fa fa-question"></i> <span>Notification</span></a>-->
+                        <!--</li>-->
+                        <!--<li> -->
+                        <!--	<a href="privacy_policy.html"><i class="fa fa-briefcase"></i> <span>privacy policy</span></a>-->
+                        <!--</li>-->
+                        <!--<li> -->
+                        <!--	<a href="terms_condition.html"><i class="fa fa-briefcase"></i> <span>Terms Condition</span></a>-->
+                        <!--</li>-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /Sidebar -->
+        <!-- Page Wrapper -->
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card full-header">
+                                <div class="users">
+                                    <h3 class="page-title">Product Add User </h3>
+                                </div>
+                                <div class="user-box">
+                                    <form action="" method="post" enctype='multipart/form-data'>
+                                        {% csrf_token %}
+                                        <div class=" row">
+                                            <div class="form-group col-sm-12">
+                                                <!-- <label>Product Varient</label> -->
+                                                <label for="{{ fm.category.id_for_label }}">Select Category</label>
+                                                {% render_field fm.category class="form-control" %}
+                                            </div>
+                                            <div class="fm-group col-sm-12">
+                                                <!-- <label>Product name</label> -->
+                                                <label for="{{ fm.name.id_for_label }}">Product Name</label>
+                                                {% render_field fm.name class="form-control" %}
+                                            </div>
+                                            <div class="form-group col-sm-12">
+                                                <!-- <label>Product Image</label> -->
+                                                <label for="{{ fm.price.id_for_label }}">Product Price</label>
+                                                {% render_field fm.price class="form-control" %}
+                                            </div>
+
+                                            <div class="form-group col-sm-12">
+                                                <!-- <label>Product Quantity</label> -->
+                                                <label for="{{ fm.description.id_for_label }}">Product Description
+                                                </label>
+                                                {% render_field fm.description class="form-control" %}
+                                            </div>
+                                            <div class="form-group col-sm-12">
+                                                <!-- <label>Product Discription</label> -->
+                                                <label for="{{ fm.image.id_for_label }}">Product Image</label>
+                                                {% render_field fm.image class="form-control" %}
+                                            </div>
+                                            <div class="form-group col-sm-12">
+                                                <div class="submit">
+                                                    <button type="submit" class="form-control bg-submits">Submit</button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+                <div class="row">
+                    <div class="col-sm-12">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- /Page Wrapper -->
+
+    </div>
+    <!-- /Main Wrapper -->
+
+    <!-- jQuery -->
+    <script src="{% static 'vender/js/jquery-3.6.0.min.js' %}"></script>
+
+    <!-- Bootstrap Core JS -->
+    <script src="{% static 'vender/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Slimscroll JS -->
+    <script src="{% static 'vender/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+
+    <!-- Custom JS -->
+    <script src="{% static 'vender/js/script.js' %}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,252 @@
+{% extends 'websiteuser/base.html'%}
+{% load widget_tweaks %}
+{% load static %}
+{% block content%}
+
+
+<div class="hero-wrap hero-bread" style="background-image: url(images/banner/footer-bg.png);">
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Checkout</span>
+                </p>
+                <h1 class="mb-0 bread">Checkout</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="ftco-section  checkout-form">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-10 ftco-animate fadeInUp ftco-animated">
+                <div class="checkout-form cart-detail p-3 p-md-4">
+                    <form action="{% url 'checkout'  %}" method="post" class="billing-form">
+                        {% csrf_token %}
+                        <h3 class="mb-4 billing-heading">Billing Details</h3>
+                        <div class="row align-items-end">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="firstname">First Name</label>
+                                    <input type="text" name="username" value="{{ user_data.username }}"
+                                        class="form-control" placeholder="">
+                                    <input type="hidden" name="total_price" value="{{ total_price }}">
+                                    <input type="hidden" name="product_name" value="{{ product_name }}">
+                                </div>
+                            </div>
+
+                            <div class="w-100"></div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="towncity">Town / City</label>
+                                    <input type="text" name="city" value="{{ user_data.city }}" class="form-control"
+                                        placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="postcodezip">Postcode / ZIP *</label>
+                                    <input type="text" name="postal_code" value="450011" class="form-control"
+                                        placeholder="">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="phone">Phone</label>
+                                    <input type="text" name="contact" value="{{ user_data.contact }}"
+                                        class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="w-100"></div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="streetaddress">Street Address</label>
+                                    <input type="text" class="form-control" name="address"
+                                        value="{{ user_data.address }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="country">State / Country</label>
+                                    <div class="select-wrap">
+                                        <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                        <select name="" id="" class="form-control">
+                                            <option value="">France</option>
+                                            <option value="">Italy</option>
+                                            <option value="">Philippines</option>
+                                            <option value="">South Korea</option>
+                                            <option value="">Hongkong</option>
+                                            <option value="">Japan</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="emailaddress">Email Address</label>
+                                    <input type="text" name="email" value="{{ user_data.email }}" class="form-control"
+                                        placeholder="">
+                                </div>
+                            </div>
+                            <div class="w-100"></div>
+                            <div class="col-md-12">
+                                <div class="form-group mt-4">
+                                    <!-- <div class="radio">
+                                        <label for="tab1" class="mr-3">Create an Account?</label>
+                                            <input id="tab1" type="radio" name="optradio"> 
+                                             
+                                        <label for="tab2" > Ship to different address   </label>
+                                            <input id="tab2" type="radio" name="optradio"> 
+                                       
+                                        <article>
+                                                  <h2>article1</h2>
+                                                </article>
+                                                <article>
+                                                  <h2>article2</h2>
+                                                </article>
+                                      </div> -->
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <input type="radio" id="tab1" name="tab" checked="">
+                                <label for="tab1"> Create an Account? </label>
+                                <input type="radio" id="tab2" name="tab">
+                                <label for="tab2"> Ship to different address </label>
+                                <article class="on"> </article>
+                                <!-- TAB END -->
+                                <article class="">
+                                    <div class="fully-address">
+
+
+                                        <div class="form-group row">
+                                            <div class="form-group col-md-6">
+                                                <label for="phone">Country</label>
+                                                <input type="text" class="form-control" name="country" placeholder="">
+                                            </div>
+
+                                            <div class="form-group col-md-12">
+                                                <label for="phone">State</label>
+                                                <input type="text" class="form-control" name="state" placeholder="">
+                                            </div>
+
+                                            <div class="form-group col-md-6">
+                                                <label for="phone">City</label>
+                                                <input type="text" class="form-control" name="city" placeholder="">
+                                            </div>
+
+                                            <div class="form-group col-md-6">
+                                                <label for="phone">Address</label>
+                                                <input type="text" class="form-control" name="street_address"
+                                                    placeholder="">
+                                            </div>
+
+                                            <div class="form-group col-md-6">
+                                                <label for="phone">Postal_code</label>
+                                                <input type="text" class="form-control" name="postal_code"
+                                                    placeholder="">
+                                            </div>
+
+                                            <!-- <div class="form-group col-md-12">
+                                            </div> -->
+                                            <!-- <p><a href="index.html" class="btn btn-primary py-3 px-4">Place an
+                                                      order</a></p> -->
+                                            <!-- <div class="form-group col-sm-12">
+                                                <div class="submit">
+                                                    <button type="submit" class="form-control bg-submits">Place an
+                                                        order</button>
+                                                </div>
+                                            </div> -->
+
+                                        </div>
+
+                                    </div>
+
+                                </article>
+                            </div>
+
+
+
+                            <div class="carts-details p-3 p-md-4" style="
+  width: 100%;
+">
+                                <h3 class="billing-heading mb-4">Payment Method</h3>
+                                <div class="form-group">
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <div class="radio">
+                                            <label><input type="radio" name="optradio" class="mr-2"> Check
+                                                Payment</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <div class="radio">
+                                            <label><input type="radio" name="optradio" class="mr-2"> Paypal</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" value="" class="mr-2"> I have read and accept
+                                                the terms and conditions</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="submit">
+                                    <button type="submit" class="btn btn-primary py-3 px-4">Place an
+                                        order</button>
+                                        <!-- <div class="submit">
+                                            <p><a href="{% url 'dashboard-web' %}?user={{ request.user.id }}&{% for item in cart_items %}product{{ forloop.counter }}={{ item.product.id }}{% if not forloop.last %}&{% endif %}{% endfor %}&total_price={{ total_price }}" class="btn btn-primary py-3 px-4">Place an order</a></p>
+                                        </div> -->
+                                        
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- END -->
+            </div>
+            <!-- .col-md-8 -->
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    $('[name=tab]').each(function (i, d) {
+        var p = $(this).prop('checked');
+        //   console.log(p);
+        if (p) {
+            $('article').eq(i)
+                .addClass('on');
+        }
+    });
+
+    $('[name=tab]').on('change', function () {
+        var p = $(this).prop('checked');
+
+        // $(type).index(this) == nth-of-type
+        var i = $('[name=tab]').index(this);
+
+        $('article').removeClass('on');
+        $('article').eq(i).addClass('on');
+    });
+</script>
+
+
+<!-- loader -->
+<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+        <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+            stroke="#F96D00" />
+    </svg></div>

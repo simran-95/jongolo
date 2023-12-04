@@ -1,0 +1,765 @@
+{% extends 'websiteuser/base.html'%}
+{% load widget_tweaks %}
+{% load static %}
+{% block content%}
+
+
+    <div class="hero-wrap hero-bread" style="background-image: url(static/images/banner/footer-bg.png);">
+        <div class="container">
+            <div class="row no-gutters slider-text align-items-center justify-content-center">
+                <div class="col-md-9 ftco-animate text-center">
+                    <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Checkout</span>
+                    </p>
+                    <h1 class="mb-0 bread">Product Detail</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row flex-row-reverse">
+                <div class="col-lg-9">
+                    <div class="product_top_bar">
+                        <div class="left_dorp" style="display: flex;">
+                            <select class="form-control sorting" style="width: 48%;margin: 0px 5px;">
+                                <option value="1">Default sorting</option>
+                                <option value="2">Default sorting 01</option>
+                                <option value="4">Default sorting 02</option>
+                            </select>
+                            <select class="form-control show" style="width: 48%;margin: 0px 5px;">
+                                <option value="1">Show 12</option>
+                                <option value="2">Show 14</option>
+                                <option value="4">Show 16</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="latest_product_inner mt-3">
+                        <div class="row">
+                            {% for p in product %}
+                            <div class="col-md-6 col-lg-3 ftco-animate fadeInUp ftco-animated">
+                                <div class="product">
+                                    <a href="/details/{{p.id}}" class="img-prod"><img class="img-fluid"
+                                            src="{{ p.image.url }}" alt="Colorlib Template">
+                                        <!-- <span class="status">30%</span> -->
+                                        <div class="overlay"></div>
+                                    </a>
+                                    <div class="text py-3 pb-4 px-3 text-center">
+                                        <h3><a href="/details">{{ p.name }}</a></h3>
+                                        <div class="d-flex">
+                                            <div class="pricing">
+                                                <p class="price"><span class="mr-2 price-dc">$120.00</span><span
+                                                        class="price-sale">${{ p.price }}</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="bottom-area d-flex px-3">
+                                            <div class="m-auto d-flex">
+                                                <a href="/details"
+                                                    class="add-to-cart d-flex justify-content-center align-items-center text-center">
+                                                    <span><i class="ion-ios-menu"></i></span>
+                                                </a>
+                                                <a href="/details"
+                                                    class="buy-now d-flex justify-content-center align-items-center mx-1">
+                                                    <span><i class="ion-ios-cart"></i></span>
+                                                </a>
+                                                <a href="/details"
+                                                    class="heart d-flex justify-content-center align-items-center ">
+                                                    <span><i class="ion-ios-heart"></i></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            <!-- <div class="col-md-6 col-lg-3 ftco-animate fadeInUp ftco-animated">
+                                <div class="product">
+                                    <a href="product-single.html" class="img-prod"><img class="img-fluid"
+                                            src="static/images/product/produc-2.png" alt="Colorlib Template">
+                                        <div class="overlay"></div>
+                                    </a>
+                                    <div class="text py-3 pb-4 px-3 text-center">
+                                        <h3><a href="product-single.html">african-fashion-dresses</a></h3>
+                                        <div class="d-flex">
+                                            <div class="pricing">
+                                                <p class="price"><span>$120.00</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="bottom-area d-flex px-3">
+                                            <div class="m-auto d-flex">
+                                                <a href="product-single.html"
+                                                    class="add-to-cart d-flex justify-content-center align-items-center text-center">
+                                                    <span><i class="ion-ios-menu"></i></span>
+                                                </a>
+                                                <a href="product-single.html"
+                                                    class="buy-now d-flex justify-content-center align-items-center mx-1">
+                                                    <span><i class="ion-ios-cart"></i></span>
+                                                </a>
+                                                <a href="product-single.html"
+                                                    class="heart d-flex justify-content-center align-items-center ">
+                                                    <span><i class="ion-ios-heart"></i></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <!-- <div class="col-md-6 col-lg-3 ftco-animate fadeInUp ftco-animated">
+                                <div class="product">
+                                    <a href="product-single.html" class="img-prod"><img class="img-fluid"
+                                            src="static/images/product/produc-3.png" alt="Colorlib Template">
+                                        <div class="overlay"></div>
+                                    </a>
+                                    <div class="text py-3 pb-4 px-3 text-center">
+                                        <h3><a href="product-single.html">african dresses-man</a></h3>
+                                        <div class="d-flex">
+                                            <div class="pricing">
+                                                <p class="price"><span>$120.00</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="bottom-area d-flex px-3">
+                                            <div class="m-auto d-flex">
+                                                <a href="product-single.html"
+                                                    class="add-to-cart d-flex justify-content-center align-items-center text-center">
+                                                    <span><i class="ion-ios-menu"></i></span>
+                                                </a>
+                                                <a href="product-single.html"
+                                                    class="buy-now d-flex justify-content-center align-items-center mx-1">
+                                                    <span><i class="ion-ios-cart"></i></span>
+                                                </a>
+                                                <a href="product-single.html"
+                                                    class="heart d-flex justify-content-center align-items-center ">
+                                                    <span><i class="ion-ios-heart"></i></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <!-- <div class="col-md-6 col-lg-3 ftco-animate fadeInUp ftco-animated">
+                                <div class="product">
+                                    <a href="product-single.html" class="img-prod"><img class="img-fluid"
+                                            src="static/images/product/produc-4.png" alt="Colorlib Template">
+                                        <div class="overlay"></div>
+                                    </a>
+                                    <div class="text py-3 pb-4 px-3 text-center">
+                                        <h3><a href="product-single.html">african kurta-pajaa</a></h3>
+                                        <div class="d-flex">
+                                            <div class="pricing">
+                                                <p class="price"><span>$120.00</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="bottom-area d-flex px-3">
+                                            <div class="m-auto d-flex">
+                                                <a href="product-single.html"
+                                                    class="add-to-cart d-flex justify-content-center align-items-center text-center">
+                                                    <span><i class="ion-ios-menu"></i></span>
+                                                </a>
+                                                <a href="product-single.html"
+                                                    class="buy-now d-flex justify-content-center align-items-center mx-1">
+                                                    <span><i class="ion-ios-cart"></i></span>
+                                                </a>
+                                                <a href="product-single.html"
+                                                    class="heart d-flex justify-content-center align-items-center ">
+                                                    <span><i class="ion-ios-heart"></i></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+
+
+                            <!-- <div class="col-md-6 col-lg-3 ftco-animate fadeInUp ftco-animated">
+                                <div class="product">
+                                    <a href="product-single.html" class="img-prod"><img class="img-fluid"
+                                            src="static/images/product/produc-5.png" alt="Colorlib Template">
+                                        <span class="status">30%</span>
+                                        <div class="overlay"></div>
+                                    </a>
+                                    <div class="text py-3 pb-4 px-3 text-center">
+                                        <h3><a href="product-single.html">African trandy-dreses</a></h3>
+                                        <div class="d-flex">
+                                            <div class="pricing">
+                                                <p class="price"><span class="mr-2 price-dc">$120.00</span><span
+                                                        class="price-sale">$80.00</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="bottom-area d-flex px-3">
+                                            <div class="m-auto d-flex">
+                                                <a href="product-single.html"
+                                                    class="add-to-cart d-flex justify-content-center align-items-center text-center">
+                                                    <span><i class="ion-ios-menu"></i></span>
+                                                </a>
+                                                <a href="product-single.html"
+                                                    class="buy-now d-flex justify-content-center align-items-center mx-1">
+                                                    <span><i class="ion-ios-cart"></i></span>
+                                                </a>
+                                                <a href="product-single.html"
+                                                    class="heart d-flex justify-content-center align-items-center ">
+                                                    <span><i class="ion-ios-heart"></i></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <!-- <div class="col-md-6 col-lg-3 ftco-animate fadeInUp ftco-animated">
+                                <div class="product">
+                                    <a href="product-single.html" class="img-prod"><img class="img-fluid"
+                                            src="static/images/product/produc-6.png" alt="Colorlib Template">
+                                        <div class="overlay"></div>
+                                    </a>
+                                    <div class="text py-3 pb-4 px-3 text-center">
+                                        <h3><a href="product-single.html">African-brovo-creative</a></h3>
+                                        <div class="d-flex">
+                                            <div class="pricing">
+                                                <p class="price"><span>$120.00</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="bottom-area d-flex px-3">
+                                            <div class="m-auto d-flex">
+                                                <a href="product-single.html"
+                                                    class="add-to-cart d-flex justify-content-center align-items-center text-center">
+                                                    <span><i class="ion-ios-menu"></i></span>
+                                                </a>
+                                                <a href="product-single.html"
+                                                    class="buy-now d-flex justify-content-center align-items-center mx-1">
+                                                    <span><i class="ion-ios-cart"></i></span>
+                                                </a>
+                                                <a href="product-single.html"
+                                                    class="heart d-flex justify-content-center align-items-center ">
+                                                    <span><i class="ion-ios-heart"></i></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <!-- <div class="col-md-6 col-lg-3 ftco-animate fadeInUp ftco-animated">
+                                <div class="product">
+                                    <a href="product-single.html" class="img-prod"><img class="img-fluid"
+                                            src="static/images/product/produc-7.png" alt="Colorlib Template">
+                                        <div class="overlay"></div>
+                                    </a>
+                                    <div class="text py-3 pb-4 px-3 text-center">
+                                        <h3><a href="product-single.html">African-Fashion Hoodie</a></h3>
+                                        <div class="d-flex">
+                                            <div class="pricing">
+                                                <p class="price"><span>$120.00</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="bottom-area d-flex px-3">
+                                            <div class="m-auto d-flex">
+                                                <a href="product-single.html"
+                                                    class="add-to-cart d-flex justify-content-center align-items-center text-center">
+                                                    <span><i class="ion-ios-menu"></i></span>
+                                                </a>
+                                                <a href="product-single.html"
+                                                    class="buy-now d-flex justify-content-center align-items-center mx-1">
+                                                    <span><i class="ion-ios-cart"></i></span>
+                                                </a>
+                                                <a href="product-single.html"
+                                                    class="heart d-flex justify-content-center align-items-center ">
+                                                    <span><i class="ion-ios-heart"></i></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <!-- <div class="col-md-6 col-lg-3 ftco-animate fadeInUp ftco-animated">
+                                <div class="product">
+                                    <a href="product-single.html" class="img-prod"><img class="img-fluid"
+                                            src="static/images/product/produc-8.png" alt="Colorlib Template">
+                                        <div class="overlay"></div>
+                                    </a>
+                                    <div class="text py-3 pb-4 px-3 text-center">
+                                        <h3><a href="product-single.html">African Multile Dresses</a></h3>
+                                        <div class="d-flex">
+                                            <div class="pricing">
+                                                <p class="price"><span>$120.00</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="bottom-area d-flex px-3">
+                                            <div class="m-auto d-flex">
+                                                <a href="product-single.html"
+                                                    class="add-to-cart d-flex justify-content-center align-items-center text-center">
+                                                    <span><i class="ion-ios-menu"></i></span>
+                                                </a>
+                                                <a href="product-single.html"
+                                                    class="buy-now d-flex justify-content-center align-items-center mx-1">
+                                                    <span><i class="ion-ios-cart"></i></span>
+                                                </a>
+                                                <a href="product-single.html"
+                                                    class="heart d-flex justify-content-center align-items-center ">
+                                                    <span><i class="ion-ios-heart"></i></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                        <!-- row end -->
+                        <!-- <div class="row">
+                            <div class="col-md-6 col-lg-3 ftco-animate fadeInUp ftco-animated">
+                                <div class="product">
+                                    <a href="/product-single" class="img-prod"><img class="img-fluid"
+                                            src="static/images/product/produc-1.png" alt="Colorlib Template">
+                                        <span class="status">30%</span>
+                                        <div class="overlay"></div>
+                                    </a>
+                                    <div class="text py-3 pb-4 px-3 text-center">
+                                        <h3><a href="product-single.html">African-Men's-Fashion</a></h3>
+                                        <div class="d-flex">
+                                            <div class="pricing">
+                                                <p class="price"><span class="mr-2 price-dc">$120.00</span><span
+                                                        class="price-sale">$80.00</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="bottom-area d-flex px-3">
+                                            <div class="m-auto d-flex">
+                                                <a href="product-single.html"
+                                                    class="add-to-cart d-flex justify-content-center align-items-center text-center">
+                                                    <span><i class="ion-ios-menu"></i></span>
+                                                </a>
+                                                <a href="product-single.html"
+                                                    class="buy-now d-flex justify-content-center align-items-center mx-1">
+                                                    <span><i class="ion-ios-cart"></i></span>
+                                                </a>
+                                                <a href="product-single.html"
+                                                    class="heart d-flex justify-content-center align-items-center ">
+                                                    <span><i class="ion-ios-heart"></i></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3 ftco-animate fadeInUp ftco-animated">
+                                <div class="product">
+                                    <a href="product-single.html" class="img-prod"><img class="img-fluid"
+                                            src="static/images/product/produc-2.png" alt="Colorlib Template">
+                                        <div class="overlay"></div>
+                                    </a>
+                                    <div class="text py-3 pb-4 px-3 text-center">
+                                        <h3><a href="product-single.html">african-fashion-dresses</a></h3>
+                                        <div class="d-flex">
+                                            <div class="pricing">
+                                                <p class="price"><span>$120.00</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="bottom-area d-flex px-3">
+                                            <div class="m-auto d-flex">
+                                                <a href="product-single.html"
+                                                    class="add-to-cart d-flex justify-content-center align-items-center text-center">
+                                                    <span><i class="ion-ios-menu"></i></span>
+                                                </a>
+                                                <a href="product-single.html"
+                                                    class="buy-now d-flex justify-content-center align-items-center mx-1">
+                                                    <span><i class="ion-ios-cart"></i></span>
+                                                </a>
+                                                <a href="product-single.html"
+                                                    class="heart d-flex justify-content-center align-items-center ">
+                                                    <span><i class="ion-ios-heart"></i></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3 ftco-animate fadeInUp ftco-animated">
+                                <div class="product">
+                                    <a href="product-single.html" class="img-prod"><img class="img-fluid"
+                                            src="static/images/product/produc-3.png" alt="Colorlib Template">
+                                        <div class="overlay"></div>
+                                    </a>
+                                    <div class="text py-3 pb-4 px-3 text-center">
+                                        <h3><a href="product-single.html">african dresses-man</a></h3>
+                                        <div class="d-flex">
+                                            <div class="pricing">
+                                                <p class="price"><span>$120.00</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="bottom-area d-flex px-3">
+                                            <div class="m-auto d-flex">
+                                                <a href="product-single.html"
+                                                    class="add-to-cart d-flex justify-content-center align-items-center text-center">
+                                                    <span><i class="ion-ios-menu"></i></span>
+                                                </a>
+                                                <a href="product-single.html"
+                                                    class="buy-now d-flex justify-content-center align-items-center mx-1">
+                                                    <span><i class="ion-ios-cart"></i></span>
+                                                </a>
+                                                <a href="product-single.html"
+                                                    class="heart d-flex justify-content-center align-items-center ">
+                                                    <span><i class="ion-ios-heart"></i></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3 ftco-animate fadeInUp ftco-animated">
+                                <div class="product">
+                                    <a href="product-single.html" class="img-prod"><img class="img-fluid"
+                                            src="static/images/product/produc-4.png" alt="Colorlib Template">
+                                        <div class="overlay"></div>
+                                    </a>
+                                    <div class="text py-3 pb-4 px-3 text-center">
+                                        <h3><a href="product-single.html">african kurta-pajaa</a></h3>
+                                        <div class="d-flex">
+                                            <div class="pricing">
+                                                <p class="price"><span>$120.00</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="bottom-area d-flex px-3">
+                                            <div class="m-auto d-flex">
+                                                <a href="product-single.html"
+                                                    class="add-to-cart d-flex justify-content-center align-items-center text-center">
+                                                    <span><i class="ion-ios-menu"></i></span>
+                                                </a>
+                                                <a href="product-single.html"
+                                                    class="buy-now d-flex justify-content-center align-items-center mx-1">
+                                                    <span><i class="ion-ios-cart"></i></span>
+                                                </a>
+                                                <a href="product-single.html"
+                                                    class="heart d-flex justify-content-center align-items-center ">
+                                                    <span><i class="ion-ios-heart"></i></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6 col-lg-3 ftco-animate fadeInUp ftco-animated">
+                                <div class="product">
+                                    <a href="product-single.html" class="img-prod"><img class="img-fluid"
+                                            src="static/images/product/produc-5.png" alt="Colorlib Template">
+                                        <span class="status">30%</span>
+                                        <div class="overlay"></div>
+                                    </a>
+                                    <div class="text py-3 pb-4 px-3 text-center">
+                                        <h3><a href="product-single.html">African trandy-dreses</a></h3>
+                                        <div class="d-flex">
+                                            <div class="pricing">
+                                                <p class="price"><span class="mr-2 price-dc">$120.00</span><span
+                                                        class="price-sale">$80.00</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="bottom-area d-flex px-3">
+                                            <div class="m-auto d-flex">
+                                                <a href="product-single.html"
+                                                    class="add-to-cart d-flex justify-content-center align-items-center text-center">
+                                                    <span><i class="ion-ios-menu"></i></span>
+                                                </a>
+                                                <a href="product-single.html"
+                                                    class="buy-now d-flex justify-content-center align-items-center mx-1">
+                                                    <span><i class="ion-ios-cart"></i></span>
+                                                </a>
+                                                <a href="product-single.html"
+                                                    class="heart d-flex justify-content-center align-items-center ">
+                                                    <span><i class="ion-ios-heart"></i></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3 ftco-animate fadeInUp ftco-animated">
+                                <div class="product">
+                                    <a href="product-single.html" class="img-prod"><img class="img-fluid"
+                                            src="static/images/product/produc-6.png" alt="Colorlib Template">
+                                        <div class="overlay"></div>
+                                    </a>
+                                    <div class="text py-3 pb-4 px-3 text-center">
+                                        <h3><a href="product-single.html">African-brovo-creative</a></h3>
+                                        <div class="d-flex">
+                                            <div class="pricing">
+                                                <p class="price"><span>$120.00</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="bottom-area d-flex px-3">
+                                            <div class="m-auto d-flex">
+                                                <a href="product-single.html"
+                                                    class="add-to-cart d-flex justify-content-center align-items-center text-center">
+                                                    <span><i class="ion-ios-menu"></i></span>
+                                                </a>
+                                                <a href="product-single.html"
+                                                    class="buy-now d-flex justify-content-center align-items-center mx-1">
+                                                    <span><i class="ion-ios-cart"></i></span>
+                                                </a>
+                                                <a href="product-single.html"
+                                                    class="heart d-flex justify-content-center align-items-center ">
+                                                    <span><i class="ion-ios-heart"></i></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3 ftco-animate fadeInUp ftco-animated">
+                                <div class="product">
+                                    <a href="product-single.html" class="img-prod"><img class="img-fluid"
+                                            src="static/images/product/produc-7.png" alt="Colorlib Template">
+                                        <div class="overlay"></div>
+                                    </a>
+                                    <div class="text py-3 pb-4 px-3 text-center">
+                                        <h3><a href="product-single.html">African-Fashion Hoodie</a></h3>
+                                        <div class="d-flex">
+                                            <div class="pricing">
+                                                <p class="price"><span>$120.00</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="bottom-area d-flex px-3">
+                                            <div class="m-auto d-flex">
+                                                <a href="product-single.html"
+                                                    class="add-to-cart d-flex justify-content-center align-items-center text-center">
+                                                    <span><i class="ion-ios-menu"></i></span>
+                                                </a>
+                                                <a href="product-single.html"
+                                                    class="buy-now d-flex justify-content-center align-items-center mx-1">
+                                                    <span><i class="ion-ios-cart"></i></span>
+                                                </a>
+                                                <a href="product-single.html"
+                                                    class="heart d-flex justify-content-center align-items-center ">
+                                                    <span><i class="ion-ios-heart"></i></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3 ftco-animate fadeInUp ftco-animated">
+                                <div class="product">
+                                    <a href="product-single.html" class="img-prod"><img class="img-fluid"
+                                            src="static/images/product/produc-8.png" alt="Colorlib Template">
+                                        <div class="overlay"></div>
+                                    </a>
+                                    <div class="text py-3 pb-4 px-3 text-center">
+                                        <h3><a href="product-single.html">African Multile Dresses</a></h3>
+                                        <div class="d-flex">
+                                            <div class="pricing">
+                                                <p class="price"><span>$120.00</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="bottom-area d-flex px-3">
+                                            <div class="m-auto d-flex">
+                                                <a href="product-single.html"
+                                                    class="add-to-cart d-flex justify-content-center align-items-center text-center">
+                                                    <span><i class="ion-ios-menu"></i></span>
+                                                </a>
+                                                <a href="product-single.html"
+                                                    class="buy-now d-flex justify-content-center align-items-center mx-1">
+                                                    <span><i class="ion-ios-cart"></i></span>
+                                                </a>
+                                                <a href="product-single.html"
+                                                    class="heart d-flex justify-content-center align-items-center ">
+                                                    <span><i class="ion-ios-heart"></i></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- row end -->
+
+
+                    </div>
+                </div>
+
+
+        <!-- ///////////// sidebar for Categories //////////// -->
+
+                <div class="col-lg-3">
+                    <div class="left_sidebar_area">
+                        <aside class="left_widgets p_filter_widgets">
+                            <div class="l_w_title">
+                                <h3>Browse Categories</h3>
+                            </div>
+                            <div class="widgets_inner">
+                                <ul class="list">
+                                    <li class="active">
+                                        <a href="#">Home</a>
+                                    </li>
+                                    {% for c in categories %}
+                                    <li>
+                                        <a href="/product/{{c.pk}}"> {{c.name}}</a>
+                                    </li>
+                                    {% endfor %}
+                                    <!-- <li>
+                                        <a href="#"> Bags/accessories</a>
+                                    </li> -->
+                                    <!-- <li>
+                                        <a href="#"> Jewellery</a>
+                                    </li> -->
+                                    <!-- <li>
+                                        <a href="#"> Fabrics</a>
+                                    </li> -->
+                                    <!-- <li>
+                                        <a href="#">Hair and beauty</a>
+                                    </li>
+                                    <li>
+                                        <a href="#"> Pets</a>
+                                    </li>
+                                    <li>
+                                        <a href="#"> Shuka</a>
+                                    </li> -->
+                                    <!-- <li>
+                                        <a href="#">Dashiki</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Isidwaba</a>
+                                    </li>
+                                    <li>
+                                        <a href="#"> Isiagu</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Toghu/Atoghu</a>
+                                    </li> -->
+                                </ul>
+                            </div>
+                        </aside>
+
+                        <aside class="left_widgets p_filter_widgets">
+                            <div class="l_w_title">
+                                <h3>Product Brand</h3>
+                            </div>
+                            <div class="widgets_inner">
+                                <ul class="list">
+                                    <li class="active">
+                                        <a href="#">Rental </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Mobile</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Fridge</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Cooler</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </aside>
+
+                        <aside class="left_widgets p_filter_widgets">
+                            <div class="l_w_title">
+                                <h3>Color Filter</h3>
+                            </div>
+                            <div class="widgets_inner">
+                                <ul class="list">
+                                    <li>
+                                        <a href="#">Black</a>
+                                    </li>
+                                    <li class="active">
+                                        <a href="#">Gold</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Spacegrey</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </aside>
+
+                        <aside class="left_widgets p_filter_widgets">
+                            <div class="l_w_title">
+                                <h3>Price Filter</h3>
+                            </div>
+                            <div class="widgets_inner">
+                                <div class="range_item">
+                                    <div id="slider-range"
+                                        class="ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content">
+                                        <div class="ui-slider-range ui-corner-all ui-widget-header"
+                                            style="left: 2%; width: 98%;"></div><span tabindex="0"
+                                            class="ui-slider-handle ui-corner-all ui-state-default"
+                                            style="left: 2%;"></span><span tabindex="0"
+                                            class="ui-slider-handle ui-corner-all ui-state-default"
+                                            style="left: 100%;"></span>
+                                    </div>
+                                    <div class="">
+                                        <label for="amount">Price : </label>
+                                        <input type="text" id="amount" readonly="">
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> <!-- .section -->
+
+
+
+
+
+    <!-- loader -->
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+            <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+            <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+                stroke="#F96D00" />
+        </svg></div>
+
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <script src="js/jquery.waypoints.min.js"></script>
+    <script src="js/jquery.stellar.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/aos.js"></script>
+    <script src="js/jquery.animateNumber.min.js"></script>
+    <script src="js/bootstrap-datepicker.js"></script>
+    <script src="js/scrollax.min.js"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="js/google-map.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            var quantitiy = 0;
+            $('.quantity-right-plus').click(function (e) {
+
+                // Stop acting like a button
+                e.preventDefault();
+                // Get the field name
+                var quantity = parseInt($('#quantity').val());
+
+                // If is not undefined
+
+                $('#quantity').val(quantity + 1);
+
+
+                // Increment
+
+            });
+
+            $('.quantity-left-minus').click(function (e) {
+                // Stop acting like a button
+                e.preventDefault();
+                // Get the field name
+                var quantity = parseInt($('#quantity').val());
+
+                // If is not undefined
+
+                // Increment
+                if (quantity > 0) {
+                    $('#quantity').val(quantity - 1);
+                }
+            });
+
+        });
+    </script>
+
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends 'websiteuser/base.html'%}
+{% load static %}
+{% block content%}
+<div class="container">
+
+  <form action="" method="post" id="payment-form">
+    {% csrf_token %}
+    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="{{ publishable_key }}"
+    data-amount="{{ total_price|floatformat:"2"|cut:"."|join:"" }}" data-name="Your Company Name"
+    data-description="Payment for services" data-image="https://example.com/your-logo.png" data-locale="auto"
+    data-currency="INR">
+  </script>
+      <!-- <input type="hidden" name="total_price" value="{{ total_price }}">
+      <input type="hidden" name="product_name" value="{{ product_name }}"> -->
+  </form>
+  <script src="https://js.stripe.com/v3/"></script>
+</div>
+
+<!-- <div class="container">
+  <form action="" method="post" id="payment-form">
+    {% csrf_token %}
+    <div id="card-element">
+      
+      <h3>Cart Totals</h3>
+      <p class="d-flex">
+        <span>data-amount</span>
+        <span>1000</span>
+      </p>
+      <p class="d-flex">
+        <span>data-name</span>
+        <span>Your Company Name</span>
+      </p>
+      <p class="d-flex">
+        <span>data-description</span>
+        <span>Payment for services</span>
+      </p>
+      <hr>
+      <p class="d-flex total-price">
+        <img class="img" src="https://example.com/your-logo.png">
+      </p>
+      <p class="d-flex">
+        <span>data-locale</span>
+        <span>auto</span>
+      </p>
+      <p class="d-flex">
+        <span>data-currency</span>
+        <span>INR</span>
+      </p>
+    
+    </div>
+
+    Used to display form errors.
+    <div id="card-errors" role="alert">h1</div>
+
+    <button id="submit">Submit Payment</button>
+  </form>
+
+  <script src="https://js.stripe.com/v3/"></script>
+  <script>
+    var stripe = Stripe('{{ publishable_key }}');
+    var elements = stripe.elements();
+
+    // Create an instance of the card Element.
+    var card = elements.create('card');
+
+    // Add an instance of the card Element into the `card-element` div.
+    card.mount('#card-element');
+
+    // Handle form submission.
+    var form = document.getElementById('payment-form');
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      stripe.createPaymentMethod({
+        type: 'card',
+        card: card,
+      }).then(function (result) {
+        if (result.error) {
+          // Show error in payment form
+          var errorElement = document.getElementById('card-errors');
+          errorElement.textContent = result.error.message;
+        } else {
+          // Token is created successfully, add it to the form and submit
+          var paymentMethodInput = document.createElement('input');
+          paymentMethodInput.setAttribute('type', 'hidden');
+          paymentMethodInput.setAttribute('name', 'payment_method_id');
+          paymentMethodInput.setAttribute('value', result.paymentMethod.id);
+          form.appendChild(paymentMethodInput);
+
+          // Submit the form
+          form.submit();
+        }
+      });
+    });
+  </script>
+</div> -->
+{% endblock %}

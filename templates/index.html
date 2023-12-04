@@ -1,0 +1,147 @@
+{% extends 'base.html'%}
+{% load widget_tweaks %}
+{% load static %}
+{% block content%}
+
+       
+
+      
+
+        <!-- Page Wrapper -->
+        <div class="page-wrapper">
+
+            <div class="content container-fluid">
+
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h3 class="page-title">Welcome To Jongolo Admin!</h3>
+                        </div>
+                        <div class="col-md-4">
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+                                <li class="breadcrumb-item active">Dashboard</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+                <div class="row">
+                    <div class="col-xl-3 col-sm-6 col-12">
+                        <div class="card">
+                            <div class="card-body bg-gradient" style="
+    background: linear-gradient(91deg, #000000bd, #00000091), url(static/admin/img/dash/dash-1.jpg);">
+                                <div class="dash-widget-header">
+                                    <span class="dash-widget-icon bg-primary">
+                                        <i class="fe fe-users"></i>
+                                    </span>
+
+                                </div>
+                                <div class="dash-widget-info">
+                                    <h3>Customers</h3>
+                                    <h6 class="text-muted text-white">168 </h6>
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar w-50"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 col-12">
+                        <div class="card">
+                            <div class="card-body bg-gradient" style="
+    background: linear-gradient(91deg, #000000bd, #00000091), url(static/admin/img/dash/dash-1.jpg);">
+                                <div class="dash-widget-header">
+                                    <span class="dash-widget-icon bg-success">
+                                        <i class="fe fe-money"></i>
+                                    </span>
+
+                                </div>
+                                <div class="dash-widget-info">
+                                    <h3>Products </h3>
+                                    <h6 class="text-muted text-white">21587</h6>
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar  w-50"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 col-12">
+                        <div class="card">
+                            <div class="card-body bg-gradient" style="
+    background: linear-gradient(91deg, #000000bd, #00000091), url(static/admin/img/dash/dash-1.jpg);">
+                                <div class="dash-widget-header">
+                                    <span class="dash-widget-icon bg-danger">
+                                        <i class="fe fe-credit-card"></i>
+                                    </span>
+
+                                </div>
+                                <div class="dash-widget-info">
+                                    <h3>Sales</h3>
+                                    <h6 class="text-muted text-white">$56485</h6>
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar w-50"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 col-12">
+                        <div class="card">
+                            <div class="card-body bg-gradient" style="
+    background: linear-gradient(91deg, #000000bd, #00000091), url(static/admin/img/dash/dash-1.jpg);">
+                                <div class="dash-widget-header">
+                                    <span class="dash-widget-icon bg-warning">
+                                        <i class="fe fe-folder"></i>
+                                    </span>
+
+                                </div>
+                                <div class="dash-widget-info">
+                                    <h3>Revenue </h3>
+                                    <h6 class="text-muted text-white">$62523</h6>
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar  w-50"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 col-lg-6">
+
+                        <!-- Sales Chart -->
+                        <div class="card card-chart bg-border">
+                            <div class="card-header">
+                                <h4 class="card-title">Sales Overview</h4>
+                            </div>
+                            <div class="card-body">
+                                <div id="morrisArea"></div>
+                            </div>
+                        </div>
+                        <!-- /Sales Chart -->
+
+                    </div>
+                    <div class="col-md-12 col-lg-6">
+
+                        <!-- Invoice Chart -->
+                        <div class="card card-chart bg-border">
+                            <div class="card-header">
+                                <h4 class="card-title">Order Status</h4>
+                            </div>
+                            <div class="card-body">
+                                <div id="morrisLine"></div>
+                            </div>
+                        </div>
+                        <!-- /Invoice Chart -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Wrapper -->
+        {% endblock %}
