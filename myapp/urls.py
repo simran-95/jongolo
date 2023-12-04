@@ -7,9 +7,12 @@ from django.conf.urls.static import static
 
 urlpatterns=[
     path('login', views.login,name='login'),
+    path('admin-login', views.superadmin_login,name='admin-login'),
     path('',views.login1,name='login1'),
     path('doLogin',views.doLogin,name='doLogin'),
+    path('dologout',views.logout_view,name='logout'),
     path('base',views.base,name='base'),
+   
     path('dashboard',views.dashboard,name='dashboard'),
     path('dashboard-add',views.dashboard1,name='dashboard-add'),
     # path('dashboard-web',website_views.dashboard2,name='dashboard-web'),
@@ -45,16 +48,18 @@ urlpatterns=[
     path('product/<int:categoryid>',website_views.product_cat),
     path('details/<int:id>',website_views.product_single,name='details'),
     path('dashboard-web',website_views.dashboard2,name='dashboard-web'),
+    path('header',website_views.header,name='header'),
     # path('cart/<int:product_id>/', website_views.cart, name='view_cart'),
     # path('view_cart/', website_views.view_cart, name='view_cart'),
     path('add_to_cart/<int:product_id>/', website_views.add_to_cart, name='add_to_cart'),
     path('cart_view/', website_views.cart_view, name='cart_view'),
     path('remove_from_cart/<int:item_id>/', website_views.remove_from_cart, name='remove_from_cart'),
     path('checkout', website_views.checkout, name='checkout'),
+    path('order',website_views.Order_view,name='order'),
     # path('payment_form', website_views.HomePageView.as_view(), name='payment_form'),
     #path('payment_form/', website_views.checkout, name='payment_form'),
     path('payment_form/<int:order_id>/<str:total_price>/', website_views.PaymentFormView.as_view(), name='payment_form'),
-
+    path('earning',vender_views.earning,name='earning'),
     # path('payment/', website_views.initiate_payment, name='payment'),
     
 ]

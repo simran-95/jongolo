@@ -3,6 +3,8 @@ from .forms import *
 from .models import *
 from django.contrib.auth import login as dj_login, logout, authenticate
 from django.contrib import messages
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 # from django.contrib.auth import update_session_auth_hash
 
 # Create your views here.
@@ -15,6 +17,19 @@ def login1(request):
 
 # def product_single(request):
 #     return render(request, 'websiteuser/product-single.html')
+def superadmin_login(request):
+    if request.method == 'POST':
+        user = authenticate(request,
+            email=request.POST.get('email'),
+            password=request.POST.get('password'),
+        )
+        if user and user.user_type == User.SUPERUSER:
+            dj_login(request, user)
+            return redirect('dashboard')
+        else:
+            messages.error(request, 'Invalid credentials')
+
+    return render(request, 'admin-login.html')
 
 
 def doLogin(request):
@@ -27,11 +42,11 @@ def doLogin(request):
             dj_login(request,user) 
             user_type=user.user_type
        
-            if user_type==User.SUPERUSER:
+            # if user_type==User.SUPERUSER:
                
-               return redirect('dashboard')
+            #    return redirect('dashboard')
            
-            elif user_type==User.VENDER:
+            if user_type==User.VENDER:
                
                 return redirect('dashboard-add')
             elif user_type==User.ADDUSER:
@@ -46,7 +61,7 @@ def doLogin(request):
     return redirect('login1')
 
 
-
+@login_required(login_url='/login')
 def dashboard(request):
     return render(request, 'index.html')
 
@@ -60,9 +75,9 @@ def base(request):
     return render(request, 'websiteuser/base.html')
 
 
-def logout(request):
+def logout_view(request):
     logout(request)
-    return redirect('login')
+    return redirect('/')
 
 
 def add_user(request):

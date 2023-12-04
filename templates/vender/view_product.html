@@ -82,7 +82,7 @@
 								</div>
 							</div>
 							<a class="dropdown-item" href="profile.html">My Profile</a>
-							<a class="dropdown-item" href="login.html">Logout</a>
+							<a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
 						</div>
 					</li>
 					<!-- /User Menu -->
@@ -102,7 +102,7 @@
 								<span>Main</span>
 							</li>
 							<li > 
-								<a href="index.html"><i class="fe fe-home"></i> <span>Dashboard</span></a>
+								<a href="/dashboard-add"><i class="fe fe-home"></i> <span>Dashboard</span></a>
 							</li>
 							<!--<li class="submenu">-->
 							<!--	<a href="#" class=""><i class="fa fa-users "></i> <span> User </span> <span class="menu-arrow"></span></a>-->
@@ -126,7 +126,7 @@
 							<!--	</ul>-->
 							<!--</li>-->
 							<li> 
-								<a href="Earning.html"><i class="fa fa-money"></i> <span>Earning</span></a>
+								<a href="/earning"><i class="fa fa-money"></i> <span>Earning</span></a>
 							</li>	
 								<li> 
 								<a href="View_Order.html"><i class="fa fa-money"></i> <span>View Order</span></a>

@@ -8,6 +8,7 @@ from django.http import HttpRequest
 from django.conf import settings
 import stripe
 from django.views import View
+from .models import Order as OrderModel
 
 
 stripe.api_key = 'sk_test_51OITjfSGqeyhk1pWAkeGPNjEevcHkTLHgSa56PfMqWH1ik4v6UbVv82jd4HYyXSNjGVlwl6vvwPfI8skyrpNdmke00zEEvqqu1'
@@ -19,15 +20,28 @@ def dashboard2(request):
     cat=Product.objects.all()[:12]
     # cats=Category.objects.get(pk=categoryid)
     # product=Blog.objects.filter(category=cats)
-    return render(request, 'websiteuser/dashboard-web.html',{'cat':cat})
+    cart_items = CartItem.objects.filter(user=request.user)
+    total_price = sum(item.total_price() for item in cart_items)
+    cart_items = CartItem.objects.filter(user=request.user)
+    cart_count = cart_items.count()
+   
+    return render(request, 'websiteuser/dashboard-web.html',{'cat':cat, 'cart_count':cart_count})
 
 
+def header(request):
+    cart_items = CartItem.objects.filter(user=request.user)
+    total_price = sum(item.total_price() for item in cart_items)
+    cart_items = CartItem.objects.filter(user=request.user)
+    cart_count = cart_items.count()
+    print(cart_count)
+    return render(request, 'websiteuser/header.html',{'cart_count':cart_count})
     
 def base(request):
     cart_items = CartItem.objects.filter(user=request.user)
     total_price = sum(item.total_price() for item in cart_items)
     cart_items = CartItem.objects.filter(user=request.user)
     cart_count = cart_items.count()
+    print(cart_count)
     return render(request, 'websiteuser/base.html',{'cart_count':cart_count})
 
 
@@ -35,8 +49,12 @@ def base(request):
 def product(request):
     product=Product.objects.all()
     categories=Category.objects.all()
+    cart_items = CartItem.objects.filter(user=request.user)
+    total_price = sum(item.total_price() for item in cart_items)
+    cart_items = CartItem.objects.filter(user=request.user)
+    cart_count = cart_items.count()
 
-    return render(request, 'websiteuser/product.html',{'categories':categories,'product':product})
+    return render(request, 'websiteuser/product.html',{'categories':categories,'product':product,'cart_count':cart_count})
 
 
 def product_cat(request,categoryid):
@@ -45,22 +63,47 @@ def product_cat(request,categoryid):
     cats=Category.objects.get(pk=categoryid)
 
     product=Product.objects.filter(category=cats)
-    context={'product':product,'categories':categories}
+    cart_items = CartItem.objects.filter(user=request.user)
+    total_price = sum(item.total_price() for item in cart_items)
+    cart_items = CartItem.objects.filter(user=request.user)
+    cart_count = cart_items.count()
+
+    context={'product':product,'categories':categories,'cart_count':cart_count}
     return render(request, 'websiteuser/product.html',context)
 
 
 def product_single(request,id):
     product=Product.objects.filter(id=id)
     emp=Product.objects.all()
-    return render(request, 'websiteuser/product-single.html', {'product':product,'emp':emp})
+    cart_items = CartItem.objects.filter(user=request.user)
+    total_price = sum(item.total_price() for item in cart_items)
+    cart_items = CartItem.objects.filter(user=request.user)
+    cart_count = cart_items.count()
+    return render(request, 'websiteuser/product-single.html', {'product':product,'emp':emp,'cart_count':cart_count})
 
 
+# ///////// Orders ///////////
+from django.apps import apps
 
+def calculate_total_quantity(order):
+    order_items = OrderItem.objects.filter(order=order)
+    total_quantity = sum(item.quantity for item in order_items)
+    return total_quantity
+
+def calculate_total_price(order):
+    order_items = OrderItem.objects.filter(order=order)
+    total_price = sum(item.unit_price * item.quantity for item in order_items)
+    return total_price
+
+def Order_view(request):
+    user_orders = Order.objects.filter(user=request.user).order_by('-created_at')
+    print(user_orders)  # Add this line to print user_orders
+    return render(request, 'websiteuser/order.html', {'user_orders': user_orders})
 
 # ///////// Add To Cart ///////////
 
 
-@login_required
+@login_required (login_url='/')
 def add_to_cart(request, product_id):
     product = Product.objects.get(pk=product_id)
     user = request.user
@@ -75,7 +118,8 @@ def add_to_cart(request, product_id):
 
     return redirect('cart_view')
 
-@login_required
+
+@login_required (login_url='/')
 def cart_view(request):
     cart_items = CartItem.objects.filter(user=request.user)
     total_price = sum(item.total_price() for item in cart_items)
@@ -99,7 +143,7 @@ def cart_view(request):
 
 
 
-@login_required
+@login_required (login_url='/')
 def remove_from_cart(request, item_id):
     cart_item = get_object_or_404(CartItem, id=item_id, user=request.user)
     cart_item.delete()
@@ -109,6 +153,7 @@ def remove_from_cart(request, item_id):
 # def checkout(request):
 #     return render(request, 'websiteuser/checkout.html')
 
+@login_required (login_url='/')
 def checkout(request: HttpRequest):
     print(request.user)
     

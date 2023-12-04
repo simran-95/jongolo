@@ -11,6 +11,7 @@ from django.contrib.auth.models import (
     )
 from django.contrib.auth.base_user import BaseUserManager
 
+
 # Create your models here.
 class UserManager(BaseUserManager):
    
@@ -232,6 +233,7 @@ class CartItem(models.Model):
     def total_price(self):
         return self.quantity * self.product.price
     
+  
     def image_url(self):
         return self.product.image.url
 

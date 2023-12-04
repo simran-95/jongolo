@@ -1,0 +1,73 @@
+{% extends 'websiteuser/base.html'%}
+{% load widget_tweaks %}
+{% load static %}
+{% block content %}
+
+
+<div class="hero-wrap hero-bread" style="background-image: url(/static/images/banner/footer-bg.png);">
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Cart</span></p>
+                <h1 class="mb-0 bread">My Cart</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="ftco-section ftco-cart">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 ftco-animate">
+                <div class="cart-list">
+                    <table class="table">
+                        <thead class="thead-primary">
+                            <tr class="text-center">
+                                <th>&nbsp;</th>
+                                <th>Product Image</th>
+                                <th>Product name</th>
+                                <th>Address</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in user_orders %}
+                                {% for item in order.orderitem_set.all %}
+                                    <tr class="text-center">
+                                        <td class="product-remove">
+                                            <a href="{% url 'remove_from_cart' item.id %}">
+                                                <span class="ion-ios-close"></span>
+                                            </a>
+                                        </td>
+                                        <td class="image-prod">
+                                            <img class="img" src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                                        </td>
+                                        <td class="product-name">
+                                            <h3>{{ item.product.name }}</h3>
+                                        </td>
+                                        <!-- <td class="product-name">
+                                            <h3>{{ item.created_at }}</h3>
+                                        </td> -->
+                                        <td class="shipping-address">
+                                            {{ order.shipping_address.street_address }}, {{ order.shipping_address.city }}, {{ order.shipping_address.country }}
+                                        </td>
+                                        <td class="price">${{ item.unit_price }}</td>
+                                       
+                                        <td class="quantity">
+                                            {{ item.quantity }}
+                                        </td>
+                                        <td class="total">${{ item.unit_price|floatformat:2 }} * {{ item.quantity }}</td>
+
+                                    </tr>
+                                {% endfor %}
+                            {% endfor %}
+                        </tbody>
+                        
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

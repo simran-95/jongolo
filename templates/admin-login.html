@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,10 +6,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <title>jongolo Login home page</title>
-    <link rel="shortcut icon" type="image/x-icon" href="static/img/favicon.png">
-    <link rel="stylesheet" href="static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="static/css/font-awesome.min.css">
-    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'admin/img/favicon.png' %}">
+    <link rel="stylesheet" href="{% static 'admin/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'admin/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'admin/css/style.css' %}">
     <style>
         .login-icons {
             position: absolute;
@@ -34,30 +35,31 @@
         <div class="login-wrapper" style="background: black;">
             <div class="container">
                 <div class="loginbox">
-                    <div class="login-left" style="background: url(static/img/banners/banners-2.jpg);">
+                    <div class="login-left" style="background: url(/static/admin/img/banners/banners-2.jpg);">
 
                     </div>
                     <div class="login-right">
 
                         <div class="login-right-wrap">
                             <div class="logo-login">
-                                <img class="img-fluid" src="static/img/Logo-black.png" alt="Logo">
+                                <img class="img-fluid" src="{% static 'admin/img/Logo-black.png' %}" alt="Logo">
                             </div>
                             <h1> Welcome To Jongolo </h1>
                             <p class="account-subtitle">Access to our Login</p>
 
                             <!-- Form -->
-                            <form action="index.html">
+                            <form action="{% url 'admin-login' %}" method="post">
+                                {% csrf_token %}
                                 <div class="form-group">
                                     <label>Email</label>
                                     <i class="fa fa-envelope login-icons" aria-hidden="true"></i>
-                                    <input class="form-control" type="text" placeholder="Email">
+                                    <input class="form-control" name="email" type="text" placeholder="Email">
                                 </div>
                                 <div class="form-group">
 
                                     <label>Password</label>
                                     <i class="fa fa-key login-icons" aria-hidden="true" style="bottom: 32%;"></i>
-                                    <input class="form-control" type="text" placeholder="Password">
+                                    <input class="form-control" name="password" type="text" placeholder="Password">
                                 </div>
                                 <div class="form-group">
                                     <button class="btn btn-primary btn-block" type="submit"
@@ -73,9 +75,9 @@
     </div>
     <!-- /Main Wrapper -->
 
-    <script src="static/js/jquery-3.6.0.min.js"></script>
-    <script src="static/js/bootstrap.bundle.min.js"></script>
-    <script src="static/js/script.js"></script>
+    <script src="{% static 'admin/js/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'admin/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'admin/js/script.js' %}"></script>
 
 </body>
 
