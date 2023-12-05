@@ -10,7 +10,10 @@ def add_product(request):
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            # Set the user field before saving
+            product = form.save(commit=False)
+            product.user = request.user  # Set the user to the logged-in user
+            product.save()
             return redirect('view_product')
     else:
         form = ProductForm()
@@ -50,5 +53,25 @@ def earning(request):
 
 
 def order_status(request):
-    user_orders = Order.objects.filter(user=request.user).order_by('-created_at')
-    return render(request, 'vender/order.html',{'user_orders':user_orders})
+    user_orders = Order.objects.filter(user=request.user)
+    return render(request, 'vender/order_vender.html',{'user_orders':user_orders})
+
+
+
+# def project_allow(request, id):
+#     developer=Team.objects.get(id=id)
+#     developer.status = 0
+#     developer.save()
+#     return redirect('list3')
+
+# def project_completed(request, id):
+#     developer=Team.objects.get(id=id)
+#     developer.status = 1
+#     developer.save()
+#     return redirect('list3')
+
+# def project_pending(request, id):
+#     developer=Team.objects.get(id=id)
+#     developer.status = 2
+#     developer.save()
+#     return redirect('list3')

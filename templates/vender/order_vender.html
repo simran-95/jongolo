@@ -197,7 +197,7 @@
                                             </thead>
                                             <tbody>
                                                 {% for order in user_orders %}
-                                                {% for item in order.orderitem_set.all %}
+                                                
                                                 <tr class="text-center">
 
                                                     <td class="image-prod">
@@ -209,8 +209,8 @@
                                                     </td>
                                                     <td class="placed-date">{{ order.created_at }}</td>
                                                     <!-- <td class="shipping-address">
-                                            {{ order.shipping_address.street_address }}, {{ order.shipping_address.city }}, {{ order.shipping_address.country }}
-                                        </td> -->
+                                                        {{ order.shipping_address.street_address }}, {{ order.shipping_address.city }}, {{ order.shipping_address.country }}
+                                                    </td> -->
                                                     <td class="price">${{ item.unit_price }}</td>
 
                                                     <td class="quantity">
@@ -235,38 +235,38 @@
                                                             <button class="dropdown-toggle" type="button"
                                                                 data-toggle="dropdown"
                                                                 style="border: none;background: #fff0;"><img
-                                                                    src="{% static 'img/8279651.png'%}"
+                                                                    src="{% static 'settings.png'%}"
                                                                     style="width:30px;height:30px;">
                                                             </button>
                                                             <ul class="dropdown-menu">
                                                                 <li><a href="confirmed/{{order.id}}"
                                                                         data-toggle="tooltip" title=""
                                                                         data-original-title="allowt"><img
-                                                                            src="{% static 'img/Delete.png' %}"
+                                                                            src="{% static 'Delete.png' %}"
                                                                             style="width:30px;height:30px;"></a></li>
 
 
                                                                 <li><a href="placed/{{order.id}}" data-toggle="tooltip"
                                                                         title="" data-original-title="complete"><img
-                                                                            src="{% static 'img/active.png' %}"
+                                                                            src="{% static 'active.png' %}"
                                                                             style="width:30px;height:30px;"></a></li>
 
 
                                                                 <li><a href="completed/{{order.id}}"
                                                                         data-toggle="tooltip" title=""
                                                                         data-original-title="pending"><img
-                                                                            src="{% static 'img/pending.png' %}"
+                                                                            src="{% static 'pending.png' %}"
                                                                             style="width:30px;height:30px;"></a></li>
 
                                                                 <li><a href="cancel/{{order.id}}" data-toggle="tooltip"
                                                                         title="" data-original-title="pending"><img
-                                                                            src="{% static 'img/pending.png' %}"
+                                                                            src="{% static 'pending.png' %}"
                                                                             style="width:30px;height:30px;"></a></li>
                                                             </ul>
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                {% endfor %}
+                                                
                                                 {% endfor %}
                                             </tbody>
 
