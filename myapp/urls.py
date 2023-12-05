@@ -43,7 +43,10 @@ urlpatterns=[
     path('delete_product/<int:id>/',vender_views.delete_product, name='delete_product'),
     path('update_product/<int:pk>',vender_views.update_product,name='update_product'),
     # path('/register',views.add_vendor,name='product'),
+    path('earning',vender_views.earning,name='earning'),
+    path('order1',vender_views.order_status,name='order1'),
 
+    #//////// for Website and user /////////
     path('product',website_views.product,name='product'),
     path('product/<int:categoryid>',website_views.product_cat),
     path('details/<int:id>',website_views.product_single,name='details'),
@@ -59,7 +62,10 @@ urlpatterns=[
     # path('payment_form', website_views.HomePageView.as_view(), name='payment_form'),
     #path('payment_form/', website_views.checkout, name='payment_form'),
     path('payment_form/<int:order_id>/<str:total_price>/', website_views.PaymentFormView.as_view(), name='payment_form'),
-    path('earning',vender_views.earning,name='earning'),
+    path('cancel_order/<int:order_id>/', website_views.cancel_order, name='cancel_order'),
+    
+    
+   
     # path('payment/', website_views.initiate_payment, name='payment'),
     
 ]

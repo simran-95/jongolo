@@ -45,6 +45,10 @@ def update_product(request,pk):
     return render(request,'vender/update_product.html',context)
 
 
-
 def earning(request):
     return render(request, 'vender/earning.html')
+
+
+def order_status(request):
+    user_orders = Order.objects.filter(user=request.user).order_by('-created_at')
+    return render(request, 'vender/order.html',{'user_orders':user_orders})

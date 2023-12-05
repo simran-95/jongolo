@@ -1,6 +1,7 @@
 
 
 {% load static %}
+
 <body class="goto-here">
 	<div class="py-2 top-header">
 		<div class="container">
@@ -40,12 +41,14 @@
 					<li class="nav-item" id="about"><a href="about.html" class="nav-link">About</a></li>
 					<li class="nav-item" id="blog"><a href="blog.html" class="nav-link">Blog</a></li>
 					<li class="nav-item" id="contact"><a href="contact.html" class="nav-link">Contact</a></li>
+										
 					<li class="nav-item cta cta-colored"><a href="/cart_view" class="nav-link">
-                        <span class="icon-shopping_cart"></span> [{{ cart_count }}]</a></li>
-					
-					
-		
+						<span class="icon-shopping_cart"></span> [{{ cart_count }}]</a>
+					</li>
+				
 					{% if request.user.ADDUSER %}
+						
+						
 						<li class="nav-item">
 							<a class="nav-link" href="{% url 'order' %}">Orders<span class="sr-only">(current)</span></a>
 						</li>
@@ -53,6 +56,8 @@
 							<a class="nav-link" href="{% url 'logout' %}">Logout<span class="sr-only">(current)</span></a>
 						</li>
 					{% else %}
+						
+						
 						<li class="nav-item">
 							<a class="nav-link" href="/">Login<span class="sr-only">(current)</span></a>
 						</li>

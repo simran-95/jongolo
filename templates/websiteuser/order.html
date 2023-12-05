@@ -3,13 +3,26 @@
 {% load static %}
 {% block content %}
 
+<style>
+    .dialog {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        max-width: 400px;
+        animation: slideIn 0.3s ease-in-out;
+        background-color: #0d1a27;
+    }
+</style>
 
 <div class="hero-wrap hero-bread" style="background-image: url(/static/images/banner/footer-bg.png);">
     <div class="container">
         <div class="row no-gutters slider-text align-items-center justify-content-center">
             <div class="col-md-9 ftco-animate text-center">
-                <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Cart</span></p>
-                <h1 class="mb-0 bread">My Cart</h1>
+                <p class="breadcrumbs"><span class="mr-2"><a href="/dashboard-web">Home</a></span> <span>Order</span>
+                </p>
+                <h1 class="mb-0 bread">My Orders</h1>
             </div>
         </div>
     </div>
@@ -22,52 +35,261 @@
                     <table class="table">
                         <thead class="thead-primary">
                             <tr class="text-center">
-                                <th>&nbsp;</th>
+                                <!-- <th>&nbsp;</th> -->
                                 <th>Product Image</th>
                                 <th>Product name</th>
-                                <th>Address</th>
+                                <th>Order Date</th>
                                 <th>Price</th>
                                 <th>Quantity</th>
                                 <th>Total</th>
+                                <th>Status</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for order in user_orders %}
-                                {% for item in order.orderitem_set.all %}
-                                    <tr class="text-center">
-                                        <td class="product-remove">
-                                            <a href="{% url 'remove_from_cart' item.id %}">
-                                                <span class="ion-ios-close"></span>
-                                            </a>
-                                        </td>
-                                        <td class="image-prod">
-                                            <img class="img" src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
-                                        </td>
-                                        <td class="product-name">
-                                            <h3>{{ item.product.name }}</h3>
-                                        </td>
-                                        <!-- <td class="product-name">
-                                            <h3>{{ item.created_at }}</h3>
-                                        </td> -->
-                                        <td class="shipping-address">
-                                            {{ order.shipping_address.street_address }}, {{ order.shipping_address.city }}, {{ order.shipping_address.country }}
-                                        </td>
-                                        <td class="price">${{ item.unit_price }}</td>
-                                       
-                                        <td class="quantity">
-                                            {{ item.quantity }}
-                                        </td>
-                                        <td class="total">${{ item.unit_price|floatformat:2 }} * {{ item.quantity }}</td>
+                            {% for item in order.orderitem_set.all %}
+                            <tr class="text-center">
 
-                                    </tr>
-                                {% endfor %}
+                                <td class="image-prod">
+                                    <img class="img" src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                                </td>
+                                <td class="product-name">
+                                    <h3>{{ item.product.name }}</h3>
+                                </td>
+                                <td class="placed-date">{{ order.created_at }}</td>
+                                <!-- <td class="shipping-address">
+                                            {{ order.shipping_address.street_address }}, {{ order.shipping_address.city }}, {{ order.shipping_address.country }}
+                                        </td> -->
+                                <td class="price">${{ item.unit_price }}</td>
+
+                                <td class="quantity">
+                                    {{ item.quantity }}
+                                </td>
+
+                                <td class="total">${{ item.unit_price|floatformat:2 }} * {{ item.quantity }}</td>
+
+                                <td>
+                                    {% if item.status %}
+                                <td><small class="badge badge-success">Completed</small></td>
+                                {% else %}
+                                <td><small class="badge badge-warning">Pending</small></td>
+                                {% endif %}
+                                </td>
+
+
+
+                                <td>
+                                    <!-- <p>Status: {{ order.status }}</p> -->
+
+                                    {% if order.status == 'pending' or order.status == 'confirmed' %}
+                                    <!-- Display cancel option and form here -->
+                                    <button type="button" class="btn btn-danger" data-toggle="modal"
+                                        onclick="showConfirmationDialog('{{order.id}}')">
+                                        Cancel Order
+                                    </button>
+
+
+                                    <div class="overlay" id="confirmationOverlay">
+                                        <div class="dialog" id="confirmationDialog">
+                                            <p>Are you sure you want to cancel this product? if Yes Select Reason </p>
+
+                                            <form method="post" id="cancellationForm"
+                                                action="{% url 'cancel_order' order.id %}">
+                                                {% csrf_token %}
+
+                                                <ul>
+                                                    <li class="cancellation-reasons"><input type="radio" name="reason"
+                                                            value="Booking by mistake" required> Booking by mistake</li>
+                                                    <li class="cancellation-reasons"><input type="radio" name="reason"
+                                                            value="Wrong product" required> Wrong product</li>
+                                                    <li class="cancellation-reasons"><input type="radio" name="reason"
+                                                            value="Owner misbehave" required> Owner misbehave</li>
+                                                    <li class="cancellation-reasons"><input type="radio" name="reason"
+                                                            value="Changed plan" required> Changed plan</li>
+                                                    <li class="cancellation-reasons"><input type="radio" name="reason"
+                                                            value="Other" required> Other</li>
+                                                </ul>
+
+                                                <!-- <div class="form-group">
+                                                    <div class="col-md-12">
+                                                        <div class="radio">
+                                                            <label><input type="radio" name="reason" class="mr-2"> Check
+                                                                Payment</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-md-12">
+                                                        <div class="radio">
+                                                            <label><input type="radio" name="reason" class="mr-2"> Paypal</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-md-12">
+                                                        <div class="checkbox">
+                                                            <label><input type="checkbox" name="reason"  value="Other"  class="mr-2"> I have read and accept
+                                                                the terms and conditions</label>
+                                                        </div>
+                                                    </div>
+                                                </div> -->
+
+                                                <input class="primary" type="submit" value="Submit">
+                                                <button class="primary"
+                                                    onclick="closeConfirmationDialog()">close</button>
+                                                <!-- <button class="primary" onclick="showConfirmationDialog()">Ok</button> -->
+                                            </form>
+
+
+
+
+                                        </div>
+                                    </div>
+                                    {% else %}
+                                    <!-- Display a message or something else for orders that can't be canceled -->
+                                    <p>This order cannot be canceled.</p>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
                             {% endfor %}
                         </tbody>
-                        
+
                     </table>
                 </div>
             </div>
         </div>
     </div>
 </section>
+<!-- 
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script >$(document).ready(function () {
+    const confirmationOverlay = document.getElementById("confirmationOverlay");
+    const confirmationDialog = document.getElementById("confirmationDialog");
+    confirmationOverlay.style.display = "none";
+
+    let finalOrderID = '';
+
+    function showConfirmationDialog(orderId) {
+        confirmationOverlay.style.display = "flex";
+        finalOrderID = orderId;
+    }
+
+    function closeConfirmationDialog() {
+        confirmationOverlay.style.display = "none";
+    }
+
+    function submitCancellationForm() {
+        const selectedReason = $("input[name='reason']:checked").val();
+
+        $.ajax({
+            url: `/cancel_order/${finalOrderID}/`,
+            method: 'POST',
+            data: { cancel_reason: selectedReason },
+            success: function (data) {
+                if (data.success) {
+                    alert(data.message);
+                    location.reload();
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function () {
+                alert('An error occurred.');
+            }
+        });
+
+        closeConfirmationDialog();
+    }
+
+    // Attach the event handler when the document is ready
+    $("#cancellationForm").submit(function (event) {
+        event.preventDefault();
+    });
+
+    // Attach the event handler dynamically after the form is inserted into the DOM
+    $("#confirmationDialog").on("submit", "#cancellationForm", function (event) {
+        submitCancellationForm();
+    });
+});</script> -->
+
+<script>
+    const confirmationOverlay = document.getElementById("confirmationOverlay");
+
+    const confirmationDialog = document.getElementById("confirmationDialog");
+    confirmationOverlay.style.display = "none";
+
+    finalOrderID = ''
+
+
+    function showConfirmationDialog(orderId) {
+
+        confirmationOverlay.style.display = "flex";
+        finalOrderID = orderId
+
+    }
+
+    function closeConfirmationDialog(orderId) {
+        confirmationOverlay.style.display = "none";
+    }
+
+
+
+    $("#cancellationForm").submit(function (event) {
+        event.preventDefault(); // Prevent the form from submitting normally
+        const selectedReason = $("input[name='reason']:checked").val();
+
+        // Send the orderId and selectedReason to the server using AJAX
+        $.ajax({
+            url: `/cancel_order/${orderId}/`,
+            method: 'POST', // Use the same URL as the current page
+            data: { cancel_reason: reason },
+            success: function (data) {
+                if (data.success) {
+                    alert(data.message);
+                    location.reload();
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function () {
+                alert('An error occurred.');
+            }
+        });
+
+        confirmationOverlay.style.display = "none";
+    });
+
+
+
+
+    function showCancellationDialog1(orderId) {
+
+        // Prevent the default behavior of the anchor element
+        event.preventDefault();
+
+        // Send the orderId and reason to the server using AJAX
+        $.ajax({
+            type: "POST",
+            url: "order_history.php", // Use the same URL as the current page
+            data: {
+                orderId: orderId,
+                reason: reason
+            },
+            success: function (response) {
+                $("#successMessage").removeClass("d-none");
+                $("#errorMessage").addClass("d-none");
+                location.reload();
+            },
+            error: function (xhr, status, error) {
+                $("#errorMessage").removeClass("d-none");
+                $("#successMessage").addClass("d-none");
+            }
+        });
+
+
+    }
+</script>
+
 {% endblock %}

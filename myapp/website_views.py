@@ -17,15 +17,19 @@ STRIPE_PUBLC_KEY = settings.STRIPE_PUBLISHABLE_KEY,
 
 def dashboard2(request):
     print(request.user)
-    cat=Product.objects.all()[:12]
-    # cats=Category.objects.get(pk=categoryid)
-    # product=Blog.objects.filter(category=cats)
-    cart_items = CartItem.objects.filter(user=request.user)
-    total_price = sum(item.total_price() for item in cart_items)
-    cart_items = CartItem.objects.filter(user=request.user)
-    cart_count = cart_items.count()
-   
-    return render(request, 'websiteuser/dashboard-web.html',{'cat':cat, 'cart_count':cart_count})
+    cat = Product.objects.all()[:12]
+
+    if request.user.is_authenticated:
+        # If the user is authenticated, fetch the cart information
+        cart_items = CartItem.objects.filter(user=request.user)
+        total_price = sum(item.total_price() for item in cart_items)
+        cart_count = cart_items.count()
+    else:
+        # If the user is not authenticated, set default values for cart information
+        total_price = 0
+        cart_count = 0
+
+    return render(request, 'websiteuser/dashboard-web.html', {'cat': cat, 'total_price': total_price, 'cart_count': cart_count})
 
 
 def header(request):
@@ -37,23 +41,27 @@ def header(request):
     return render(request, 'websiteuser/header.html',{'cart_count':cart_count})
     
 def base(request):
-    cart_items = CartItem.objects.filter(user=request.user)
-    total_price = sum(item.total_price() for item in cart_items)
-    cart_items = CartItem.objects.filter(user=request.user)
-    cart_count = cart_items.count()
-    print(cart_count)
-    return render(request, 'websiteuser/base.html',{'cart_count':cart_count})
+    # cart_items = CartItem.objects.filter(user=request.user)
+    # total_price = sum(item.total_price() for item in cart_items)
+    # cart_items = CartItem.objects.filter(user=request.user)
+    # cart_count = cart_items.count()
+    # print(cart_count)
+    return render(request, 'websiteuser/base.html')
 
 
 
 def product(request):
     product=Product.objects.all()
     categories=Category.objects.all()
-    cart_items = CartItem.objects.filter(user=request.user)
-    total_price = sum(item.total_price() for item in cart_items)
-    cart_items = CartItem.objects.filter(user=request.user)
-    cart_count = cart_items.count()
-
+    if request.user.is_authenticated:
+        cart_items = CartItem.objects.filter(user=request.user)
+        total_price = sum(item.total_price() for item in cart_items)
+        cart_items = CartItem.objects.filter(user=request.user)
+        cart_count = cart_items.count()
+    else:
+        # If the user is not authenticated, set default values for cart information
+        total_price = 0
+        cart_count = 0
     return render(request, 'websiteuser/product.html',{'categories':categories,'product':product,'cart_count':cart_count})
 
 
@@ -63,23 +71,37 @@ def product_cat(request,categoryid):
     cats=Category.objects.get(pk=categoryid)
 
     product=Product.objects.filter(category=cats)
-    cart_items = CartItem.objects.filter(user=request.user)
-    total_price = sum(item.total_price() for item in cart_items)
-    cart_items = CartItem.objects.filter(user=request.user)
-    cart_count = cart_items.count()
+    if request.user.is_authenticated:
+        cart_items = CartItem.objects.filter(user=request.user)
+        total_price = sum(item.total_price() for item in cart_items)
+        cart_items = CartItem.objects.filter(user=request.user)
+        cart_count = cart_items.count()
+    else:
+        # If the user is not authenticated, set default values for cart information
+        total_price = 0
+        cart_count = 0
 
     context={'product':product,'categories':categories,'cart_count':cart_count}
     return render(request, 'websiteuser/product.html',context)
+   
 
 
 def product_single(request,id):
     product=Product.objects.filter(id=id)
     emp=Product.objects.all()
-    cart_items = CartItem.objects.filter(user=request.user)
-    total_price = sum(item.total_price() for item in cart_items)
-    cart_items = CartItem.objects.filter(user=request.user)
-    cart_count = cart_items.count()
-    return render(request, 'websiteuser/product-single.html', {'product':product,'emp':emp,'cart_count':cart_count})
+
+    if request.user.is_authenticated:
+        cart_items = CartItem.objects.filter(user=request.user)
+        total_price = sum(item.total_price() for item in cart_items)
+        cart_items = CartItem.objects.filter(user=request.user)
+        cart_count = cart_items.count()
+    else:
+        # If the user is not authenticated, set default values for cart information
+        total_price = 0
+        cart_count = 0
+
+    
+    return render(request, 'websiteuser/product-single.html', {'product':product,'emp':emp, 'cart_count':cart_count})
 
 
 # ///////// Orders ///////////
@@ -97,8 +119,17 @@ def calculate_total_price(order):
 
 def Order_view(request):
     user_orders = Order.objects.filter(user=request.user).order_by('-created_at')
-    print(user_orders)  # Add this line to print user_orders
-    return render(request, 'websiteuser/order.html', {'user_orders': user_orders})
+    if request.user.is_authenticated:
+        cart_items = CartItem.objects.filter(user=request.user)
+        total_price = sum(item.total_price() for item in cart_items)
+        cart_items = CartItem.objects.filter(user=request.user)
+        cart_count = cart_items.count()
+    else:
+        # If the user is not authenticated, set default values for cart information
+        total_price = 0
+        cart_count = 0
+    # print(user_orders)  # Add this line to print user_orders
+    return render(request, 'websiteuser/order.html', {'user_orders': user_orders,'cart_count':cart_count})
 
 # ///////// Add To Cart ///////////
 
@@ -206,7 +237,6 @@ def checkout(request: HttpRequest):
             postal_code=postal_code
         )
 
-        # Create an order with the new address
        # Create an order with the new address
         order = Order.objects.create(user=request.user, shipping_address=new_address, total_price=total_price)
 
@@ -225,8 +255,6 @@ def checkout(request: HttpRequest):
 
         # Redirect to payment_form with the required arguments
         return redirect('payment_form', order_id=order.id, total_price=total_price)
-
-
 
 
     # If it's a GET request or shipping address is not provided, render the checkout page with address form
@@ -274,14 +302,42 @@ def success_url(request):
     return render(request, 'websiteuser/payment_success.html') 
 
 
-
 def error_url(request):
     return render(request, 'websiteuser/payment_error.html') 
 
 
 
 
+# /////////////// for CancelReason ///////////////
 
+
+from django.contrib import messages
+from django.http import HttpResponse, HttpResponseBadRequest
+
+
+@login_required (login_url='/')
+def cancel_order(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+
+    # Check if the order is cancelable (pending or confirmed)
+    if order.status in ['pending', 'confirmed']:
+        # Check if a CancelReason already exists for this order
+        cancel_reason, created = CancelReason.objects.get_or_create(order=order, user=request.user)
+
+        # If it's not created, display an error message
+        if not created:
+            return HttpResponseBadRequest('Cancel reason already provided for this order.')
+        
+        # Save the selected reason to the CancelReason model
+        selected_reason = request.POST.get('reason')
+        cancel_reason.reason = selected_reason
+        cancel_reason.save()
+
+        # return HttpResponse('Order canceled successfully.')
+        messages.success(request, 'Order canceled successfully.')
+        return redirect('order') # messages show in order page is remaining
+    else:
+        return HttpResponseBadRequest('This order cannot be canceled.')
 
 
 

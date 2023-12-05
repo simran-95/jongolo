@@ -225,6 +225,9 @@ class Adres(models.Model):
     city = models.CharField(max_length=100)
     postal_code = models.CharField(max_length=20)
 
+    def __str__(self):
+        return self.street_address
+
 class CartItem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -238,18 +241,36 @@ class CartItem(models.Model):
         return self.product.image.url
 
 
+
+
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     shipping_address = models.ForeignKey(Adres, on_delete=models.SET_NULL, null=True, blank=True)
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
+    status = models.CharField(max_length=20,default='pending')
+
+    # def __str__(self):
+    #     return self.order
+    
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
     unit_price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return self.order
+        
+
+class CancelReason(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    order = models.OneToOneField(Order, on_delete=models.CASCADE)
+    reason = models.TextField()
     
+    def __str__(self):
+        return self.reason  
 
 # gpt this is my checkout page's design and i have to follow these all fields so is it possible that in this form i can fetch user's details  as value in input field and if user choose ship to the address then it is click
 
