@@ -13,6 +13,7 @@ def login(request):
     return render(request, 'admin-login.html')
 
 def login1(request):
+    print('..login page opened..')
     return render(request, 'websiteuser/website-login.html')
 
 # def product_single(request):
