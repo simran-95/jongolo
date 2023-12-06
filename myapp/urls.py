@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from . import views,blogs_views
 from . import vender_views,website_views
 from django.conf import settings
 from django.conf.urls.static import static
@@ -28,6 +28,12 @@ urlpatterns=[
     path('delete/<int:id>/',views.delete_vender, name='delete'),
     path('update-vender/<int:pk>',views.update_vender,name='update-vender'),
 
+    path('add_bloger',views.add_blogger,name='add_bloger'),
+    path('view_bloger',views.view_blogger,name='view_bloger'),
+    path('delete_bloger/<int:id>/',views.delete_blogger, name='delete_bloger'),
+    path('update-bloger/<int:pk>',views.update_blogger,name='update-bloger'),
+
+    #//////// blog views  /////////
     path('add_bloger',views.add_blogger,name='add_bloger'),
     path('view_bloger',views.view_blogger,name='view_bloger'),
     path('delete_bloger/<int:id>/',views.delete_blogger, name='delete_bloger'),

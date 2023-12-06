@@ -163,6 +163,7 @@ class Vender(models.Model):
         return f"{self.user}"
 
 
+
 class Blogger(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.OneToOneField(User, on_delete = models.CASCADE)
@@ -191,15 +192,25 @@ class Blogger(models.Model):
 
 #///////////// for products //////////////
 
+# class Blog(models.Model):
+#     # id = models.AutoField(primary_key=True)
+#     user = models.OneToOneField(User, on_delete = models.CASCADE)
+#     title=models.CharField(max_length=100)
+#     address = models.TextField()
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     profile_pic = models.ImageField(upload_to='blog',default="")
+
 class Blog(models.Model):
     # id = models.AutoField(primary_key=True)
     user = models.OneToOneField(User, on_delete = models.CASCADE)
     title=models.CharField(max_length=100)
-    address = models.TextField()
+    description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    profile_pic=models.ImageField(upload_to='blog',default="")
+    image = models.ImageField(upload_to='blog',default="")
 
-
+    def __str__(self):
+        return self.title
+        
 
 #///////////// for products //////////////
 

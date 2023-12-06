@@ -133,3 +133,15 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = ['name','price','category','description','image']
+
+
+class BlogForm(forms.ModelForm):
+   
+    title = forms.CharField( label='Blog Name',required=True)
+    description = forms.CharField(widget=forms.Textarea(attrs={'rows': 3, 'cols': 30}))
+    image = forms.ImageField()
+
+    class Meta:
+        model = Blog
+        fields = ['title','description','image']
+        exclude = ['created_at']

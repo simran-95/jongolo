@@ -78,6 +78,8 @@ def doLogin(request):
 
     return redirect('login1')
 
+def index(request):
+    return render(request, 'demo.html')
 
 @login_required(login_url='/login')
 def dashboard(request):

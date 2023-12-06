@@ -34,6 +34,7 @@ admin.site.register(Blogger)
 admin.site.register(Category)
 admin.site.register(Product)
 admin.site.register(CartItem)
+admin.site.register(Blog)
 
 admin.site.register(Adres)
 admin.site.register(Order)
