@@ -78,6 +78,32 @@ class AddVenderForm(forms.ModelForm):
         exclude = ['created_at', 'updated_at', 'slug']
 
 
+
+class Addblogger(forms.ModelForm):
+   
+    username = forms.CharField( label='UserName',required=True)
+    email = forms.EmailField(label='Email',required=True)
+
+    class Meta:
+        model=User
+        fields=['password','email','username']
+        
+
+class AddBlogerForm(forms.ModelForm):
+   
+    address = forms.CharField(widget=forms.Textarea(attrs={'rows': 3, 'cols': 30}))
+    contact = forms.IntegerField()
+    profile_pic = forms.ImageField()
+
+    class Meta:
+        model = Blogger
+        fields = ['address', 'contact', 'profile_pic', 'city']
+        exclude = ['created_at', 'updated_at', 'slug']
+
+
+# <--//////// end-up of login //////////-->
+
+
 class CategoryForm(forms.ModelForm):
    
     name = forms.CharField( label='Category Name',required=True)

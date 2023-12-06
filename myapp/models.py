@@ -47,9 +47,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
+    
     SUPERUSER = '1'
     VENDER = '2'
     ADDUSER = '3'
+    BLOGER = '4'
    
    
     User_type=(
@@ -57,9 +59,10 @@ class User(AbstractBaseUser, PermissionsMixin):
       
         ('AddUser','ADDUSER'),
         ('Vender','VENDER'),
+        ('Bloger','BLOGER'),
                
     )
-    user_type_data = (( VENDER, "Vender"), (ADDUSER, "AddUser"), (SUPERUSER, "Superuser"))
+    user_type_data = (('Bloger','BLOGER'), ( VENDER, "Vender"), (ADDUSER, "AddUser"), (SUPERUSER, "Superuser"))
     user_type = models.CharField( choices=user_type_data, max_length=10,default='1')
  
        
@@ -159,6 +162,42 @@ class Vender(models.Model):
 
         return f"{self.user}"
 
+
+class Blogger(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.OneToOneField(User, on_delete = models.CASCADE)
+    address = models.TextField()
+    contact=models.IntegerField()
+    profile_pic=models.ImageField(upload_to='user_profile',default="")
+    city=models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    slug = models.SlugField(null=True)
+    
+    class Meta:
+        verbose_name = ('bloger')
+        verbose_name_plural = ('bloger')
+
+    def save(self, *args, **kwargs):
+
+        self.slug = slugify(self.user.username )
+        return super().save(*args, **kwargs)
+    def __str__(self):
+
+        return f"{self.user}"
+
+
+
+
+#///////////// for products //////////////
+
+class Blog(models.Model):
+    # id = models.AutoField(primary_key=True)
+    user = models.OneToOneField(User, on_delete = models.CASCADE)
+    title=models.CharField(max_length=100)
+    address = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    profile_pic=models.ImageField(upload_to='blog',default="")
 
 
 

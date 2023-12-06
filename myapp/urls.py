@@ -15,7 +15,7 @@ urlpatterns=[
    
     path('dashboard',views.dashboard,name='dashboard'),
     path('dashboard-add',views.dashboard1,name='dashboard-add'),
-    # path('dashboard-web',website_views.dashboard2,name='dashboard-web'),
+    path('dashboard-blog',views.dashboard3,name='dashboard-blog'),
     path('add_user',views.add_user,name='add_user'),
     path('view_user',views.view_user,name='view_user'),
     path('delete_user/<int:id>/',views.delete_user, name='delete_user'),
@@ -27,6 +27,11 @@ urlpatterns=[
     path('view_vender',views.view_vender,name='view_vender'),
     path('delete/<int:id>/',views.delete_vender, name='delete'),
     path('update-vender/<int:pk>',views.update_vender,name='update-vender'),
+
+    path('add_bloger',views.add_blogger,name='add_bloger'),
+    path('view_bloger',views.view_blogger,name='view_bloger'),
+    path('delete_bloger/<int:id>/',views.delete_blogger, name='delete_bloger'),
+    path('update-bloger/<int:pk>',views.update_blogger,name='update-bloger'),
 
 
     #////// for category and product ///////

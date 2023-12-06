@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title>jongolo home page</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'vender/img/favicon.png' %}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'vender/css/bootstrap.min.css' %}">
+
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="{% static 'vender/css/font-awesome.min.css' %}">
+
+    <!-- Feathericon CSS -->
+    <link rel="stylesheet" href="{% static 'vender/css/feathericon.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'vender/plugins/morris/morris.css' %}">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{% static 'vender/css/style.css' %}">
+</head>
+
+<body>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+
+        <!-- Header -->
+        <div class="header">
+
+            <!-- Logo -->
+            <div class="header-left">
+                <a href="/dashboard-blog" class="logo">
+                    <img src="static/vender/img/logo.png" alt="Logo">
+                </a>
+                <a href="/dashboard-blog" class="logo logo-small">
+                    <img src="{% static 'vender/img/logo-small.png' %}" alt="Logo" width="30" height="30">
+                </a>
+            </div>
+            <!-- /Logo -->
+
+            <a href="javascript:void(0);" id="toggle_btn">
+                <i class="fe fe-text-align-left"></i>
+            </a>
+
+            <!-- Mobile Menu Toggle -->
+            <a class="mobile_btn" id="mobile_btn">
+                <i class="fa fa-bars"></i>
+            </a>
+            <!-- /Mobile Menu Toggle -->
+
+            <!-- Header Right Menu -->
+            <ul class="nav user-menu">
+
+                <!-- User Menu -->
+                <li class="nav-item dropdown has-arrow">
+                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                        <span class="user-img"><img class="rounded-circle"
+                                src="static/vender/img/profiles/avatar-01.jpg" width="31" alt="Ryan Taylor"></span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="user-header">
+                            <div class="avatar avatar-sm">
+                                <img src="{% static 'vender/img/profiles/avatar-01.jpg' %}" alt="User Image"
+                                    class="avatar-img rounded-circle">
+                            </div>
+                            <div class="user-text">
+                                <h6>Ryan Taylor</h6>
+                                <p class="text-muted mb-0">Administrator</p>
+                            </div>
+                        </div>
+                        <a class="dropdown-item" href="update-vender">My Profile</a>
+                        <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                    </div>
+                </li>
+                <!-- /User Menu -->
+
+            </ul>
+            <!-- /Header Right Menu -->
+
+        </div>
+        <!-- /Header -->
+
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-inner slimscroll">
+                <div id="sidebar-menu" class="sidebar-menu">
+                    <ul>
+                        <li class="menu-title">
+                            <span>Main</span>
+                        </li>
+                        <li class="active">
+                            <a href="/dashboard-add"><i class="fe fe-home"></i> <span>Dashboard</span></a>
+                        </li>
+                   
+                        <li class="submenu">
+                            <a href="#" class=""><i class="fa fa-tasks"></i> <span> Product </span> <span
+                                    class="menu-arrow"></span></a>
+                            <ul style="display: none;">
+                                <li><a href="/blog"> <i class="fa fa-angle-double-right"></i> Add Your Blogs </a></li>
+                                <li><a href="/view"> <i class="fa fa-angle-double-right"></i> View Your Bloges </a></li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="Earning.html"><i class="fa fa-money"></i> <span>Earning</span></a>
+                        </li>
+                        <!-- <li> 
+								<a href="View_Order.html"><i class="fa fa-money"></i> <span>View Order</span></a>
+							</li> -->
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /Sidebar -->
+    </div>
+    <!-- /Main Wrapper -->
+
+    <!-- jQuery -->
+    <script src="{% static 'vender/js/jquery-3.6.0.min.js' %}"></script>
+
+    <!-- Bootstrap Core JS -->
+    <script src="{% static 'vender/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Slimscroll JS -->
+    <script src="{% static 'vender/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+
+    <script src="{% static 'vender/plugins/raphael/raphael.min.js' %}"></script>
+    <script src="{% static 'vender/plugins/morris/morris.min.js' %}"></script>
+    <script src="{% static 'vender/js/chart.morris.js' %}"></script>
+
+    <!-- Custom JS -->
+    <script src="{% static 'vender/js/script.js' %}"></script>
+
+</body>
+
+</html>

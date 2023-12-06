@@ -32,6 +32,21 @@ def superadmin_login(request):
     return render(request, 'admin-login.html')
 
 
+def blogger_login(request):
+    if request.method == 'POST':
+        user = authenticate(request,
+            email=request.POST.get('email'),
+            password=request.POST.get('password'),
+        )
+        if user and user.user_type == User.BLOGGER:
+            dj_login(request, user)
+            return redirect('dashboard')
+        else:
+            messages.error(request, 'Invalid credentials')
+
+    return render(request, 'admin-login.html')
+
+
 def doLogin(request):
      
     if request.method=='POST':
@@ -52,6 +67,9 @@ def doLogin(request):
             elif user_type==User.ADDUSER:
                
                 return redirect('dashboard-web')
+            elif user_type==User.BLOGER:
+               
+                return redirect('dashboard-blog')
             else:
                 messages.error(request,'invalid credentials')
                 return redirect('login1')
@@ -68,8 +86,8 @@ def dashboard(request):
 def dashboard1(request):
     return render(request, 'vender/dashboard-add.html')
 
-# def dashboard2(request):
-#     return render(request, 'websiteuser/dashboard-web.html')
+def dashboard3(request):
+    return render(request, 'vender/dashboard-blog.html')
     
 def base(request):
     return render(request, 'websiteuser/base.html')
@@ -205,6 +223,69 @@ def update_vender(request,pk):
     return render(request, 'update_vender.html', {'pharmacist_user_form': pharmacist_user_form, 'pharmacist_form': pharmacist_form})
 
 
+
+def add_blogger(request):
+    userForm = Addblogger()
+    bloggerForm = AddBlogerForm()
+    mydict = {'userForm': userForm, 'bloggerForm': bloggerForm}
+
+    if request.method == 'POST':
+        userForm = Addblogger(request.POST)
+        bloggerForm = AddBlogerForm(request.POST, request.FILES)
+
+        if userForm.is_valid() and bloggerForm.is_valid():
+            user = userForm.save()
+            user.user_type = 4  # Use the string '4' for the 'Blogger' user type
+            user.set_password(user.password)
+            user.save()
+
+            # Fix the indentation here
+            reception = bloggerForm.save(commit=False)
+            reception.user = user
+            reception.save()
+
+            return redirect('view_bloger')
+        else:
+            print(userForm.errors)
+            print(bloggerForm.errors)
+            return render(request, 'add_bloger.html', context=mydict)
+    
+    return render(request, 'add_bloger.html', context=mydict)
+
+
+def view_blogger(request):
+    user = Blogger.objects.all()
+    return render(request, 'view_bloger.html',{'user':user})
+
+
+def delete_blogger(request,id):
+    u = Blogger.objects.get(id=id)
+    u.delete()
+    return redirect('view_bloger')   
+
+
+def update_blogger(request,pk):
+    add=Addblogger.objects.get(id=pk)
+    user=User.objects.get(id=add.user_id)
+
+    userForm=Addblogger(instance=user)
+    adduserForm=AddBlogerForm(request.FILES,instance=add)
+    mydict={'userForm':userForm,'adduserForm':adduserForm}
+    if request.method=='POST':
+        userForm=Addblogger(request.POST,instance=user)
+        adduserForm=AddBlogerForm(request.POST,request.FILES,instance=add)
+        if userForm.is_valid() and adduserForm.is_valid():
+            user=userForm.save()
+            user.set_password(user.password)
+            user.save()
+            add=adduserForm.save(commit=False)
+            add.status=True
+            add.save()
+            return redirect('view_user')
+        else:
+            userForm = Addblogger(instance=user)
+            adduserForm = AddBlogerForm(instance=add)
+    return render(request,'update_bloger.html',{'adduserForm': adduserForm, 'userForm': userForm})
 
 
 
