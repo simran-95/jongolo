@@ -37,7 +37,7 @@
             <!-- Logo -->
             <div class="header-left">
                 <a href="/dashboard-blog" class="logo">
-                    <img src="static/vender/img/logo.png" alt="Logo">
+                    <img src="{% static 'vender/img/logo.png' %}" alt="Logo">
                 </a>
                 <a href="/dashboard-blog" class="logo logo-small">
                     <img src="{% static 'vender/img/logo-small.png' %}" alt="Logo" width="30" height="30">
@@ -62,7 +62,7 @@
                 <li class="nav-item dropdown has-arrow">
                     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                         <span class="user-img"><img class="rounded-circle"
-                                src="static/vender/img/profiles/avatar-01.jpg" width="31" alt="Ryan Taylor"></span>
+                                src="{% static 'vender/img/profiles/avatar-01.jpg' %}" width="31" alt="Ryan Taylor"></span>
                     </a>
                     <div class="dropdown-menu">
                         <div class="user-header">
@@ -130,30 +130,30 @@
                         <div class="col-sm-12">
                             <div class="card full-header">
                                 <div class="users">
-                                    <h3 class="page-title">Add Blogs </h3>
+                                    <h3 class="page-title">Blog's Update </h3>
                                 </div>
                                 <div class="user-box">
-                                    <form action="{% url 'blog' %}" method="post" enctype='multipart/form-data'>
+                                    <form action="" method="post" enctype='multipart/form-data'>
                                         {% csrf_token %}
                                         <div class=" row">
                                            
                                             <div class="form-group col-sm-12">
                                                 <!-- <label>Blogs name</label> -->
-                                                <label for="{{ form.title.id_for_label }}">Blog's Name</label>
-                                                {% render_field form.title class="form-control" %}
+                                                <label for="{{ fm.title.id_for_label }}">Blog Title</label>
+                                                {% render_field fm.title class="form-control" %}
                                             </div>
                                           
 
                                             <div class="form-group col-sm-12">
                                                 <!-- <label>Blogs Quantity</label> -->
-                                                <label for="{{ form.description.id_for_label }}">Blog's Description
+                                                <label for="{{ fm.description.id_for_label }}">Blog Description
                                                 </label>
-                                                {% render_field form.description class="form-control" %}
+                                                {% render_field fm.description class="form-control" %}
                                             </div>
                                             <div class="form-group col-sm-12">
                                                 <!-- <label>Blogs Discription</label> -->
-                                                <label for="{{ form.image.id_for_label }}">Blog's Image</label>
-                                                {% render_field form.image class="form-control" %}
+                                                <label for="{{ fm.image.id_for_label }}">Blog Image</label>
+                                                {% render_field fm.image class="form-control" %}
                                             </div>
                                             <div class="form-group col-sm-12">
                                                 <div class="submit">

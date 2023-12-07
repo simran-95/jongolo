@@ -166,7 +166,7 @@ class Vender(models.Model):
 
 class Blogger(models.Model):
     id = models.AutoField(primary_key=True)
-    user = models.OneToOneField(User, on_delete = models.CASCADE)
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
     address = models.TextField()
     contact=models.IntegerField()
     profile_pic=models.ImageField(upload_to='user_profile',default="")
@@ -202,7 +202,7 @@ class Blogger(models.Model):
 
 class Blog(models.Model):
     # id = models.AutoField(primary_key=True)
-    user = models.OneToOneField(User, on_delete = models.CASCADE)
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
     title=models.CharField(max_length=100)
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)

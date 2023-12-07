@@ -27,17 +27,17 @@ urlpatterns=[
     path('view_vender',views.view_vender,name='view_vender'),
     path('delete/<int:id>/',views.delete_vender, name='delete'),
     path('update-vender/<int:pk>',views.update_vender,name='update-vender'),
-
+    #//////// bloggers views  /////////
     path('add_bloger',views.add_blogger,name='add_bloger'),
     path('view_bloger',views.view_blogger,name='view_bloger'),
     path('delete_bloger/<int:id>/',views.delete_blogger, name='delete_bloger'),
-    path('update-bloger/<int:pk>',views.update_blogger,name='update-bloger'),
+    path('update_bloger/<int:pk>',views.update_blogger,name='update_bloger'),
 
-    #//////// blog views  /////////
-    path('add_bloger',views.add_blogger,name='add_bloger'),
-    path('view_bloger',views.view_blogger,name='view_bloger'),
-    path('delete_bloger/<int:id>/',views.delete_blogger, name='delete_bloger'),
-    path('update-bloger/<int:pk>',views.update_blogger,name='update-bloger'),
+    #//////// blogs views  /////////
+    path('blog',blogs_views.blogs,name='blog'),
+    path('view',blogs_views.view_blog,name='view'),
+    path('delete_blog/<int:id>/',blogs_views.delete_blog, name='delete_blog'),
+    path('update_blog/<int:pk>',blogs_views.update_blog,name='update_blog'),
 
 
     #////// for category and product ///////
@@ -75,7 +75,7 @@ urlpatterns=[
     path('payment_form/<int:order_id>/<str:total_price>/', website_views.PaymentFormView.as_view(), name='payment_form'),
     path('cancel_order/<int:order_id>/', website_views.cancel_order, name='cancel_order'),
     
-    
+    path('blog1',website_views.website_blog,name='blog1'),
    
     # path('payment/', website_views.initiate_payment, name='payment'),
     

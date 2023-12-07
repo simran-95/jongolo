@@ -15,6 +15,7 @@ stripe.api_key = 'sk_test_51OITjfSGqeyhk1pWAkeGPNjEevcHkTLHgSa56PfMqWH1ik4v6UbVv
 stripe.api_key=settings.STRIPE_SECRET_KEY
 STRIPE_PUBLC_KEY = settings.STRIPE_PUBLISHABLE_KEY,
 
+
 def dashboard2(request):
     print(request.user)
     cat = Product.objects.all()[:12]
@@ -340,8 +341,15 @@ def cancel_order(request, order_id):
         return HttpResponseBadRequest('This order cannot be canceled.')
 
 
-
-
-# def payment_form(request):
-#     key = settings.STRIPE_PUBLIC_KEY
-#     return render(request, 'payment_form.html', {'stripe_public_key': stripe_public_key})
+def website_blog(request):
+    user = Blog.objects.all()
+    if request.user.is_authenticated:
+        # If the user is authenticated, fetch the cart information
+        cart_items = CartItem.objects.filter(user=request.user)
+        total_price = sum(item.total_price() for item in cart_items)
+        cart_count = cart_items.count()
+    else:
+        # If the user is not authenticated, set default values for cart information
+        total_price = 0
+        cart_count = 0
+    return render(request, 'websiteuser/blog.html',{'user':user, 'cart_count':cart_count, 'total_price':total_price})

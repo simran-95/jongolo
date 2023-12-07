@@ -78,6 +78,7 @@ def doLogin(request):
             messages.error(request,'invalid credentials')
 
     return redirect('login1')
+    
 
 def index(request):
     return render(request, 'demo.html')
@@ -268,7 +269,7 @@ def delete_blogger(request,id):
 
 
 def update_blogger(request,pk):
-    add=Addblogger.objects.get(id=pk)
+    add=Blogger.objects.get(id=pk)
     user=User.objects.get(id=add.user_id)
 
     userForm=Addblogger(instance=user)
@@ -288,7 +289,7 @@ def update_blogger(request,pk):
         else:
             userForm = Addblogger(instance=user)
             adduserForm = AddBlogerForm(instance=add)
-    return render(request,'update_bloger.html',{'adduserForm': adduserForm, 'userForm': userForm})
+    return render(request,'update_blogers.html',{'adduserForm': adduserForm, 'userForm': userForm})
 
 
 

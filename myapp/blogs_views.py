@@ -10,24 +10,28 @@ def blogs(request):
     if request.method == 'POST':
         form = BlogForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            return redirect('view_blog')
+            blog = form.save(commit=False)
+            blog.user = request.user
+            blog.save()
+            return redirect('view')
     else:
         form = BlogForm()
 
-    return render(request, 'add_blog.html', {'form': form})
+    return render(request, 'blogs/add_blogs.html', {'form': form})
+
 
 
 
 def view_blog(request):
-    user = Blog.objects.all()
-    return render(request, 'view_blog.html',{'user':user})
+    # user = Blog.objects.all()
+    user = Blog.objects.filter(user=request.user)
+    return render(request, 'blogs/view_blog.html',{'user':user})
 
 
 def delete_blog(request, id):
     category = Blog.objects.get(id=id)
     category.delete()
-    return redirect('view_blog')
+    return redirect('view')
    
 
 def update_blog(request,pk):
@@ -36,11 +40,13 @@ def update_blog(request,pk):
         pi=Blog.objects.get(pk=pk)
         fm=BlogForm(request.POST,request.FILES,instance=pi)
         if fm.is_valid():
+            fm.save(commit=False)
+            fm.user = request.user
             fm.save()
-            return redirect('view_blog')
+            return redirect('view')
     else:
             pi=Blog.objects.get(id=pk)
             fm=BlogForm(instance=pi)
         
         # return render(request, 'edit.html')
-    return render(request, 'update_blog.html',{'fm':fm})
+    return render(request, 'blogs/update_blogs.html',{'fm':fm})
