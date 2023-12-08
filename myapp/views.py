@@ -12,7 +12,7 @@ from django.contrib.auth import update_session_auth_hash
 def login(request):
     return render(request, 'admin-login.html')
 
-
+@login_required(login_url='/login')
 def earning_admin(request):
     user_orders = Order.objects.all()
     user_products = Product.objects.all()
@@ -96,7 +96,7 @@ def doLogin(request):
 
     return redirect('login1')
     
-
+@login_required(login_url='/login')
 def index(request):
     return render(request, 'demo.html')
 
@@ -104,9 +104,11 @@ def index(request):
 def dashboard(request):
     return render(request, 'index.html')
 
+@login_required(login_url='/')
 def dashboard1(request):
     return render(request, 'vender/dashboard-add.html')
 
+@login_required(login_url='/')
 def dashboard3(request):
     return render(request, 'vender/dashboard-blog.html')
     
@@ -118,7 +120,7 @@ def logout_view(request):
     logout(request)
     return redirect('/')
 
-
+@login_required(login_url='/login')
 def add_user(request):
     userForm=Adduser()
     receptionForm=AddUserForm()
@@ -143,18 +145,18 @@ def add_user(request):
         
     return render(request, 'add_user.html', context=mydict)
 
-
+@login_required(login_url='/login')
 def view_user(request):
     user = AddUser.objects.all()
     return render(request, 'view_user.html',{'user':user})
 
-
+@login_required(login_url='/login')
 def delete_user(request,id):
     u = AddUser.objects.get(id=id)
     u.delete()
     return redirect('view_user')
 
-
+@login_required(login_url='/login')
 def update_user(request,pk):
     add=AddUser.objects.get(id=pk)
     user=User.objects.get(id=add.user_id)
@@ -178,7 +180,7 @@ def update_user(request,pk):
             adduserForm = AddUserForm(instance=add)
     return render(request,'update_user.html',{'adduserForm': adduserForm, 'userForm': userForm})
 
-
+@login_required(login_url='/login')
 def add_vendor(request):
     userForm=Addvender()
     receptionForm=AddVenderForm()
@@ -203,19 +205,19 @@ def add_vendor(request):
         
     return render(request, 'add_vender.html', context=mydict)
 
-
+@login_required(login_url='/login')
 def view_vender(request):
     user = Vender.objects.all()
     return render(request, 'view_vender.html',{'user':user})
 
-
+@login_required(login_url='/login')
 def delete_vender(request,id):
     u = Vender.objects.get(id=id)
     u.delete()
     return redirect('view_vender')
     
 
-
+@login_required(login_url='/login')
 def update_vender(request,pk):
     
     vender = Vender.objects.get(id=pk)
@@ -243,7 +245,7 @@ def update_vender(request,pk):
     return render(request, 'update_vender.html', {'pharmacist_user_form': pharmacist_user_form, 'pharmacist_form': pharmacist_form})
 
 
-
+@login_required(login_url='/login')
 def add_blogger(request):
     userForm = Addblogger()
     bloggerForm = AddBlogerForm()
@@ -272,18 +274,18 @@ def add_blogger(request):
     
     return render(request, 'add_bloger.html', context=mydict)
 
-
+@login_required(login_url='/login')
 def view_blogger(request):
     user = Blogger.objects.all()
     return render(request, 'view_bloger.html',{'user':user})
 
-
+@login_required(login_url='/login')
 def delete_blogger(request,id):
     u = Blogger.objects.get(id=id)
     u.delete()
     return redirect('view_bloger')   
 
-
+@login_required(login_url='/login')
 def update_blogger(request,pk):
     add=Blogger.objects.get(id=pk)
     user=User.objects.get(id=add.user_id)
@@ -308,7 +310,7 @@ def update_blogger(request,pk):
     return render(request,'update_blogers.html',{'adduserForm': adduserForm, 'userForm': userForm})
 
 
-
+@login_required(login_url='/login')
 def category(request):
     if request.method == 'POST':
         form = CategoryForm(request.POST, request.FILES)
@@ -320,18 +322,18 @@ def category(request):
 
     return render(request, 'category.html', {'form': form})
 
-
+@login_required(login_url='/login')
 def view_category(request):
     user = Category.objects.all()
     return render(request, 'view_category.html',{'user':user})
 
-
+@login_required(login_url='/login')
 def delete_category(request, id):
     category = Category.objects.get(id=id)
     category.delete()
     return redirect('/view_category')
    
-
+@login_required(login_url='/login')
 def update_category(request,pk):
 
     if request.method=="POST":
