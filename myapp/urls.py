@@ -88,6 +88,7 @@ urlpatterns=[
 
     path('blog1',website_views.website_blog,name='blog1'),
     path('contact',website_views.contact,name='contact'),
+    path('about',website_views.about,name='about'),
    
     # path('payment/', website_views.initiate_payment, name='payment'),
     

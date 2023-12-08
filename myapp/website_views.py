@@ -18,6 +18,18 @@ stripe.api_key=settings.STRIPE_SECRET_KEY
 STRIPE_PUBLC_KEY = settings.STRIPE_PUBLISHABLE_KEY,
 
 
+def about(request):
+    if request.user.is_authenticated:
+        # If the user is authenticated, fetch the cart information
+        cart_items = CartItem.objects.filter(user=request.user)
+        total_price = sum(item.total_price() for item in cart_items)
+        cart_count = cart_items.count()
+    else:
+        # If the user is not authenticated, set default values for cart information
+        total_price = 0
+        cart_count = 0
+    return render(request, 'websiteuser/about.html',{'total_price': total_price, 'cart_count': cart_count})
+
 def dashboard2(request):
     print(request.user)
     cat = Product.objects.all()[:12]

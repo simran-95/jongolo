@@ -9,6 +9,9 @@ from django.contrib.auth import update_session_auth_hash
 
 # Create your views here.
 
+
+
+
 def login(request):
     return render(request, 'admin-login.html')
 
