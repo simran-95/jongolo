@@ -8,7 +8,8 @@ from django.conf.urls.static import static
 urlpatterns=[
     path('login', views.login,name='login'),
     path('admin-login', views.superadmin_login,name='admin-login'),
-    path('',views.login1,name='login1'),
+    # path('login2', views.vender_login,name='login2'),
+    path('',views.vender_login,name='login1'),
     path('doLogin',views.doLogin,name='doLogin'),
     path('dologout',views.logout_view,name='logout'),
     path('base',views.base,name='base'),
@@ -21,7 +22,7 @@ urlpatterns=[
     path('delete_user/<int:id>/',views.delete_user, name='delete_user'),
     path('update_user/<int:pk>',views.update_user,name='update_user'),
     path('profile', vender_views.profile,name='profile'),
-    # path('profile1', vender_views.value,name='profile1'),
+    path('earning_admin', views.earning_admin,name='earning_admin'),
     
     # path('teacher_list',views.teacher_list,name='teacher_list'),
     # path('delete/<int:id>/', views.teacher_delete, name='delete'),
@@ -59,6 +60,13 @@ urlpatterns=[
     path('earning',vender_views.earning,name='earning'),
     path('order1',vender_views.order_status,name='order1'),
     path('sign-in', vender_views.vender_sign_in, name='sign-in'),
+
+
+    path('pending/<int:id>',vender_views.product_pending,name='pending'),
+    path('confirmed/<int:id>',vender_views.product_confirm, name='confirmed'),
+    path('placed/<int:id>',vender_views.product_placed, name='placed'),
+    path('completed/<int:id>',vender_views.product_completed,name='completed'),
+    path('completed/<int:id>',vender_views.product_completed,name='completed'),
 
     #//////// for Website and user /////////
     path('product',website_views.product,name='product'),

@@ -67,7 +67,7 @@
                                     {{ item.quantity }}
                                 </td>
 
-                                <td class="total">${{ item.unit_price|floatformat:2 }} * {{ item.quantity }}</td>
+                                <td class="total">${{ order.total_price }}</td>
 
                                 <td>
                                     {% if item.status %}

@@ -1,0 +1,107 @@
+{% extends 'base.html'%}
+{% load widget_tweaks %}
+{% load static %}
+{% block content%}
+
+<!-- Page Wrapper -->
+<div class="page-wrapper">
+    <div class="content container-fluid">
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card full-header">
+                        <div class="users">
+                            <h3 class="page-title">Total Earnings: ${{ total_earnings }}</h3>
+                        </div>
+                        <div class="user-box">
+                            <div class="datatables">
+                                <table id="example" class="display nowrap" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>S.no</th>
+                                            <th>Product Name</th>
+                                            <th>Product Image</th>
+                                            <th>User Who Purchesed</th>
+                                            <th>Quantity</th>
+                                            <th>Price</th>
+                                            <th>Total</th>
+                                            <!-- <th>Action</th> -->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="even">
+                                            <!-- earnings_summary.html -->
+                                            <!-- <h2>Total Earnings: ${{ total_earnings }}</h2> -->
+                                            {% for order in user_orders %}
+                                            {% for item in order.orderitem_set.all %}
+                                            <td>{{ order.id }}</td>
+                                            <td>{{item.product.name}}</td>
+                                            <td><img class="rounded-circle" src="{{item.product.image.url}}" width="31"
+                                                    alt="{{item.user}}" style="height: 60px;width: 60px;"></td>
+                                            <td>{{order.user}}</td>
+                                            <td>{{ item.quantity }}</td>
+                                            <td>
+                                                <div class="badge badge-success">{{item.unit_price}}</div>
+                                            </td>
+                                            <td>
+                                                <div class="badge badge-success">{{order.total_price}}</div>
+                                            </td>
+                                            <!-- <td>Lorem Ipsum is simply dummy text.</td> -->
+                                            <!-- <td>
+														<button class="btn btn-primary"><a class="edit-btn"
+																href="#">Edit</a></button>
+														<button class="btn btn-primary"><a class="edit-btn"
+																href="#">Delete</a></button>
+													</td> -->
+
+                                        </tr>
+                                        {% endfor %}
+                                        {% endfor %}
+                                        <!-- <tr class="odd">
+													<td>2</td>
+													<td>Earning Clothes</td>
+													<td><img class="rounded-circle"
+															src="assets/img/profiles/avatar-01.jpg" width="31"
+															alt="Ryan Taylor"></td>
+													<td>Size xl</td>
+													<td>3</td>
+													<td>
+														<div class="badge badge-success">Medium</div>
+													</td>
+
+													<td>Lorem Ipsum is simply dummy text.</td>
+													<td>
+														<button class="btn btn-primary"><a class="edit-btn"
+																href="#">Edit</a></button>
+														<button class="btn btn-primary"><a class="edit-btn"
+																href="#">Delete</a></button>
+													</td>
+												</tr> -->
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+
+        <div class="row">
+            <div class="col-sm-12">
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- /Page Wrapper -->
+
+</div>
+<!-- /Main Wrapper -->
+
+{% endblock %}

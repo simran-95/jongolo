@@ -1,4 +1,3 @@
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -175,28 +174,28 @@
         {% if messages %}
         {% for message in messages %}
         {% if message.tags == 'error'%}
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
             {{message}}
-            
-            </div>
+
+        </div>
         {% endif %}
         {% endfor %}
-    {% endif %}
-    {% if messages %}
+        {% endif %}
+        {% if messages %}
         {% for message in messages %}
         {% if message.tags == 'success'%}
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
             {{message}}
-            
-            </div>
+
+        </div>
         {% endif %}
         {% endfor %}
-    {% endif %}
+        {% endif %}
         <div class="container-fluid">
             <div class="row">
-         
+
                 <div class="col-md-4">
-                   
+
                 </div>
                 <div class="col-md-4">
                     <div class="login-form">
@@ -204,14 +203,13 @@
                             <div class="account-center account-box">
 
                                 <div class="account-logo">
-                                    <a href=""><img class="img-responsive"
-                                            src="{% static 'images/logo/Logo-02.png' %}" alt="#"
-                                            style="margin-bottom: 20px ;"></a>
+                                    <a href=""><img class="img-responsive" src="{% static 'images/logo/Logo-02.png' %}"
+                                            alt="#" style="margin-bottom: 20px ;"></a>
                                     <h3 style="color: white;font-size: 22px;">Welcome To Jongolo Website </h3>
                                     <h5 style="color: white;">Login In To Continue </h5>
 
                                 </div>
-                         
+
                                 <div class="full-tabs">
                                     <button class="tablink" onclick="openPage('user', this, '#d6800a')"
                                         id="defaultOpen">User</button>
@@ -246,8 +244,8 @@
                                                         class="btn btn-primary account-btn">Login</button>
                                                 </div>
                                                 <div class="text-center register-link" style="color: white;">
-                                                    Don’t have an account? <a href="/sign-in1"
-                                                        style="color: white;"> Register Now</a>
+                                                    Don’t have an account? <a href="/sign-in1" style="color: white;">
+                                                        Register Now</a>
                                                 </div>
                                             </form>
                                         </div>
@@ -258,7 +256,7 @@
                                             <center>
                                                 <h4>VENDOR LOGIN</h4>
                                             </center>
-                                            <form action="{% url 'doLogin' %}" method="post" class="form-signin">
+                                            <form action="{% url 'login1' %}" method="post" class="form-signin">
                                                 {% csrf_token %}
                                                 <div class="form-group">
                                                     <label style="color: white;"> Username or Email</label>
@@ -279,8 +277,8 @@
                                                         class="btn btn-primary account-btn">Login</button>
                                                 </div>
                                                 <div class="text-center register-link" style="color: white;">
-                                                    Don’t have an account? <a href="/sign-in"
-                                                        style="color: white;"> Register Now</a>
+                                                    Don’t have an account? <a href="/sign-in" style="color: white;">
+                                                        Register Now</a>
                                                 </div>
                                             </form>
                                         </div>

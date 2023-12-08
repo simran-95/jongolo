@@ -5,6 +5,7 @@ from django.contrib.auth import login as dj_login, logout, authenticate
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseBadRequest
+from django.contrib.auth import update_session_auth_hash
 
 @login_required (login_url='/')
 def add_product(request):
@@ -24,7 +25,8 @@ def add_product(request):
 
 @login_required (login_url='/')
 def view_product(request):
-    user = Product.objects.all()
+    # user = Product.objects.all()
+    user = Product.objects.filter(user=request.user)
     return render(request, 'vender/view_product.html',{'user':user})
     
 
@@ -50,11 +52,32 @@ def update_product(request,pk):
 
 
 def earning(request):
-    return render(request, 'vender/earning.html')
+    user_orders = Order.objects.filter(orderitem__product__user=request.user)
+    user_products = Product.objects.filter(user=request.user)
+    total_earnings = sum(product.total_earnings() for product in user_products)
 
+    return render(request, 'vender/earning.html', {'total_earnings': total_earnings, 'user_orders':user_orders})
+
+
+# ///////// Orders ///////////
+from django.apps import apps
+
+# def calculate_total_quantity(order):
+#     order_items = OrderItem.objects.filter(order=order)
+#     total_quantity = sum(item.quantity for item in order_items)
+#     return total_quantity
+
+# def calculate_total_price(request):
+#     order_items = OrderItem.objects.filter(user=request.user)
+#     # total_price1 = sum(item.unit_price * item.quantity for item in order_items)
+#     # return total_price1
+#     return render(request, 'vender/order_vender.html',{'order_items':order_items})
 
 def order_status(request):
-    user_orders = Order.objects.filter(user=request.user)
+    # user_orders = Order.objects.filter(user=request.user)
+    user_orders = Order.objects.filter(orderitem__product__user=request.user)
+    print(request.user)
+    # order_items = OrderItem.objects.all()
     return render(request, 'vender/order_vender.html',{'user_orders':user_orders})
 
 # def order_status(request):
@@ -62,23 +85,34 @@ def order_status(request):
 #     user_orders = Order.objects.filter(user=request.user)
 
 
-# def project_allow(request, id):
-#     developer=Team.objects.get(id=id)
-#     developer.status = 0
-#     developer.save()
-#     return redirect('list3')
+def product_pending(request, id):
+    developer=Order.objects.get(id=id)
+    developer.status = 'pending'
+    developer.save()
+    return redirect('order1')
 
-# def project_completed(request, id):
-#     developer=Team.objects.get(id=id)
-#     developer.status = 1
-#     developer.save()
-#     return redirect('list3')
+def product_confirm(request, id):
+    developer=Order.objects.get(id=id)
+    developer.status = 'confirm'
+    developer.save()
+    return redirect('order1')
 
-# def project_pending(request, id):
-#     developer=Team.objects.get(id=id)
-#     developer.status = 2
-#     developer.save()
-#     return redirect('list3')
+def product_placed(request, id):
+    developer=Order.objects.get(id=id)
+    developer.status = 'shipped'
+    developer.save()
+    return redirect('order1')
+
+def product_completed(request, id):
+    developer=Order.objects.get(id=id)
+    developer.status = 'completed'
+    return redirect('order1')
+
+def product_cancel(request, id):
+    developer=Order.objects.get(id=id)
+    developer.status = 'cancel'
+    developer.save()
+    return redirect('order1')
 
 
 def vender_sign_in(request):

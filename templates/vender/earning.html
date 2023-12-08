@@ -34,10 +34,10 @@
 
 			<!-- Logo -->
 			<div class="header-left">
-				<a href="index.html" class="logo">
+				<a href="/dashboard-add" class="logo">
 					<img src="{% static 'vender/img/logo.png' %}" alt="Logo">
 				</a>
-				<a href="index.html" class="logo logo-small">
+				<a href="/dashboard-add" class="logo logo-small">
 					<img src="{% static 'vender/img/logo-small.png' %}" alt="Logo" width="30" height="30">
 				</a>
 			</div>
@@ -134,45 +134,34 @@
 							<a href="/earning"><i class="fa fa-money"></i> <span>Earning</span></a>
 						</li>
 						<li>
-							<a href="View_Order.html"><i class="fa fa-money"></i> <span>View Order</span></a>
+							<a href="/order1"><i class="fa fa-money"></i> <span>View Order</span></a>
 						</li>
-						<!--<li> -->
-						<!--	<a href="Product_review.html"><i class="fa fa-address-card"></i> <span>Product Review</span></a>-->
-						<!--</li>-->
-						<!--<li> -->
-						<!--	<a href="Notification.html"><i class="fa fa-question"></i> <span>Notification</span></a>-->
-						<!--</li>-->
-						<!--<li> -->
-						<!--	<a href="privacy_policy.html"><i class="fa fa-briefcase"></i> <span>privacy policy</span></a>-->
-						<!--</li>-->
-						<!--<li> -->
-						<!--	<a href="terms_condition.html"><i class="fa fa-briefcase"></i> <span>Terms Condition</span></a>-->
-						<!--</li>-->
+						
 					</ul>
 				</div>
 			</div>
 		</div>
 		<!-- /Sidebar -->
-        {% if messages %}
-        {% for message in messages %}
-        {% if message.tags == 'error'%}
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            {{message}}
-            
-            </div>
-        {% endif %}
-        {% endfor %}
-    {% endif %}
-    {% if messages %}
-        {% for message in messages %}
-        {% if message.tags == 'success'%}
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            {{message}}
-            
-            </div>
-        {% endif %}
-        {% endfor %}
-    {% endif %}
+		{% if messages %}
+		{% for message in messages %}
+		{% if message.tags == 'error'%}
+		<div class="alert alert-warning alert-dismissible fade show" role="alert">
+			{{message}}
+
+		</div>
+		{% endif %}
+		{% endfor %}
+		{% endif %}
+		{% if messages %}
+		{% for message in messages %}
+		{% if message.tags == 'success'%}
+		<div class="alert alert-warning alert-dismissible fade show" role="alert">
+			{{message}}
+
+		</div>
+		{% endif %}
+		{% endfor %}
+		{% endif %}
 		<!-- Page Wrapper -->
 		<div class="page-wrapper">
 			<div class="content container-fluid">
@@ -191,36 +180,46 @@
 											<thead>
 												<tr>
 													<th>S.no</th>
-													<th>Earning name</th>
-													<th>Earning Image</th>
-													<th>Earning Varient</th>
-													<th>Earning Quantity</th>
-													<th>Earning Badge</th>
-													<th>Earning Discription</th>
-													<th>Action</th>
+													<th>Product Name</th>
+													<th>Product Image</th>
+													<th>User Who Purchesed</th>
+													<th>Quantity</th>
+													<th>Price</th>
+													<th>Total</th>
+													<!-- <th>Action</th> -->
 												</tr>
 											</thead>
 											<tbody>
 												<tr class="even">
-													<td>1</td>
-													<td>Earning Clothes</td>
+													<!-- earnings_summary.html -->
+													<h2>Total Earnings: ${{ total_earnings }}</h2>
+													{% for order in user_orders %}
+													{% for item in order.orderitem_set.all %}
+													<td>{{ order.id }}</td>
+													<td>{{item.product.name}}</td>
 													<td><img class="rounded-circle"
-															src="assets/img/profiles/avatar-01.jpg" width="31"
-															alt="Ryan Taylor"></td>
-													<td>Size xl</td>
-													<td>3</td>
+															src="{{item.product.image.url}}" width="31"
+															alt="{{item.user}}" style="height: 60px;width: 60px;"></td>
+													<td>{{order.user}}</td>
+													<td>{{ item.quantity }}</td>
 													<td>
-														<div class="badge badge-success">Medium</div>
+														<div class="badge badge-success">{{item.unit_price}}</div>
 													</td>
-													<td>Lorem Ipsum is simply dummy text.</td>
 													<td>
+														<div class="badge badge-success">{{order.total_price}}</div>
+													</td>
+													<!-- <td>Lorem Ipsum is simply dummy text.</td> -->
+													<!-- <td>
 														<button class="btn btn-primary"><a class="edit-btn"
 																href="#">Edit</a></button>
 														<button class="btn btn-primary"><a class="edit-btn"
 																href="#">Delete</a></button>
-													</td>
+													</td> -->
+													
 												</tr>
-												<tr class="odd">
+												{% endfor %}
+													{% endfor %}
+												<!-- <tr class="odd">
 													<td>2</td>
 													<td>Earning Clothes</td>
 													<td><img class="rounded-circle"
@@ -239,83 +238,8 @@
 														<button class="btn btn-primary"><a class="edit-btn"
 																href="#">Delete</a></button>
 													</td>
-												</tr>
-												<tr class="even">
-													<td>1</td>
-													<td>Earning Clothes</td>
-													<td><img class="rounded-circle"
-															src="assets/img/profiles/avatar-01.jpg" width="31"
-															alt="Ryan Taylor"></td>
-													<td>Size xl</td>
-													<td>3</td>
-													<td>
-														<div class="badge badge-primary">high</div>
-													</td>
-													<td>Lorem Ipsum is simply dummy text.</td>
-													<td>
-														<button class="btn btn-primary"><a class="edit-btn"
-																href="#">Edit</a></button>
-														<button class="btn btn-primary"><a class="edit-btn"
-																href="#">Delete</a></button>
-													</td>
-												</tr>
-												<tr class="odd">
-													<td>2</td>
-													<td>Earning Clothes</td>
-													<td><img class="rounded-circle"
-															src="assets/img/profiles/avatar-01.jpg" width="31"
-															alt="Ryan Taylor"></td>
-													<td>Size xl</td>
-													<td>3</td>
-													<td>
-														<div class="badge badge-primary">high</div>
-													</td>
-													<td>Lorem Ipsum is simply dummy text.</td>
-													<td>
-														<button class="btn btn-primary"><a class="edit-btn"
-																href="#">Edit</a></button>
-														<button class="btn btn-primary"><a class="edit-btn"
-																href="#">Delete</a></button>
-													</td>
-												</tr>
-												<tr class="even">
-													<td>1</td>
-													<td>Earning Clothes</td>
-													<td><img class="rounded-circle"
-															src="assets/img/profiles/avatar-01.jpg" width="31"
-															alt="Ryan Taylor"></td>
-													<td>Size xl</td>
-													<td>3</td>
-													<td>
-														<div class="badge badge-primary">high</div>
-													</td>
-													<td>Lorem Ipsum is simply dummy text.</td>
-													<td>
-														<button class="btn btn-primary"><a class="edit-btn"
-																href="#">Edit</a></button>
-														<button class="btn btn-primary"><a class="edit-btn"
-																href="#">Delete</a></button>
-													</td>
-												</tr>
-												<tr class="odd">
-													<td>2</td>
-													<td>Earning Clothes</td>
-													<td><img class="rounded-circle"
-															src="assets/img/profiles/avatar-01.jpg" width="31"
-															alt="Ryan Taylor"></td>
-													<td>Size xl</td>
-													<td>3</td>
-													<td>
-														<div class="badge badge-primary">high</div>
-													</td>
-													<td>Lorem Ipsum is simply dummy text.</td>
-													<td>
-														<button class="btn btn-primary"><a class="edit-btn"
-																href="#">Edit</a></button>
-														<button class="btn btn-primary"><a class="edit-btn"
-																href="#">Delete</a></button>
-													</td>
-												</tr>
+												</tr> -->
+
 											</tbody>
 										</table>
 									</div>

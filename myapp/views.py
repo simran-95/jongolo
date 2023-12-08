@@ -5,19 +5,21 @@ from django.contrib.auth import login as dj_login, logout, authenticate
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-# from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth import update_session_auth_hash
 
 # Create your views here.
 
 def login(request):
     return render(request, 'admin-login.html')
 
-def login1(request):
-    print('..login page opened..')
-    return render(request, 'websiteuser/website-login.html')
 
-# def product_single(request):
-#     return render(request, 'websiteuser/product-single.html')
+def earning_admin(request):
+    user_orders = Order.objects.all()
+    user_products = Product.objects.all()
+    total_earnings = sum(product.total_earnings() for product in user_products)
+    return render(request, 'earning_admin.html',{'user_products':user_products, 'total_earnings':total_earnings, 'user_orders':user_orders})
+
+
 def superadmin_login(request):
     if request.method == 'POST':
         user = authenticate(request,
@@ -48,6 +50,22 @@ def blogger_login(request):
     return render(request, 'admin-login.html')
 
 
+def vender_login(request):
+    print('..login page opened..')
+    if request.method == 'POST':
+        user = authenticate(request,
+            email=request.POST.get('email'),
+            password=request.POST.get('password'),
+        )
+        if user and user.user_type == User.VENDER:
+            dj_login(request, user)
+            return redirect('dashboard-add')
+        else:
+            messages.error(request, 'Invalid credentials')
+
+    return render(request, 'websiteuser/website-login.html')
+
+
 def doLogin(request):
     if request.method=='POST':
         user=authenticate(request,
@@ -61,10 +79,10 @@ def doLogin(request):
                
             #    return redirect('dashboard')
            
-            if user_type==User.VENDER:
+            # if user_type==User.VENDER:
                
-                return redirect('dashboard-add')
-            elif user_type==User.ADDUSER:
+            #     return redirect('dashboard-add')
+            if user_type==User.ADDUSER:
                
                 return redirect('dashboard-web')
             elif user_type==User.BLOGER:

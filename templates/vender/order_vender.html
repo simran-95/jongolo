@@ -35,10 +35,10 @@
 
             <!-- Logo -->
             <div class="header-left">
-                <a href="index.html" class="logo">
+                <a href="/dashboard-add" class="logo">
                     <img src="{% static 'vender/img/logo.png' %}" alt="Logo">
                 </a>
-                <a href="index.html" class="logo logo-small">
+                <a href="/dashboard-add" class="logo logo-small">
                     <img src="{% static 'vender/img/logo-small.png' %}" alt="Logo" width="30" height="30">
                 </a>
             </div>
@@ -134,21 +134,10 @@
                         <li>
                             <a href="/earning"><i class="fa fa-money"></i> <span>Earning</span></a>
                         </li>
-                        <li>
-                            <a href="View_Order.html"><i class="fa fa-money"></i> <span>View Order</span></a>
+                        <li> 
+                            <a href="/order1"><i class="fa fa-money"></i> <span>View Order</span></a>
                         </li>
-                        <!--<li> -->
-                        <!--	<a href="Product_review.html"><i class="fa fa-address-card"></i> <span>Product Review</span></a>-->
-                        <!--</li>-->
-                        <!--<li> -->
-                        <!--	<a href="Notification.html"><i class="fa fa-question"></i> <span>Notification</span></a>-->
-                        <!--</li>-->
-                        <!--<li> -->
-                        <!--	<a href="privacy_policy.html"><i class="fa fa-briefcase"></i> <span>privacy policy</span></a>-->
-                        <!--</li>-->
-                        <!--<li> -->
-                        <!--	<a href="terms_condition.html"><i class="fa fa-briefcase"></i> <span>Terms Condition</span></a>-->
-                        <!--</li>-->
+
                     </ul>
                 </div>
             </div>
@@ -185,27 +174,30 @@
                                             <thead>
                                                 <tr class="text-center">
                                                     <!-- <th>&nbsp;</th> -->
+                                                    <th>Order_id</th>
                                                     <th>Product Image</th>
                                                     <th>Product name</th>
                                                     <th>Order Date</th>
                                                     <th>Price</th>
                                                     <th>Quantity</th>
                                                     <th>Total</th>
+                                                    <th>User</th>
                                                     <th>Status</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {% for order in user_orders %}
-                                                
+                                                {% for item in order.orderitem_set.all %}
                                                 <tr class="text-center">
-
+                                                    <td class="id">{{ order.id }}</td>
                                                     <td class="image-prod">
                                                         <img class="img" src="{{ item.product.image.url }}"
-                                                            alt="{{ item.product.name }}">
+                                                            alt="{{ item.product.name }}"
+                                                            style="height: 100px; width: 110px;">
                                                     </td>
                                                     <td class="product-name">
-                                                        <h3>{{ item.product.name }}</h3>
+                                                        <h5><span>{{ item.product.name }}</span></h5>
                                                     </td>
                                                     <td class="placed-date">{{ order.created_at }}</td>
                                                     <!-- <td class="shipping-address">
@@ -217,56 +209,77 @@
                                                         {{ item.quantity }}
                                                     </td>
 
-                                                    <td class="total">${{ item.unit_price|floatformat:2 }} * {{
-                                                        item.quantity }}
+                                                    <!-- <td class="total">${{ item.unit_price|floatformat:2 }} * {{ item.quantity }}
+                                                    </td> -->
+                                                    <td>{{ order.total_price }}</td>
+                                                    <!-- {% for o in order_items %}
+                                                    <td class="total">${{ o.total_price }} 
                                                     </td>
-
-                                                    <td>
-                                                        {% if item.status %}
-                                                    <td><small class="badge badge-success">Completed</small></td>
+                                                    {% endfor %} -->
+                                                    <!-- <td>
+                                                        {% if order.status %}
+                                                    <td><small class="badge badge-success">confirm</small></td>
                                                     {% else %}
-                                                    <td><small class="badge badge-warning">Pending</small></td>
+                                                    <td><small class="badge badge-warning">pending</small></td>
                                                     {% endif %}
-                                                    </td>
-
-
+                                                    </td> -->
+                                                    <!-- <div class="actions">
+                                                        {% if order.status == pending %}
+                                                        <button class="btn btn-secondary" disabled="disabled">Pending</button>
+                                                        {% elif order.status == confirm %}
+                                                        <button class="btn btn-success" disabled="disabled">Confirmed</button>
+                                                        {% elif order.status == shipped %}
+                                                        <button class="btn btn-primary" disabled="disabled">Shipped</button>
+                                                        {% elif order.status == complete %}
+                                                        <button class="btn btn-success" disabled="disabled">Pending</button>
+                                                        {% else %}
+                                                        <button class="btn btn-danger" disabled="disabled">Pending</button>
+                                                        {% endif %}
+                                                    </div> -->
+                                                    <td> {{ order.user }}</td>
+                                                    <td class="total"><small class="badge badge-success"></small>{{ order.status }}</td>
                                                     <td>
                                                         <div class="dropdown">
                                                             <button class="dropdown-toggle" type="button"
                                                                 data-toggle="dropdown"
                                                                 style="border: none;background: #fff0;"><img
-                                                                    src="{% static 'settings.png'%}"
+                                                                    src="{% static 'setting.png'%}"
                                                                     style="width:30px;height:30px;">
                                                             </button>
                                                             <ul class="dropdown-menu">
+
+                                                                <li><a href="pending/{{order.id}}" data-toggle="tooltip"
+                                                                        title="" data-original-title="pending"><img
+                                                                            src="{% static 'pending.png' %}"
+                                                                            style="width:20px;height:20px;"></a></li>
+
                                                                 <li><a href="confirmed/{{order.id}}"
                                                                         data-toggle="tooltip" title=""
-                                                                        data-original-title="allowt"><img
-                                                                            src="{% static 'Delete.png' %}"
-                                                                            style="width:30px;height:30px;"></a></li>
-
+                                                                        data-original-title="confirm"><img
+                                                                            src="{% static 'Delete1.png' %}"
+                                                                            style="width:20px;height:20px;"></a></li>
 
                                                                 <li><a href="placed/{{order.id}}" data-toggle="tooltip"
-                                                                        title="" data-original-title="complete"><img
+                                                                        title="" data-original-title="shipped"><img
                                                                             src="{% static 'active.png' %}"
-                                                                            style="width:30px;height:30px;"></a></li>
-
+                                                                            style="width:20px;height:20px;"></a></li>
 
                                                                 <li><a href="completed/{{order.id}}"
                                                                         data-toggle="tooltip" title=""
-                                                                        data-original-title="pending"><img
-                                                                            src="{% static 'pending.png' %}"
-                                                                            style="width:30px;height:30px;"></a></li>
+                                                                        data-original-title="complete"><img
+                                                                            src="{% static 'complete.png' %}"
+                                                                            style="width:20px;height:20px;"></a></li>
 
                                                                 <li><a href="cancel/{{order.id}}" data-toggle="tooltip"
-                                                                        title="" data-original-title="pending"><img
-                                                                            src="{% static 'pending.png' %}"
-                                                                            style="width:30px;height:30px;"></a></li>
+                                                                        title="" data-original-title="cancel"><img
+                                                                            src="{% static 'cancel.png' %}"
+                                                                            style="width:20px;height:20px;"></a></li>
                                                             </ul>
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                
+
+                                                {% endfor %}
                                                 {% endfor %}
                                             </tbody>
 

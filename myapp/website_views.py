@@ -110,18 +110,19 @@ def product_single(request,id):
 # ///////// Orders ///////////
 from django.apps import apps
 
-def calculate_total_quantity(order):
-    order_items = OrderItem.objects.filter(order=order)
-    total_quantity = sum(item.quantity for item in order_items)
-    return total_quantity
+# def calculate_total_quantity(order):
+#     order_items = OrderItem.objects.filter(order=order)
+#     total_quantity = sum(item.quantity for item in order_items)
+#     return total_quantity
 
-def calculate_total_price(order):
-    order_items = OrderItem.objects.filter(order=order)
-    total_price = sum(item.unit_price * item.quantity for item in order_items)
-    return total_price
+# def calculate_total_price(order):
+#     order_items = OrderItem.objects.filter(order=order)
+#     total_price1 = sum(item.unit_price * item.quantity for item in order_items)
+#     return total_price1
 
 def Order_view(request):
     user_orders = Order.objects.filter(user=request.user).order_by('-created_at')
+    # total_earnings = sum(product.total_earnings() for product in user_products)
     if request.user.is_authenticated:
         cart_items = CartItem.objects.filter(user=request.user)
         total_price = sum(item.total_price() for item in cart_items)

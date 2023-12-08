@@ -234,6 +234,11 @@ class Product(models.Model):
     description = models.CharField(max_length=200, default='' , null=True , blank=True)
     image = models.ImageField(upload_to='products')
 
+    def total_earnings(self):
+        order_items = OrderItem.objects.filter(product=self)
+        total_quantity_sold = sum(item.quantity for item in order_items)
+        return total_quantity_sold * self.price
+
     @staticmethod
     def get_products_by_id(ids):
         return Product.objects.filter(id__in =ids)
@@ -254,17 +259,8 @@ class Product(models.Model):
         return self.name
 
 
-
 # ////////////////add to cart and checkout/////////////////
 
-# class Address(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     country=models.ForeignKey(Country, on_delete=models.CASCADE)
-#     state=models.ForeignKey(State, on_delete=models.CASCADE)
-#     city=models.ForeignKey(City, on_delete=models.CASCADE)
-#     street_address = models.CharField(max_length=255)
-#     city = models.CharField(max_length=100)
-#     postal_code = models.CharField(max_length=20)
 
 class Adres(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -292,7 +288,6 @@ class CartItem(models.Model):
 
 
 
-
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -302,7 +297,7 @@ class Order(models.Model):
 
     # def __str__(self):
     #     return self.order
-    
+  
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
@@ -312,7 +307,11 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return self.order
-        
+
+    def total_earnings(self):
+        order_items = OrderItem.objects.filter(product=self)
+        total_quantity_sold = sum(item.quantity for item in order_items)
+        return total_quantity_sold * self.unit_price
 
 class CancelReason(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -322,7 +321,6 @@ class CancelReason(models.Model):
     def __str__(self):
         return self.reason  
 
-# gpt this is my checkout page's design and i have to follow these all fields so is it possible that in this form i can fetch user's details  as value in input field and if user choose ship to the address then it is click
 
 class Contact(models.Model):
     # id = models.AutoField(primary_key=True)
@@ -335,4 +333,31 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.name 
-    
+
+
+
+
+
+
+# class Address(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     country=models.ForeignKey(Country, on_delete=models.CASCADE)
+#     state=models.ForeignKey(State, on_delete=models.CASCADE)
+#     city=models.ForeignKey(City, on_delete=models.CASCADE)
+#     street_address = models.CharField(max_length=255)
+#     city = models.CharField(max_length=100)
+#     postal_code = models.CharField(max_length=20)
+
+
+# class OrderProduct(models.Model): 
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+#     country=models.CharField(max_length=100)
+#     state=models.CharField(max_length=100,null=True, blank=True)
+#     city=models.CharField(max_length=100,null=True, blank=True)
+#     quantity = models.PositiveIntegerField()
+#     unit_price = models.DecimalField(max_digits=10, decimal_places=2)
+#     shipping_address = models.ForeignKey(Adres, on_delete=models.SET_NULL, null=True, blank=True)       
+#     created_at = models.DateTimeField(auto_now_add=True)
+
+
