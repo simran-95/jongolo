@@ -5,7 +5,27 @@
 {% block content%}
 
 	
-    <!-- Page Wrapper -->
+{% if messages %}
+{% for message in messages %}
+{% if message.tags == 'error'%}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    {{message}}
+    
+    </div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% if messages %}
+{% for message in messages %}
+{% if message.tags == 'success'%}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    {{message}}
+    
+    </div>
+{% endif %}
+{% endfor %}
+{% endif %}
+<!-- Page Wrapper -->
     <div class="page-wrapper">
         <div class="content container-fluid">
         

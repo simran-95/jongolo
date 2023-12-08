@@ -45,9 +45,9 @@ class Adduser(forms.ModelForm):
 
 class AddUserForm(forms.ModelForm):
    
-    address = forms.CharField(widget=forms.Textarea(attrs={'rows': 3, 'cols': 30}))
+    address = forms.CharField(widget=forms.Textarea(attrs={'rows': 3, 'cols': 30}),required=False)
     contact = forms.IntegerField()
-    profile_pic = forms.ImageField()
+    profile_pic = forms.ImageField(required=False)
 
     class Meta:
         model = AddUser
@@ -68,9 +68,10 @@ class Addvender(forms.ModelForm):
 
 class AddVenderForm(forms.ModelForm):
    
-    address = forms.CharField(widget=forms.Textarea(attrs={'rows': 3, 'cols': 30}))
+    address = forms.CharField(widget=forms.Textarea(attrs={'rows': 3, 'cols': 30}),required=False)
     contact = forms.IntegerField()
-    profile_pic = forms.ImageField()
+    profile_pic = forms.ImageField(required=False)
+    
 
     class Meta:
         model = Vender
@@ -144,4 +145,18 @@ class BlogForm(forms.ModelForm):
     class Meta:
         model = Blog
         fields = ['title','description','image']
+        exclude = ['created_at']
+
+
+
+class ContactForm(forms.ModelForm):
+
+    name = forms.CharField( label='Name',required=True)
+    email = forms.EmailField(label='Email',required=True)
+    subject = forms.CharField( label='Subject',required=True)
+    message = forms.CharField(widget=forms.Textarea(attrs={'rows': 3, 'cols': 30}))
+   
+    class Meta:
+        model = Contact
+        fields = ['name','email','subject','message']
         exclude = ['created_at']

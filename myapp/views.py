@@ -49,7 +49,6 @@ def blogger_login(request):
 
 
 def doLogin(request):
-     
     if request.method=='POST':
         user=authenticate(request,
             email=request.POST.get('email'),
@@ -136,7 +135,6 @@ def delete_user(request,id):
     u = AddUser.objects.get(id=id)
     u.delete()
     return redirect('view_user')
-    
 
 
 def update_user(request,pk):

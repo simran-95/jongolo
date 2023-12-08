@@ -3,7 +3,30 @@
 {% load static %}
 {% block content%}
 			
-			<!-- Page Wrapper -->
+
+
+
+{% if messages %}
+{% for message in messages %}
+{% if message.tags == 'error'%}
+	<div class="alert alert-warning alert-dismissible fade show" role="alert">
+	{{message}}
+	
+	</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% if messages %}
+{% for message in messages %}
+{% if message.tags == 'success'%}
+	<div class="alert alert-warning alert-dismissible fade show" role="alert">
+	{{message}}
+	
+	</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+<!-- Page Wrapper -->
             <div class="page-wrapper">
                 <div class="content container-fluid">
 				
@@ -16,7 +39,7 @@
 										<h3 class="page-title">Add/Register Vendor </h3>
 									</div>
 									<div class="user-box">
-										<form method='post' action="{% url 'add_vender'%}" enctype='multipart/form-data'>
+										<form method='post' action="{% url 'add_vender'%}" enctype='multipart/form-data' novalidate>
 											{% csrf_token %}
 	
 											<div class="form-group col-sm-12">

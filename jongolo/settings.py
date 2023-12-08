@@ -140,6 +140,13 @@ AUTH_USER_MODEL='myapp.User'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_USE_TLS=True
+EMAIL_PORT=587
+EMAIL_HOST_USER='mahendraciss892@gmail.com'
+# EMAIL_HOST_PASSWORD='mydk ctyi mlbs eqor'
+EMAIL_HOST_PASSWORD='ciss@892'
 
 
 STRIPE_SECRET_KEY = 'sk_test_51OITjfSGqeyhk1pWAkeGPNjEevcHkTLHgSa56PfMqWH1ik4v6UbVv82jd4HYyXSNjGVlwl6vvwPfI8skyrpNdmke00zEEvqqu1'

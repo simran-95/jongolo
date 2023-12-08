@@ -199,8 +199,9 @@
 										 <td>{{r.contact}}</td>
 										 <td>{{r.address}}</td>
 										 <td>{{r.city}}</td>
-										 <td><img src="{{r.profile_pic.url}}" alt="" class="img1" height='60px' width='80px'>
-										 </td>
+										 
+											<td><img src="{% if r.profile_pic %}{{ r.profile_pic.url }}{% else %}#{% endif %}" alt="" class="img1" height='60px' width='80px'>
+										</td>
 										 <td>bagde</td>
 										  <td>    
 											<div class="dropdown">

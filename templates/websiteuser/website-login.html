@@ -172,8 +172,29 @@
     <div class="login-bgs"
         style="background: linear-gradient(90deg, #00000094, #0000009e), url(static/images/banner/login-bg.jpg);background-position: center;background-repeat: no-repeat;width: 99%;background-size: cover;height: 100vh;margin: 0;border-radius: 0px 0px;">
         <!-- background: linear-gradient(90deg, #000000bd, #00000000), url(images/login-bg.png); -->
+        {% if messages %}
+        {% for message in messages %}
+        {% if message.tags == 'error'%}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{message}}
+            
+            </div>
+        {% endif %}
+        {% endfor %}
+    {% endif %}
+    {% if messages %}
+        {% for message in messages %}
+        {% if message.tags == 'success'%}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{message}}
+            
+            </div>
+        {% endif %}
+        {% endfor %}
+    {% endif %}
         <div class="container-fluid">
             <div class="row">
+         
                 <div class="col-md-4">
                    
                 </div>
@@ -190,7 +211,7 @@
                                     <h5 style="color: white;">Login In To Continue </h5>
 
                                 </div>
-
+                         
                                 <div class="full-tabs">
                                     <button class="tablink" onclick="openPage('user', this, '#d6800a')"
                                         id="defaultOpen">User</button>
@@ -225,7 +246,7 @@
                                                         class="btn btn-primary account-btn">Login</button>
                                                 </div>
                                                 <div class="text-center register-link" style="color: white;">
-                                                    Don’t have an account? <a href="register.html"
+                                                    Don’t have an account? <a href="/sign-in1"
                                                         style="color: white;"> Register Now</a>
                                                 </div>
                                             </form>
@@ -258,7 +279,7 @@
                                                         class="btn btn-primary account-btn">Login</button>
                                                 </div>
                                                 <div class="text-center register-link" style="color: white;">
-                                                    Don’t have an account? <a href="/add_vender"
+                                                    Don’t have an account? <a href="/sign-in"
                                                         style="color: white;"> Register Now</a>
                                                 </div>
                                             </form>

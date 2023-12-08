@@ -9,6 +9,8 @@ from django.conf import settings
 import stripe
 from django.views import View
 from .models import Order as OrderModel
+from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
 
 
 stripe.api_key = 'sk_test_51OITjfSGqeyhk1pWAkeGPNjEevcHkTLHgSa56PfMqWH1ik4v6UbVv82jd4HYyXSNjGVlwl6vvwPfI8skyrpNdmke00zEEvqqu1'
@@ -353,3 +355,115 @@ def website_blog(request):
         total_price = 0
         cart_count = 0
     return render(request, 'websiteuser/blog.html',{'user':user, 'cart_count':cart_count, 'total_price':total_price})
+
+
+
+
+def user_sign_in(request):
+    userForm=Adduser()
+    receptionForm=AddUserForm()
+    mydict={'userForm':userForm,'receptionForm':receptionForm}
+    if request.method=='POST':
+        userForm=Adduser(request.POST)
+        receptionForm=AddUserForm(request.POST, request.FILES)
+        if userForm.is_valid() and receptionForm.is_valid():
+            user=userForm.save()
+            user.user_type=3
+            user.set_password(user.password)
+            user.save()
+
+            reception=receptionForm.save(commit=False)
+            reception.user=user
+           
+            reception.save()
+            return HttpResponse('Successfully Added!!..')
+        else:
+            print(userForm.errors)
+            print(receptionForm.errors)
+        
+    return render(request, 'websiteuser/register.html', context=mydict)
+
+
+
+from django.contrib.auth import update_session_auth_hash
+
+def profile(request):
+    user_profile = AddUser.objects.get(user=request.user)
+
+    if request.method == 'POST':
+        fm = Adduser(request.POST, request.FILES, instance=request.user)
+        form = AddUserForm(request.POST, request.FILES, instance=user_profile)
+       
+        if form.is_valid() and fm.is_valid():
+            password = fm.cleaned_data.get('password')
+            if password:
+                request.user.set_password(password)
+                update_session_auth_hash(request, request.user)
+            form.save()
+            fm.save()
+
+            return redirect('profile')  # Redirect to the user's profile page after successful update
+    else:
+        form = AddUserForm(instance=user_profile)
+        fm = Adduser(instance=request.user)
+
+    return render(request, 'websiteuser/profile.html', {'form': form, 'fm':fm})
+
+
+
+def contact(request):
+
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            subject = form.cleaned_data['subject']
+            message = form.cleaned_data['message']
+
+            # Save the contact data to the database
+            Contact.objects.create(name=name, email=email, subject=subject, message=message)
+
+            # Send the email
+            from_email = 'mahendraciss892@gmail.com'
+            to = email
+
+            try:
+                msg = EmailMultiAlternatives(subject, message, from_email, [to])
+                msg.send()
+                return redirect('contact')
+            except Exception as e:
+                print(f"Error sending email: {e}")
+                return render(request, 'websiteuser/contact.html', {'form': form, 'error': 'Error sending email'})
+    else:
+        form = ContactForm()
+
+    return render(request, 'websiteuser/contact.html', {'form': form}) 
+
+
+    # if request.method=='POST':
+    #     name=request.POST['name']
+    #     email=request.POST['email']
+    #     subject=request.POST['subject']
+    #     message=request.POST['message']
+
+        
+    #     t = Contact(name=name, email=email, subject=subject, message=message)
+    #     t.save()
+
+    #     from_email = 'mahendraciss892@gmail.com'
+      
+    # #         # to = Developer.objects.get(project1=request.POST.get('project1'))
+    #     to=email
+    # #         # to='simranwachhani548@gmail.com'
+    #     print(to)
+    # #         # filesent = request.POST.get('filesent')
+    #     msg = EmailMultiAlternatives(subject, message, from_email, [to])
+    #     msg.send()
+    #     return redirect('contact')
+    # return render(request, 'websiteuser/contact.html')
+
+
+
+
+    

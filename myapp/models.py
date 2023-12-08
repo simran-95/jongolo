@@ -139,13 +139,12 @@ class AddUser(models.Model):
 class Vender(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.OneToOneField(User, on_delete = models.CASCADE)
-    address = models.TextField()
+    address = models.TextField(blank=True, null=True)
     # gender=models.CharField(max_length=100)
     contact=models.IntegerField()
-    profile_pic=models.ImageField(upload_to='user_profile',default="")
-    city=models.CharField(max_length=100)
-    # password=models.CharField(max_length=100)
-  
+    profile_pic=models.ImageField(upload_to='user_profile',default="",blank=True, null=True)
+    city=models.CharField(max_length=100, blank=True, null=True)
+    # password=models.CharField(max_length=100)  
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     slug = models.SlugField(null=True)
@@ -167,10 +166,10 @@ class Vender(models.Model):
 class Blogger(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete = models.CASCADE)
-    address = models.TextField()
-    contact=models.IntegerField()
-    profile_pic=models.ImageField(upload_to='user_profile',default="")
-    city=models.CharField(max_length=100)
+    address = models.TextField(blank=True, null=True)
+    contact=models.IntegerField(blank=True, null=True)
+    profile_pic=models.ImageField(upload_to='user_profile',default="", blank=True, null=True)
+    city=models.CharField(max_length=100, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     slug = models.SlugField(null=True)
@@ -325,4 +324,15 @@ class CancelReason(models.Model):
 
 # gpt this is my checkout page's design and i have to follow these all fields so is it possible that in this form i can fetch user's details  as value in input field and if user choose ship to the address then it is click
 
+class Contact(models.Model):
+    # id = models.AutoField(primary_key=True)
+    # user = models.OneToOneField(User, on_delete = models.CASCADE)
+    name = models.CharField(max_length=100)
+    email = models.CharField(max_length=100)
+    subject = models.CharField(max_length=100)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.name 
+    

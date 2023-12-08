@@ -20,6 +20,8 @@ urlpatterns=[
     path('view_user',views.view_user,name='view_user'),
     path('delete_user/<int:id>/',views.delete_user, name='delete_user'),
     path('update_user/<int:pk>',views.update_user,name='update_user'),
+    path('profile', vender_views.profile,name='profile'),
+    # path('profile1', vender_views.value,name='profile1'),
     
     # path('teacher_list',views.teacher_list,name='teacher_list'),
     # path('delete/<int:id>/', views.teacher_delete, name='delete'),
@@ -56,6 +58,7 @@ urlpatterns=[
     # path('/register',views.add_vendor,name='product'),
     path('earning',vender_views.earning,name='earning'),
     path('order1',vender_views.order_status,name='order1'),
+    path('sign-in', vender_views.vender_sign_in, name='sign-in'),
 
     #//////// for Website and user /////////
     path('product',website_views.product,name='product'),
@@ -71,11 +74,12 @@ urlpatterns=[
     path('checkout', website_views.checkout, name='checkout'),
     path('order',website_views.Order_view,name='order'),
     # path('payment_form', website_views.HomePageView.as_view(), name='payment_form'),
-    #path('payment_form/', website_views.checkout, name='payment_form'),
     path('payment_form/<int:order_id>/<str:total_price>/', website_views.PaymentFormView.as_view(), name='payment_form'),
     path('cancel_order/<int:order_id>/', website_views.cancel_order, name='cancel_order'),
-    
+    path('sign-in1', website_views.user_sign_in, name='sign-in1'),
+
     path('blog1',website_views.website_blog,name='blog1'),
+    path('contact',website_views.contact,name='contact'),
    
     # path('payment/', website_views.initiate_payment, name='payment'),
     

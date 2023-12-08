@@ -3,80 +3,88 @@
 {% load static %}
 {% block content%}
 
-	
-		<!-- Main Wrapper -->
-        <div class="main-wrapper">
-		
-						
-			
-			
-			<!-- Page Wrapper -->
-            <div class="page-wrapper">
-                <div class="content container-fluid">
-				
-					<!-- Page Header -->
-					<div class="page-header">
-						<div class="row">
-							<div class="col-sm-12">
-								<div class="card full-header">
-									<div class="users">
-										<h3 class="page-title">View Bloger </h3>
-									</div>
-									<div class="user-box">
+
+<!-- Main Wrapper -->
+<div class="main-wrapper">
+
+
+
+
+	<!-- Page Wrapper -->
+	<div class="page-wrapper">
+		<div class="content container-fluid">
+
+			<!-- Page Header -->
+			<div class="page-header">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="card full-header">
+							<div class="users">
+								<h3 class="page-title">View Bloger </h3>
+							</div>
+							<div class="user-box">
 								<div class="datatables">
-                                    <table id="example" class="display" style="width:100%;    border: 2px solid #20214f;">
-                                        <thead>
-                                            <tr>
+									<table id="example" class="display"
+										style="width:100%;    border: 2px solid #20214f;">
+										<thead>
+											<tr>
 												<!-- <th><input type="checkbox" id="select-all" onclick="toggleCheckbox(this)"></th>
 											</th> -->
-                                                <th>S no</th>
-                                                <th>Username</th>
+												<th>S no</th>
+												<th>Username</th>
 												<th>Email</th>
 												<th>Contact Number</th>
 												<th>Address</th>
-                                                <th>City</th>
+												<th>City</th>
 												<th>Image</th>
-                                                <th>Badge</th>
-                                                
-                                                <th>Action</th> 
-                                            </tr>
-                                        </thead>
-                                        <tbody>
+												<th>Badge</th>
+
+												<th>Action</th>
+											</tr>
+										</thead>
+										<tbody>
 											{% for r in user %}
 											<tr>
 												<!-- <td>  <div>
 													<input type="checkbox" class="list-checkbox" name="selected_reception" value="{{ r.id }}">
 													<label for="id_selected_items_{{ forloop.counter }}">{{ r.name }}</label>
 													</div></td> -->
-												 <td>{{r.id}}</td>
-												 <td>{{r.user.username}}</td>
-												 <td>{{r.user.email}}</td>
-												 <td>{{r.contact}}</td>
-												 <td>{{r.address}}</td>
-												 <td>{{r.city}}</td>
-												 <td><img src="{{r.profile_pic.url}}" alt="" class="img1" height='60px' width='80px'>
-												 </td>
-												 <td>bagde</td>
-												  <td>    
+												<td>{{r.id}}</td>
+												<td>{{r.user.username}}</td>
+												<td>{{r.user.email}}</td>
+												<td>{{r.contact}}</td>
+												<td>{{r.address}}</td>
+												<td>{{r.city}}</td>
+												<td><img src="{{r.profile_pic.url}}" alt="" class="img1" height='60px'
+														width='80px'>
+												</td>
+												<td>bagde</td>
+												<td>
 													<div class="dropdown">
-													<button class="dropdown-toggle" type="button" data-toggle="dropdown"
-													   style="border: none;background: #fff0;"><img src=" {% static 'setting.png'%}"
-														  style="width:30px;height:30px;">
-													</button>
-													<ul class="dropdown-menu">
-													   <li><a href="/delete_bloger/{{r.pk}}" data-toggle="tooltip" title="" onclick="return confirm('Are you sure you want to delete this?')"
-																data-original-title="remove"><img src=" {% static 'delete.png'%}"
-																   style="width:30px;height:30px;"></a></li>
-							
-												   <li><a href="/update_bloger/{{r.pk}}" data-toggle="tooltip" title=""
-																data-original-title="edit"><img src=" {% static 'edit.png'%}"
-																   style="width:30px;height:30px;"></a></li> 
-													</ul>
-												 </div>
-											  </td> 
+														<button class="dropdown-toggle" type="button"
+															data-toggle="dropdown"
+															style="border: none;background: #fff0;"><img
+																src=" {% static 'setting.png'%}"
+																style="width:30px;height:30px;">
+														</button>
+														<ul class="dropdown-menu">
+															<li><a href="/delete_bloger/{{r.pk}}" data-toggle="tooltip"
+																	title=""
+																	onclick="return confirm('Are you sure you want to delete this?')"
+																	data-original-title="remove"><img
+																		src=" {% static 'delete.png'%}"
+																		style="width:30px;height:30px;"></a></li>
+
+															<li><a href="/update_bloger/{{r.pk}}" data-toggle="tooltip"
+																	title="" data-original-title="edit"><img
+																		src=" {% static 'edit.png'%}"
+																		style="width:30px;height:30px;"></a></li>
+														</ul>
+													</div>
+												</td>
 											</tr>
 											{% endfor %}
-                                            <!-- <tr class="odd">
+											<!-- <tr class="odd">
                                                 <td>2</td>
                                                 <td>Tiger Nixon</td>
                                                 <td>jongolo1234</td>
@@ -89,38 +97,38 @@
                                                   <button class="btn btn-primary"><a class="edit-btn" href="#">Delete</a></button>
                                               </td>
                                             </tr> -->
-                                                                         
-                                           
-                                        </tbody>
-                                        </table>
-                                   </div>
 
-									</div>
+
+										</tbody>
+									</table>
 								</div>
+
 							</div>
 						</div>
 					</div>
-					<!-- /Page Header -->
-					
-					<div class="row">
-						<div class="col-sm-12">
-							
-						</div>			
-					</div>
-					
-				</div>			
+				</div>
 			</div>
-			<!-- /Page Wrapper -->
-		
-        </div>
-		<!-- /Main Wrapper -->
-		
-	
-		<!-- DATATABLES  -->
-		<!--DATATABLES SCRIPT START -->
-        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-        <script>
-            new DataTable('#example');
-        </script>
-		{% endblock %}
+			<!-- /Page Header -->
+
+			<div class="row">
+				<div class="col-sm-12">
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<!-- /Page Wrapper -->
+
+</div>
+<!-- /Main Wrapper -->
+
+
+<!-- DATATABLES  -->
+<!--DATATABLES SCRIPT START -->
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script>
+	new DataTable('#example');
+</script>
+{% endblock %}
