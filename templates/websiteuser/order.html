@@ -6,8 +6,8 @@
 <style>
     .dialog {
         background-color: #fff;
-        border: 1px solid lightgrey;
-        padding: 20px;
+        border: 1px solid transparent;
+        padding: 10px 10px;
         border-radius: 10px;
         text-align: center;
         max-width: 100%;
@@ -34,7 +34,7 @@
         background: #af6b14;
     }
 
-    ul {
+    ul.details-lists {
         list-style-type: none;
         padding-left: 0px;
         text-align: left;
@@ -125,9 +125,9 @@
 
                                 <td>
                                     {% if item.status %}
-                                <td><small class="badge badge-success">Completed</small></td>
+                                <small class="badge badge-success">Completed</small></td>
                                 {% else %}
-                                <td><small class="badge badge-warning">Pending</small></td>
+                                <small class="badge badge-warning">Pending</small></td>
                                 {% endif %}
                                 </td>
 
@@ -181,11 +181,11 @@
                         <div class="overlay" id="confirmationOverlay" style="display: block !important;">
                             <div class="dialog" id="confirmationDialog">
                                 <p>Are you sure you want to cancel this product? if Yes Select Reason </p>
-
+<hr>
                                 <form method="post" id="cancellationForm" action="{% url 'cancel_order' order_id=0 %}">
                                     {% csrf_token %}
 
-                                    <ul>
+                                    <ul class="details-lists">
                                         <li class="cancellation-reasons"><input type="radio" name="reason"
                                                 value="Booking by mistake" required> Booking by mistake</li>
                                         <li class="cancellation-reasons"><input type="radio" name="reason"

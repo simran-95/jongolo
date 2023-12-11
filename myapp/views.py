@@ -11,8 +11,8 @@ from django.contrib.auth import update_session_auth_hash
 
 
 
-def login(request):
-    return render(request, 'admin-login.html')
+# def login(request):
+#     return render(request, 'admin-login.html')
 
 
 @login_required(login_url='/login')
