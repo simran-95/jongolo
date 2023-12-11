@@ -11,9 +11,9 @@ from django.contrib.auth import update_session_auth_hash
 
 
 
-
 def login(request):
     return render(request, 'admin-login.html')
+
 
 @login_required(login_url='/login')
 def earning_admin(request):
@@ -51,6 +51,7 @@ def blogger_login(request):
             messages.error(request, 'Invalid credentials')
 
     return render(request, 'admin-login.html')
+
 
 
 def vender_login(request):
@@ -119,11 +120,12 @@ def base(request):
     return render(request, 'websiteuser/base.html')
 
 
-def logout_view(request):
+def custom_logout(request):
     logout(request)
-    return redirect('/')
+    return redirect('/login')
 
-@login_required(login_url='/login')
+
+@login_required(login_url='login')
 def add_user(request):
     userForm=Adduser()
     receptionForm=AddUserForm()

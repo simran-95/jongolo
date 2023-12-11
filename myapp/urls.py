@@ -11,18 +11,20 @@ urlpatterns=[
     # path('login2', views.vender_login,name='login2'),
     path('',views.vender_login,name='login1'),
     path('doLogin',views.doLogin,name='doLogin'),
-    path('dologout',views.logout_view,name='logout'),
+    path('dologout1',views.custom_logout,name='logout1'),
+    path('dologout',website_views.logout_view,name='logout'),
     path('base',views.base,name='base'),
    
     path('dashboard',views.dashboard,name='dashboard'),
     path('dashboard-add',views.dashboard1,name='dashboard-add'),
     path('dashboard-blog',views.dashboard3,name='dashboard-blog'),
-    path('add_user',views.add_user,name='add_user'),
-    path('view_user',views.view_user,name='view_user'),
+    path('sadmin/add_user',views.add_user,name='sadmin/add_user'),
+    path('sadmin/view_user',views.view_user,name='sadmin/view_user'),
     path('delete_user/<int:id>/',views.delete_user, name='delete_user'),
     path('update_user/<int:pk>',views.update_user,name='update_user'),
     path('profile', vender_views.profile,name='profile'),
     path('earning_admin', views.earning_admin,name='earning_admin'),
+
     
     # path('teacher_list',views.teacher_list,name='teacher_list'),
     # path('delete/<int:id>/', views.teacher_delete, name='delete'),

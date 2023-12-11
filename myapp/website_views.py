@@ -30,6 +30,10 @@ def about(request):
         cart_count = 0
     return render(request, 'websiteuser/about.html',{'total_price': total_price, 'cart_count': cart_count})
 
+def logout_view(request):
+    logout(request)
+    return redirect('/')
+
 def dashboard2(request):
     print(request.user)
     cat = Product.objects.all()[:12]
@@ -338,8 +342,9 @@ def cancel_order(request, order_id):
     # Check if the order is cancelable (pending or confirmed)
     if order.status in ['pending', 'confirmed']:
         # Check if a CancelReason already exists for this order
+        print(f"Cancel Order view called with order_id: {order_id}")
         cancel_reason, created = CancelReason.objects.get_or_create(order=order, user=request.user)
-
+        print(f"Cancel Reason: {cancel_reason}")
         # If it's not created, display an error message
         if not created:
             return HttpResponseBadRequest('Cancel reason already provided for this order.')

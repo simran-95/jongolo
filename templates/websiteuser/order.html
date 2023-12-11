@@ -6,13 +6,47 @@
 <style>
     .dialog {
         background-color: #fff;
+        border: 1px solid lightgrey;
         padding: 20px;
         border-radius: 10px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
         text-align: center;
-        max-width: 400px;
+        max-width: 100%;
         animation: slideIn 0.3s ease-in-out;
-        background-color: #0d1a27;
+    }
+
+    input.primary,
+    button.primary {
+        width: 21%;
+        font-weight: 600;
+        text-transform: capitalize;
+        font-size: 14px;
+        letter-spacing: 0px;
+        text-align: center;
+        color: black !important;
+        border-radius: 5px;
+        border: 2px solid #af6b14 !important;
+        padding: 4px 10px;
+        background: #af6b14 !important;
+        height: 40px !important;
+    }
+
+    .modal-header {
+        background: #af6b14;
+    }
+
+    ul {
+        list-style-type: none;
+        padding-left: 0px;
+        text-align: left;
+        border-bottom: 1px solid lightgrey;
+    }
+
+    ul li.cancellation-reasons {
+        padding: 5px 0px;
+    }
+
+    ul li.cancellation-reasons input[type="radio"] {
+        margin-right: 10px;
     }
 </style>
 
@@ -84,34 +118,66 @@
 
                                     {% if order.status == 'pending' or order.status == 'confirmed' %}
                                     <!-- Display cancel option and form here -->
-                                    <button type="button" class="btn btn-danger" data-toggle="modal"
+                                    <!-- <button type="button" class="btn btn-danger" data-toggle="modal"
                                         onclick="showConfirmationDialog('{{order.id}}')">
+                                        Cancel Order
+                                    </button> -->
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#exampleModal" onclick="showConfirmationDialog('{{order.id}}')" data-order-id="{{order.id}}">
                                         Cancel Order
                                     </button>
 
+           
+                                    {% else %}
+                                    <!-- Display a message or something else for orders that can't be canceled -->
+                                    <p>This order cannot be canceled.</p>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% endfor %}
+                        </tbody>
 
-                                    <div class="overlay" id="confirmationOverlay">
-                                        <div class="dialog" id="confirmationDialog">
-                                            <p>Are you sure you want to cancel this product? if Yes Select Reason </p>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- POPUP CANCEL BUTTON SCRIPT START -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="full-popup">
 
-                                            <form method="post" id="cancellationForm"
-                                                action="{% url 'cancel_order' order.id %}">
-                                                {% csrf_token %}
+                        <div class="overlay" id="confirmationOverlay" style="display: block !important;">
+                            <div class="dialog" id="confirmationDialog">
+                                <p>Are you sure you want to cancel this product? if Yes Select Reason </p>
+                            
+                                <form method="post" id="cancellationForm" action="{% url 'cancel_order' order_id=0 %}">
+                                    {% csrf_token %}
 
-                                                <ul>
-                                                    <li class="cancellation-reasons"><input type="radio" name="reason"
-                                                            value="Booking by mistake" required> Booking by mistake</li>
-                                                    <li class="cancellation-reasons"><input type="radio" name="reason"
-                                                            value="Wrong product" required> Wrong product</li>
-                                                    <li class="cancellation-reasons"><input type="radio" name="reason"
-                                                            value="Owner misbehave" required> Owner misbehave</li>
-                                                    <li class="cancellation-reasons"><input type="radio" name="reason"
-                                                            value="Changed plan" required> Changed plan</li>
-                                                    <li class="cancellation-reasons"><input type="radio" name="reason"
-                                                            value="Other" required> Other</li>
-                                                </ul>
+                                    <ul>
+                                        <li class="cancellation-reasons"><input type="radio" name="reason"
+                                                value="Booking by mistake" required> Booking by mistake</li>
+                                        <li class="cancellation-reasons"><input type="radio" name="reason"
+                                                value="Wrong product" required> Wrong product</li>
+                                        <li class="cancellation-reasons"><input type="radio" name="reason"
+                                                value="Owner misbehave" required> Owner misbehave</li>
+                                        <li class="cancellation-reasons"><input type="radio" name="reason"
+                                                value="Changed plan" required> Changed plan</li>
+                                        <li class="cancellation-reasons"><input type="radio" name="reason" value="Other"
+                                                required> Other</li>
+                                    </ul>
 
-                                                <!-- <div class="form-group">
+                                    <!-- <div class="form-group">
                                                     <div class="col-md-12">
                                                         <div class="radio">
                                                             <label><input type="radio" name="reason" class="mr-2"> Check
@@ -135,32 +201,22 @@
                                                     </div>
                                                 </div> -->
 
-                                                <input class="primary" type="submit" value="Submit">
-                                                <button class="primary"
-                                                    onclick="closeConfirmationDialog()">close</button>
-                                                <!-- <button class="primary" onclick="showConfirmationDialog()">Ok</button> -->
-                                            </form>
-
-
-
-
-                                        </div>
+                                    <div class="footer-btns">
+                                        <input class="primary" type="submit" value="Submit">
+                                        <button class="primary" onclick="closeConfirmationDialog()">close</button>
                                     </div>
-                                    {% else %}
-                                    <!-- Display a message or something else for orders that can't be canceled -->
-                                    <p>This order cannot be canceled.</p>
-                                    {% endif %}
-                                </td>
-                            </tr>
-                            {% endfor %}
-                            {% endfor %}
-                        </tbody>
-
-                    </table>
+                                    <!-- <button class="primary" onclick="showConfirmationDialog()">Ok</button> -->
+                                </form>
+                             
+                            </div>
+                        </div>
+                        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div> -->
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 </section>
 <!-- 
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
@@ -214,82 +270,96 @@
     });
 });</script> -->
 
+<!--  -->
+
+
+
+
 <script>
     const confirmationOverlay = document.getElementById("confirmationOverlay");
 
-    const confirmationDialog = document.getElementById("confirmationDialog");
-    confirmationOverlay.style.display = "none";
+const confirmationDialog = document.getElementById("confirmationDialog");
+confirmationOverlay.style.display = "none";  // Set initial display to "none"
 
-    finalOrderID = ''
+let finalOrderID = '';
 
+function showConfirmationDialog(orderId) {
+    confirmationOverlay.style.display = "flex";
+    finalOrderID = orderId;
+}
 
-    function showConfirmationDialog(orderId) {
+function closeConfirmationDialog() {
+    confirmationOverlay.style.display = "none";  // Set display to "none" when closing
+}
 
-        confirmationOverlay.style.display = "flex";
-        finalOrderID = orderId
+function showConfirmationDialog(orderId) {
+    confirmationOverlay.style.display = "flex";
+    finalOrderID = orderId;
 
-    }
+    // Set the order ID value in the hidden input field
+    $('#order_id_input').val(finalOrderID);
 
-    function closeConfirmationDialog(orderId) {
-        confirmationOverlay.style.display = "none";
-    }
+    // Update the form action URL dynamically before making the AJAX request
+    $('#cancellationForm').attr('action', `{% url 'cancel_order' order_id=0 %}`.replace('0', finalOrderID));
+}
 
+$("#cancellationForm").submit(function (event) {
+    event.preventDefault(); // Prevent the form from submitting normally
+    const selectedReason = $("input[name='reason']:checked").val();
 
-
-    $("#cancellationForm").submit(function (event) {
-        event.preventDefault(); // Prevent the form from submitting normally
-        const selectedReason = $("input[name='reason']:checked").val();
-
-        // Send the orderId and selectedReason to the server using AJAX
-        $.ajax({
-            url: `/cancel_order/${orderId}/`,
-            method: 'POST', // Use the same URL as the current page
-            data: { cancel_reason: reason },
-            success: function (data) {
-                if (data.success) {
-                    alert(data.message);
-                    location.reload();
-                } else {
-                    alert(data.message);
-                }
-            },
-            error: function () {
-                alert('An error occurred.');
+    // Send the form data, including the order ID, to the server using AJAX
+    $.ajax({
+        url: '/cancel_order/',
+        method: 'POST',
+        data: { 
+            order_id: $('#order_id_input').val(),
+            cancel_reason: selectedReason
+        },
+        success: function (data) {
+            if (data.success) {
+                alert(data.message);
+                location.reload();
+            } else {
+                alert(data.message);
             }
-        });
-
-        confirmationOverlay.style.display = "none";
+        },
+        error: function () {
+            alert('An error occurred.');
+        }
     });
 
+    confirmationOverlay.style.display = "none";
+});
 
 
 
-    function showCancellationDialog1(orderId) {
 
-        // Prevent the default behavior of the anchor element
-        event.preventDefault();
+    // function showCancellationDialog1(orderId) {
 
-        // Send the orderId and reason to the server using AJAX
-        $.ajax({
-            type: "POST",
-            url: "order_history.php", // Use the same URL as the current page
-            data: {
-                orderId: orderId,
-                reason: reason
-            },
-            success: function (response) {
-                $("#successMessage").removeClass("d-none");
-                $("#errorMessage").addClass("d-none");
-                location.reload();
-            },
-            error: function (xhr, status, error) {
-                $("#errorMessage").removeClass("d-none");
-                $("#successMessage").addClass("d-none");
-            }
-        });
+    //     // Prevent the default behavior of the anchor element
+    //     event.preventDefault();
+
+    //     // Send the orderId and reason to the server using AJAX
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "order_history.php", // Use the same URL as the current page
+    //         data: {
+    //             orderId: orderId,
+    //             reason: reason
+    //         },
+    //         success: function (response) {
+    //             $("#successMessage").removeClass("d-none");
+    //             $("#errorMessage").addClass("d-none");
+    //             location.reload();
+    //         },
+    //         error: function (xhr, status, error) {
+    //             $("#errorMessage").removeClass("d-none");
+    //             $("#successMessage").addClass("d-none");
+    //         }
+    //     });
 
 
-    }
+    // }
 </script>
 
 {% endblock %}

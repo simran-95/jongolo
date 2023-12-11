@@ -128,9 +128,9 @@ class AddUser(models.Model):
         verbose_name_plural = ('adduser')
 
     def save(self, *args, **kwargs):
-
         self.slug = slugify(self.user.username )
         return super().save(*args, **kwargs)
+
     def __str__(self):
 
         return f"{self.user}"
