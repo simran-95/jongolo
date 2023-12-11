@@ -61,6 +61,26 @@
         </div>
     </div>
 </div>
+{% if messages %}
+{% for message in messages %}
+{% if message.tags == 'error'%}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    {{message}}
+
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% if messages %}
+{% for message in messages %}
+{% if message.tags == 'success'%}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    {{message}}
+
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
 <section class="ftco-section ftco-cart">
     <div class="container">
         <div class="row">
@@ -123,11 +143,12 @@
                                         Cancel Order
                                     </button> -->
                                     <button type="button" class="btn btn-primary" data-toggle="modal"
-                                        data-target="#exampleModal" onclick="showConfirmationDialog('{{order.id}}')" data-order-id="{{order.id}}">
+                                        data-target="#exampleModal" onclick="showConfirmationDialog('{{order.id}}')"
+                                        data-order-id="{{order.id}}">
                                         Cancel Order
                                     </button>
 
-           
+
                                     {% else %}
                                     <!-- Display a message or something else for orders that can't be canceled -->
                                     <p>This order cannot be canceled.</p>
@@ -160,7 +181,7 @@
                         <div class="overlay" id="confirmationOverlay" style="display: block !important;">
                             <div class="dialog" id="confirmationDialog">
                                 <p>Are you sure you want to cancel this product? if Yes Select Reason </p>
-                            
+
                                 <form method="post" id="cancellationForm" action="{% url 'cancel_order' order_id=0 %}">
                                     {% csrf_token %}
 
@@ -207,7 +228,7 @@
                                     </div>
                                     <!-- <button class="primary" onclick="showConfirmationDialog()">Ok</button> -->
                                 </form>
-                             
+
                             </div>
                         </div>
                         <!-- <div class="modal-footer">
@@ -278,58 +299,58 @@
 <script>
     const confirmationOverlay = document.getElementById("confirmationOverlay");
 
-const confirmationDialog = document.getElementById("confirmationDialog");
-confirmationOverlay.style.display = "none";  // Set initial display to "none"
+    const confirmationDialog = document.getElementById("confirmationDialog");
+    confirmationOverlay.style.display = "none";  // Set initial display to "none"
 
-let finalOrderID = '';
+    let finalOrderID = '';
 
-function showConfirmationDialog(orderId) {
-    confirmationOverlay.style.display = "flex";
-    finalOrderID = orderId;
-}
+    function showConfirmationDialog(orderId) {
+        confirmationOverlay.style.display = "flex";
+        finalOrderID = orderId;
+    }
 
-function closeConfirmationDialog() {
-    confirmationOverlay.style.display = "none";  // Set display to "none" when closing
-}
+    function closeConfirmationDialog() {
+        confirmationOverlay.style.display = "none";  // Set display to "none" when closing
+    }
 
-function showConfirmationDialog(orderId) {
-    confirmationOverlay.style.display = "flex";
-    finalOrderID = orderId;
+    function showConfirmationDialog(orderId) {
+        confirmationOverlay.style.display = "flex";
+        finalOrderID = orderId;
 
-    // Set the order ID value in the hidden input field
-    $('#order_id_input').val(finalOrderID);
+        // Set the order ID value in the hidden input field
+        $('#order_id_input').val(finalOrderID);
 
-    // Update the form action URL dynamically before making the AJAX request
-    $('#cancellationForm').attr('action', `{% url 'cancel_order' order_id=0 %}`.replace('0', finalOrderID));
-}
+        // Update the form action URL dynamically before making the AJAX request
+        $('#cancellationForm').attr('action', `{% url 'cancel_order' order_id=0 %}`.replace('0', finalOrderID));
+    }
 
-$("#cancellationForm").submit(function (event) {
-    event.preventDefault(); // Prevent the form from submitting normally
-    const selectedReason = $("input[name='reason']:checked").val();
+    $("#cancellationForm").submit(function (event) {
+        event.preventDefault(); // Prevent the form from submitting normally
+        const selectedReason = $("input[name='reason']:checked").val();
 
-    // Send the form data, including the order ID, to the server using AJAX
-    $.ajax({
-        url: '/cancel_order/',
-        method: 'POST',
-        data: { 
-            order_id: $('#order_id_input').val(),
-            cancel_reason: selectedReason
-        },
-        success: function (data) {
-            if (data.success) {
-                alert(data.message);
-                location.reload();
-            } else {
-                alert(data.message);
+        // Send the form data, including the order ID, to the server using AJAX
+        $.ajax({
+            url: '/cancel_order/',
+            method: 'POST',
+            data: {
+                order_id: $('#order_id_input').val(),
+                cancel_reason: selectedReason
+            },
+            success: function (data) {
+                if (data.success) {
+                    alert(data.message);
+                    location.reload();
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);  // Log the response for debugging
+                alert('An error occurred.');
             }
-        },
-        error: function () {
-            alert('An error occurred.');
-        }
+        });
+        confirmationOverlay.style.display = "none";
     });
-
-    confirmationOverlay.style.display = "none";
-});
 
 
 

@@ -337,29 +337,35 @@ from django.http import HttpResponse, HttpResponseBadRequest
 
 @login_required (login_url='/')
 def cancel_order(request, order_id):
-    order = get_object_or_404(Order, id=order_id)
+    if request.method == 'POST':
+
+        order = get_object_or_404(Order, id=order_id)
 
     # Check if the order is cancelable (pending or confirmed)
-    if order.status in ['pending', 'confirmed']:
+        if order.status in ['pending', 'confirmed']:
         # Check if a CancelReason already exists for this order
-        print(f"Cancel Order view called with order_id: {order_id}")
-        cancel_reason, created = CancelReason.objects.get_or_create(order=order, user=request.user)
-        print(f"Cancel Reason: {cancel_reason}")
-        # If it's not created, display an error message
-        if not created:
-            return HttpResponseBadRequest('Cancel reason already provided for this order.')
         
-        # Save the selected reason to the CancelReason model
-        selected_reason = request.POST.get('reason')
-        cancel_reason.reason = selected_reason
-        cancel_reason.save()
+            cancel_reason, created = CancelReason.objects.get_or_create(order=order, user=request.user)
 
-        # return HttpResponse('Order canceled successfully.')
-        messages.success(request, 'Order canceled successfully.')
-        return redirect('order') # messages show in order page is remaining
-    else:
-        return HttpResponseBadRequest('This order cannot be canceled.')
+            # If it's not created, display an error message
+            if not created:
+                messages.error(request, 'Cancel reason already provided for this order.')
+                return redirect('order')
 
+            
+            # Save the selected reason to the CancelReason model
+            selected_reason = request.POST.get('reason')
+            cancel_reason.reason = selected_reason
+            cancel_reason.save()
+
+            # return HttpResponse('Order canceled successfully.')
+            messages.success(request, 'Order canceled successfully.')
+            return redirect('order') # messages show in order page is remaining
+        else:
+            # return HttpResponseBadRequest('This order cannot be canceled.')
+            messages.error(request, 'This order cannot be canceled.')
+    return redirect('order')
+    
 
 def website_blog(request):
     user = Blog.objects.all()
