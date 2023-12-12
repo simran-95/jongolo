@@ -9,7 +9,7 @@ urlpatterns=[
     path('login', views.superadmin_login,name='login'),
     # path('admin-login', views.superadmin_login,name='admin-login'),
     # path('login2', views.vender_login,name='login2'),
-    path('',views.vender_login,name='login1'),
+    path('login1',views.vender_login,name='login1'),
     path('doLogin',views.doLogin,name='doLogin'),
     path('dologout1',views.custom_logout,name='logout1'),
     path('dologout',website_views.logout_view,name='logout'),
@@ -24,6 +24,7 @@ urlpatterns=[
     path('update_user/<int:pk>',views.update_user,name='update_user'),
     path('profile', vender_views.profile,name='profile'),
     path('earning_admin', views.earning_admin,name='earning_admin'),
+    path('super_admin/terms',views.terms_condition,name='super_admin/terms'),
 
     
     # path('teacher_list',views.teacher_list,name='teacher_list'),
@@ -74,7 +75,7 @@ urlpatterns=[
     path('product',website_views.product,name='product'),
     path('product/<int:categoryid>',website_views.product_cat),
     path('details/<int:id>',website_views.product_single,name='details'),
-    path('dashboard-web',website_views.dashboard2,name='dashboard-web'),
+    path('',website_views.dashboard2,name='dashboard-web'),
     path('header',website_views.header,name='header'),
     # path('cart/<int:product_id>/', website_views.cart, name='view_cart'),
     # path('view_cart/', website_views.view_cart, name='view_cart'),

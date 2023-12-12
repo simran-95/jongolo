@@ -160,3 +160,15 @@ class ContactForm(forms.ModelForm):
         model = Contact
         fields = ['name','email','subject','message']
         exclude = ['created_at']
+
+from ckeditor.widgets import CKEditorWidget
+
+class TermsForm(forms.ModelForm):
+   
+    # terms = forms.CharField( label='Terms and Condition',required=True)
+    terms = forms.CharField(widget=CKEditorWidget())
+
+    class Meta:
+        model = Terms
+        fields = ['terms']
+        

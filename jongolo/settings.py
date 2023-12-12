@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'myapp',
     'widget_tweaks',
     'django_select2',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [

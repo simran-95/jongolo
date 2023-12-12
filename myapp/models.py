@@ -191,13 +191,7 @@ class Blogger(models.Model):
 
 #///////////// for products //////////////
 
-# class Blog(models.Model):
-#     # id = models.AutoField(primary_key=True)
-#     user = models.OneToOneField(User, on_delete = models.CASCADE)
-#     title=models.CharField(max_length=100)
-#     address = models.TextField()
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     profile_pic = models.ImageField(upload_to='blog',default="")
+
 
 class Blog(models.Model):
     # id = models.AutoField(primary_key=True)
@@ -336,7 +330,11 @@ class Contact(models.Model):
 
 
 
-
+class Terms(models.Model):
+    terms = models.CharField(max_length=500)
+    
+    def __str__(self):
+        return self.terms
 
 
 # class Address(models.Model):

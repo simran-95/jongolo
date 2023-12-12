@@ -14,6 +14,20 @@ from django.contrib.auth import update_session_auth_hash
 # def login(request):
 #     return render(request, 'admin-login.html')
 
+@login_required(login_url='/login')
+def terms_condition(request):
+    if request.method == 'POST':
+        form = TermsForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('super_admin/terms')
+    else:
+        form = TermsForm()
+    
+    user = Terms.objects.all()
+
+    return render(request, 'terms_condition.html',{'form':form, 'user':user})
+
 
 @login_required(login_url='/login')
 def earning_admin(request):
@@ -24,6 +38,9 @@ def earning_admin(request):
 
 
 def superadmin_login(request):
+    if request.user.is_authenticated:
+        return redirect('dashboard')
+
     if request.method == 'POST':
         user = authenticate(request,
             email=request.POST.get('email'),
@@ -99,6 +116,7 @@ def doLogin(request):
             messages.error(request,'invalid credentials')
 
     return redirect('login1')
+
     
 @login_required(login_url='/login')
 def index(request):
@@ -353,6 +371,8 @@ def update_category(request,pk):
         
         # return render(request, 'edit.html')
     return render(request, 'update_category.html',{'fm':fm})
+
+
 
 
 # def update_category(request,pk):
