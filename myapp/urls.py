@@ -18,24 +18,28 @@ urlpatterns=[
     path('dashboard',views.dashboard,name='dashboard'),
     path('dashboard-add',views.dashboard1,name='dashboard-add'),
     path('dashboard-blog',views.dashboard3,name='dashboard-blog'),
-    path('sadmin/add_user',views.add_user,name='sadmin/add_user'),
-    path('sadmin/view_user',views.view_user,name='sadmin/view_user'),
+    path('super_admin/add_user',views.add_user,name='super_admin/add_user'),
+    path('super_admin/view_user',views.view_user,name='super_admin/view_user'),
     path('delete_user/<int:id>/',views.delete_user, name='delete_user'),
     path('update_user/<int:pk>',views.update_user,name='update_user'),
     path('profile', vender_views.profile,name='profile'),
-    path('earning_admin', views.earning_admin,name='earning_admin'),
+    path('super_admin/earning_admin', views.earning_admin,name='super_admin/earning_admin'),
     path('super_admin/terms',views.terms_condition,name='super_admin/terms'),
-
-    
+    path('delete_terms/<int:id>/',views.delete_terms, name='delete_terms'),
+    path('super_admin/privacy_policy',views.privacy_policy,name='super_admin/privacy_policy'),
+    path('delete_privacy_policy/<int:id>/',views.delete_privacy_policy, name='delete_privacy_policy'), 
+    path('super_admin/notification',views.notification,name='super_admin/notification'),
+    path('super_admin/product_review',views.review,name='super_admin/product_review'),
+    path('super_admin/delete_product1/<int:id>/',views.delete_product1, name='super_admin/delete_product1'),
     # path('teacher_list',views.teacher_list,name='teacher_list'),
     # path('delete/<int:id>/', views.teacher_delete, name='delete'),
-    path('add_vender',views.add_vendor,name='add_vender'),
-    path('view_vender',views.view_vender,name='view_vender'),
+    path('super_admin/add_vender',views.add_vendor,name='super_admin/add_vender'),
+    path('super_admin/view_vender',views.view_vender,name='super_admin/view_vender'),
     path('delete/<int:id>/',views.delete_vender, name='delete'),
     path('update-vender/<int:pk>',views.update_vender,name='update-vender'),
     #//////// bloggers views  /////////
-    path('add_bloger',views.add_blogger,name='add_bloger'),
-    path('view_bloger',views.view_blogger,name='view_bloger'),
+    path('super_admin/add_bloger',views.add_blogger,name='super_admin/add_bloger'),
+    path('super_admin/view_bloger',views.view_blogger,name='super_admin/view_bloger'),
     path('delete_bloger/<int:id>/',views.delete_blogger, name='delete_bloger'),
     path('update_bloger/<int:pk>',views.update_blogger,name='update_bloger'),
 
@@ -47,8 +51,8 @@ urlpatterns=[
 
 
     #////// for category and product ///////
-    path('category',views.category,name='category'),
-    path('view_category',views.view_category,name='view_category'),
+    path('super_admin/category',views.category,name='category'),
+    path('super_admin/view_category',views.view_category,name='view_category'),
     path('delete_cat/<int:id>/', views.delete_category, name='delete_cat'),
     path('update_cat/<int:pk>',views.update_category,name='update_cat'),
     # path('product_single',views.product_single,name='product_single'),

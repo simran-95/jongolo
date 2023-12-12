@@ -152,3 +152,16 @@ EMAIL_HOST_PASSWORD='rwwx vwkt cwho egah'
 
 STRIPE_SECRET_KEY = 'sk_test_51OITjfSGqeyhk1pWAkeGPNjEevcHkTLHgSa56PfMqWH1ik4v6UbVv82jd4HYyXSNjGVlwl6vvwPfI8skyrpNdmke00zEEvqqu1'
 STRIPE_PUBLISHABLE_KEY = 'pk_test_51OITjfSGqeyhk1pW34Q0GInuXxNDz1EZjtL3N3dRW484wR3zPW6vY4qsWQS2WhatYhVHcha8imRPIKuXSQLlpHXh00hltHRn67'
+
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 190,
+        'width': 1020,
+        # 'extra_plugins': ['autosave'],  # Use the 'autosave' plugin
+        'autosave': {                   # Configuration on the autosave plugin
+            'autoLoad': True            # Don't ask for confirmation to restore
+        }
+    },
+}

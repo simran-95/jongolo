@@ -136,6 +136,7 @@ from django.apps import apps
 #     total_price1 = sum(item.unit_price * item.quantity for item in order_items)
 #     return total_price1
 
+@login_required (login_url='/login1')
 def Order_view(request):
     user_orders = Order.objects.filter(user=request.user).order_by('-created_at')
     # total_earnings = sum(product.total_earnings() for product in user_products)
@@ -154,7 +155,7 @@ def Order_view(request):
 # ///////// Add To Cart ///////////
 
 
-@login_required (login_url='/')
+@login_required (login_url='/login1')
 def add_to_cart(request, product_id):
     product = Product.objects.get(pk=product_id)
     user = request.user
@@ -170,7 +171,7 @@ def add_to_cart(request, product_id):
     return redirect('cart_view')
 
 
-@login_required (login_url='/')
+@login_required (login_url='/login1')
 def cart_view(request):
     cart_items = CartItem.objects.filter(user=request.user)
     total_price = sum(item.total_price() for item in cart_items)
@@ -194,7 +195,7 @@ def cart_view(request):
 
 
 
-@login_required (login_url='/')
+@login_required (login_url='/login1')
 def remove_from_cart(request, item_id):
     cart_item = get_object_or_404(CartItem, id=item_id, user=request.user)
     cart_item.delete()
@@ -204,7 +205,7 @@ def remove_from_cart(request, item_id):
 # def checkout(request):
 #     return render(request, 'websiteuser/checkout.html')
 
-@login_required (login_url='/')
+@login_required (login_url='/login1')
 def checkout(request: HttpRequest):
     print(request.user)
     
@@ -335,7 +336,7 @@ from django.contrib import messages
 from django.http import HttpResponse, HttpResponseBadRequest
 
 
-@login_required (login_url='/')
+@login_required (login_url='/login1')
 def cancel_order(request, order_id):
     if request.method == 'POST':
 
@@ -411,6 +412,7 @@ def user_sign_in(request):
 
 from django.contrib.auth import update_session_auth_hash
 
+@login_required (login_url='/login1')
 def profile(request):
     user_profile = AddUser.objects.get(user=request.user)
 

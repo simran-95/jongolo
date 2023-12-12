@@ -172,3 +172,32 @@ class TermsForm(forms.ModelForm):
         model = Terms
         fields = ['terms']
         
+    
+class PrivacyForm(forms.ModelForm):
+   
+    # terms = forms.CharField( label='Terms and Condition',required=True)
+    terms = forms.CharField(widget=CKEditorWidget())
+
+    class Meta:
+        model = Policy
+        fields = ['terms']
+
+
+class NotificationForm(forms.ModelForm):
+    
+    user = forms.ModelChoiceField(
+        queryset=AddUser.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        label='Select Category'
+    )
+    title = forms.CharField( label='Title',required=True)
+    description = forms.CharField(
+        max_length=200,
+        widget=forms.TextInput(attrs={'class': 'form-control'}),
+        label='Description'
+    )
+
+
+    class Meta:
+        model = Notification
+        fields = ['user','title','description']

@@ -14,20 +14,6 @@ from django.contrib.auth import update_session_auth_hash
 # def login(request):
 #     return render(request, 'admin-login.html')
 
-@login_required(login_url='/login')
-def terms_condition(request):
-    if request.method == 'POST':
-        form = TermsForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('super_admin/terms')
-    else:
-        form = TermsForm()
-    
-    user = Terms.objects.all()
-
-    return render(request, 'terms_condition.html',{'form':form, 'user':user})
-
 
 @login_required(login_url='/login')
 def earning_admin(request):
@@ -68,7 +54,6 @@ def blogger_login(request):
             messages.error(request, 'Invalid credentials')
 
     return render(request, 'admin-login.html')
-
 
 
 def vender_login(request):
@@ -161,7 +146,7 @@ def add_user(request):
             reception.user=user
            
             reception.save()
-            return redirect('view_user')
+            return redirect('super_admin/view_user')
         else:
             print(userForm.errors)
             print(receptionForm.errors)
@@ -177,7 +162,7 @@ def view_user(request):
 def delete_user(request,id):
     u = AddUser.objects.get(id=id)
     u.delete()
-    return redirect('view_user')
+    return redirect('super_admin/view_user')
 
 @login_required(login_url='/login')
 def update_user(request,pk):
@@ -197,11 +182,12 @@ def update_user(request,pk):
             add=adduserForm.save(commit=False)
             add.status=True
             add.save()
-            return redirect('view_user')
+            return redirect('super_admin/view_user')
         else:
             userForm = Adduser(instance=user)
             adduserForm = AddUserForm(instance=add)
     return render(request,'update_user.html',{'adduserForm': adduserForm, 'userForm': userForm})
+
 
 @login_required(login_url='/login')
 def add_vendor(request):
@@ -221,7 +207,7 @@ def add_vendor(request):
             reception.user=user
            
             reception.save()
-            return redirect('view_vender')
+            return redirect('super_admin/view_vender')
         else:
              print(userForm.errors)
              print(receptionForm.errors)
@@ -237,7 +223,7 @@ def view_vender(request):
 def delete_vender(request,id):
     u = Vender.objects.get(id=id)
     u.delete()
-    return redirect('view_vender')
+    return redirect('super_admin/view_vender')
     
 
 @login_required(login_url='/login')
@@ -257,7 +243,7 @@ def update_vender(request,pk):
                 update_session_auth_hash(request, user)
             pharmacist_user_form.save()
             pharmacist_form.save()
-            return redirect('view_vender')  # Replace 'success_url' with the desired URL
+            return redirect('super_admin/view_vender')  # Replace 'success_url' with the desired URL
         else:
             print(pharmacist_user_form.errors)
             print(pharmacist_form.errors)
@@ -289,7 +275,7 @@ def add_blogger(request):
             reception.user = user
             reception.save()
 
-            return redirect('view_bloger')
+            return redirect('super_admin/view_bloger')
         else:
             print(userForm.errors)
             print(bloggerForm.errors)
@@ -306,7 +292,7 @@ def view_blogger(request):
 def delete_blogger(request,id):
     u = Blogger.objects.get(id=id)
     u.delete()
-    return redirect('view_bloger')   
+    return redirect('super_admin/view_bloger')   
 
 @login_required(login_url='/login')
 def update_blogger(request,pk):
@@ -326,7 +312,7 @@ def update_blogger(request,pk):
             add=adduserForm.save(commit=False)
             add.status=True
             add.save()
-            return redirect('view_user')
+            return redirect('super_admin/view_user')
         else:
             userForm = Addblogger(instance=user)
             adduserForm = AddBlogerForm(instance=add)
@@ -339,7 +325,7 @@ def category(request):
         form = CategoryForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('view_category')
+            return redirect('super_admin/view_category')
     else:
         form = CategoryForm()
 
@@ -354,7 +340,7 @@ def view_category(request):
 def delete_category(request, id):
     category = Category.objects.get(id=id)
     category.delete()
-    return redirect('/view_category')
+    return redirect('/super_admin/view_category')
    
 @login_required(login_url='/login')
 def update_category(request,pk):
@@ -364,7 +350,7 @@ def update_category(request,pk):
         fm=CategoryForm(request.POST,request.FILES,instance=pi)
         if fm.is_valid():
             fm.save()
-            return redirect('view_category')
+            return redirect('super_admin/view_category')
     else:
             pi=Category.objects.get(id=pk)
             fm=CategoryForm(instance=pi)
@@ -373,20 +359,67 @@ def update_category(request,pk):
     return render(request, 'update_category.html',{'fm':fm})
 
 
+@login_required(login_url='/login')
+def privacy_policy(request):
+    existing_terms = Policy.objects.first()
+
+    if request.method == 'POST':
+        form = PrivacyForm(request.POST, instance=existing_terms)
+        if form.is_valid():
+            form.save()
+            return redirect('super_admin/privacy_policy')
+        else:
+            messages.error(request, 'Error updating privacy policy. Please correct the errors below.')
+    else:
+        form = PrivacyForm(instance=existing_terms)
+
+    user = Policy.objects.all()
+
+    return render(request, 'privacy_policy.html', {'form': form, 'user': user, 'existing_terms': existing_terms})
+
+@login_required(login_url='/login')
+def delete_privacy_policy(request,id):
+    u = Policy.objects.get(id=id)
+    u.delete()
+    return redirect('super_admin/privacy_policy') 
 
 
-# def update_category(request,pk):
-#     # vender=Category.objects.get(id=pk)
-#     # userForm=CategoryForm(request.FILES,instance=vender)
-   
-#     # mydict={'userForm':userForm}
-#     if request.method=='POST':
-#         vender=Category.objects.get(pk=pk)
-#         userForm=CategoryForm(request.POST,request.FILES,instance=vender)
-#         if userForm.is_valid():
-#             userForm.save()
-#             return redirect('view_category')
-#         else:
-#             vender=Category.objects.get(pk=pk)
-#             userForm=CategoryForm(instance=vender)
-#     return render(request,'update_category.html',{'userForm':userForm})
+@login_required(login_url='/login')
+def terms_condition(request):
+    existing_terms = Terms.objects.first()
+
+    if request.method == 'POST':
+        form = TermsForm(request.POST, instance=existing_terms)
+        if form.is_valid():
+            form.save()
+            return redirect('super_admin/terms')
+    else:
+        form = TermsForm(instance=existing_terms)
+
+    user = Terms.objects.all()
+
+    return render(request, 'terms_condition.html', {'form': form, 'user': user, 'existing_terms': existing_terms})
+
+@login_required(login_url='/login')
+def delete_terms(request,id):
+    u = Terms.objects.get(id=id)
+    u.delete()
+    return redirect('super_admin/terms') 
+
+
+@login_required(login_url='/login')
+def notification(request):
+    return render(request, 'notification.html')
+
+
+@login_required(login_url='/login')
+def review(request):
+    product=Product.objects.all()
+    return render(request, 'product_preview.html',{'product':product})
+
+
+@login_required (login_url='/login')
+def delete_product1(request,id):
+    user = Product.objects.get(id=id)
+    user.delete()
+    return redirect('super_admin/product_review')

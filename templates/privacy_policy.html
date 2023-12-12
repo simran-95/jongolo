@@ -1,0 +1,129 @@
+{% extends 'base.html'%}
+{% load widget_tweaks %}
+{% load static %}
+{% block content%}
+
+<!-- Page Wrapper -->
+<div class="page-wrapper">
+    <div class="content container-fluid">
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card full-header">
+                        <div class="text-editor">
+                            <form action="{% url 'super_admin/privacy_policy' %}" method="post">
+								{% csrf_token %}
+                            <div class="users">
+                                <h3 class="page-title">Privacy Policy</h3>
+                            </div>
+                            <div class="user-box">
+                                <div class="datatables">
+                                    <textarea id="myeditor" name="terms" class="form-control" rows="10" cols="80"
+                                        Required>{{form.instance.terms}}</textarea>
+                                </div>
+                                <div class="submit">
+                                    <button type="submit" class="form-control bg-submits">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                        </div>
+                        <!--  -->
+                        <div class="full-editor mt-3">
+                            <div class="users">
+                                <h3 class="page-title">Privacy Policy Detail</h3>
+                            </div>
+
+                            <table id="example" class="display nowrap" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>S.no</th>
+                                        <th>Privacy Policy</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for r in user %}
+									<tr class="even">
+										<td>{{ r.id }}</td>
+										<td>{{ r.terms | safe }}</td>
+										<td>
+											<!-- <button class="btn btn-primary mb-2"><a class="edit-btn"
+													href="#">Edit</a></button> -->
+											<button class="btn btn-primary mb-2"><a class="edit-btn"
+												href="{% url 'delete_privacy_policy' id=r.id %}" onclick="return confirm('Are you sure you want to delete this?')">Delete</a></button>
+										</td>
+									</tr>
+									{% endfor %}
+                                    <!-- <tr class="odd">
+                                        <td>2</td>
+                                        <td> A Privacy Policy is a statement or a legal document that states how a
+                                            company or website collects, handles and processes data of its customers and
+                                            visitors. It explicitly describes whether that information is kept
+                                            confidential, or is shared with or sold to third parties</td>
+                                        <td>
+                                            <button class="btn btn-primary mb-2"><a class="edit-btn"
+                                                    href="#">Edit</a></button>
+                                            <button class="btn btn-primary mb-2"><a class="edit-btn"
+                                                    href="#">Delete</a></button>
+                                        </td>
+                                    </tr> -->
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+
+        <div class="row">
+            <div class="col-sm-12">
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- /Page Wrapper -->
+
+</div>
+
+<!-- DATATABLES  -->
+<!--TEXT EDITOR SCRIPT START TEXT EDITOR SCRIPT START TEXT EDITOR SCRIPT START -->
+<script type="text/javascript" src="https://cdn.ckeditor.com/4.5.1/standard/ckeditor.js">
+</script>
+<script type="text/javascript">
+    //resize CKEditor with customised height and width
+    CKEDITOR.editorConfig = function (config) {
+        config.language = 'es';
+        config.uiColor = '#F7B42C';
+        config.height = 300;
+        config.toolbarCanCollapse = true;
+
+    };
+    CKEDITOR.replace('myeditor');
+</script>
+<!--DATATABLES SCRIPT START DATATABLES SCRIPT START DATATABLES SCRIPT START DATATABLES SCRIPT START -->
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+    });
+</script>
+
+{% endblock %}
