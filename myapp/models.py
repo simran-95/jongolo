@@ -263,9 +263,11 @@ class Adres(models.Model):
     street_address = models.CharField(max_length=255)
     city = models.CharField(max_length=100)
     postal_code = models.CharField(max_length=20)
+    payment_mode = models.CharField(max_length=20,default='Cash on delivery')
 
     def __str__(self):
-        return self.street_address
+        return self.payment_mode
+
 
 class CartItem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -315,8 +317,18 @@ class CancelReason(models.Model):
         return self.reason  
 
 
+class Rating(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    order = models.OneToOneField(Order, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    rating = models.TextField()
+    review = models.CharField(max_length=500)
+    
+    def __str__(self):
+        return self.rating  
+        
+
 class Contact(models.Model):
-    # id = models.AutoField(primary_key=True)
     # user = models.OneToOneField(User, on_delete = models.CASCADE)
     name = models.CharField(max_length=100)
     email = models.CharField(max_length=100)

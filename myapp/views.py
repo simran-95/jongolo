@@ -407,9 +407,9 @@ def delete_terms(request,id):
     return redirect('super_admin/terms') 
 
 
-@login_required(login_url='/login')
-def notification(request):
-    return render(request, 'notification.html')
+# @login_required(login_url='/login')
+# def notification(request):
+#     return render(request, 'notification.html')
 
 
 @login_required(login_url='/login')
@@ -423,3 +423,17 @@ def delete_product1(request,id):
     user = Product.objects.get(id=id)
     user.delete()
     return redirect('super_admin/product_review')
+
+
+
+@login_required(login_url='/login')
+def notification(request):
+    if request.method == 'POST':
+        form = NotificationForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('super_admin/notification')
+    else:
+        form = NotificationForm()
+
+    return render(request, 'notification1.html', {'form': form})

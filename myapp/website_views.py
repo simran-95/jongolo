@@ -11,6 +11,7 @@ from django.views import View
 from .models import Order as OrderModel
 from django.core.mail import send_mail
 from django.core.mail import EmailMultiAlternatives
+from django.contrib.auth import update_session_auth_hash
 
 
 stripe.api_key = 'sk_test_51OITjfSGqeyhk1pWAkeGPNjEevcHkTLHgSa56PfMqWH1ik4v6UbVv82jd4HYyXSNjGVlwl6vvwPfI8skyrpNdmke00zEEvqqu1'
@@ -103,7 +104,6 @@ def product_cat(request,categoryid):
     context={'product':product,'categories':categories,'cart_count':cart_count}
     return render(request, 'websiteuser/product.html',context)
    
-
 
 def product_single(request,id):
     product=Product.objects.filter(id=id)
@@ -247,6 +247,7 @@ def checkout(request: HttpRequest):
         city = request.POST.get('city')
         street_address = request.POST.get('street_address')
         postal_code = request.POST.get('postal_code')
+        payment_mode = request.POST.get('payment_mode')
 
         # Create a new address for the user
         new_address = Adres.objects.create(
@@ -255,7 +256,9 @@ def checkout(request: HttpRequest):
             country=country,
             state=state,
             city=city,
-            postal_code=postal_code
+            postal_code=postal_code,
+            payment_mode=payment_mode
+            
         )
 
        # Create an order with the new address
@@ -275,8 +278,12 @@ def checkout(request: HttpRequest):
         cart_items.delete()
 
         # Redirect to payment_form with the required arguments
-        return redirect('payment_form', order_id=order.id, total_price=total_price)
-
+        if payment_mode == 'stripe':
+            return redirect('payment_form', order_id=order.id, total_price=total_price)
+        else:
+            # Payment method is cash on delivery, show success message and redirect to order page
+            messages.success(request, 'Your booking was successful done.')
+            return redirect('order')
 
     # If it's a GET request or shipping address is not provided, render the checkout page with address form
     return render(request, 'websiteuser/checkout.html', {'user_data': user_data, 'total_price':total_price,'cart_items':cart_items})
@@ -291,8 +298,7 @@ class PaymentFormView(View):
         order_id = kwargs.get('order_id')
         total_price = kwargs.get('total_price')
         return render(request, self.template_name, {'publishable_key': publishable_key, 'total_price': total_price})
-
-        
+       
 
     def post(self, request, *args, **kwargs):
         token = request.POST.get('stripeToken')
@@ -342,7 +348,7 @@ def cancel_order(request, order_id):
 
         order = get_object_or_404(Order, id=order_id)
 
-    # Check if the order is cancelable (pending or confirmed)
+        # Check if the order is cancelable (pending or confirmed)
         if order.status in ['pending', 'confirmed']:
         # Check if a CancelReason already exists for this order
         
@@ -367,6 +373,31 @@ def cancel_order(request, order_id):
             messages.error(request, 'This order cannot be canceled.')
     return redirect('order')
     
+
+@login_required (login_url='/login1')
+def rating_products(request, order_id):
+    if request.method == 'POST':
+        order = get_object_or_404(Order, id=order_id)
+
+        if order.status in ['shipped', 'completed']:
+            rating, created = Rating.objects.get_or_create(order=order, user=request.user)
+
+            if not created:
+                messages.error(request, 'You rated already to this product!!.')
+                return redirect('order')
+
+            # Assuming you have a 'reason' field in your Rating model
+            rating.reason = request.POST.get('reason')
+            rating.save()
+
+            messages.success(request, 'Rated successfully.')
+            return redirect('order')
+        else:
+            messages.error(request, 'This order cannot be Rated.')
+
+    return redirect('order')
+
+
 
 def website_blog(request):
     user = Blog.objects.all()
@@ -410,7 +441,6 @@ def user_sign_in(request):
 
 
 
-from django.contrib.auth import update_session_auth_hash
 
 @login_required (login_url='/login1')
 def profile(request):
@@ -434,7 +464,6 @@ def profile(request):
         fm = Adduser(instance=request.user)
 
     return render(request, 'websiteuser/profile.html', {'form': form, 'fm':fm})
-
 
 
 def contact(request):
@@ -464,7 +493,56 @@ def contact(request):
     else:
         form = ContactForm()
 
-    return render(request, 'websiteuser/contact.html', {'form': form}) 
+    if request.user.is_authenticated:
+        cart_items = CartItem.objects.filter(user=request.user)
+        total_price = sum(item.total_price() for item in cart_items)
+        cart_count = cart_items.count()
+    else:
+        total_price = 0
+        cart_count = 0
+
+    return render(request, 'websiteuser/contact.html', {'form': form, }) 
+
+
+def website_terms(request):
+    terms = Terms.objects.all()
+    if request.user.is_authenticated:
+        cart_items = CartItem.objects.filter(user=request.user)
+        total_price = sum(item.total_price() for item in cart_items)
+        cart_count = cart_items.count()
+    else:
+        total_price = 0
+        cart_count = 0
+    
+    return render(request, 'websiteuser/terms&condition.html',{'terms':terms, 'cart_count':cart_count, 'total_price':total_price}) 
+
+
+def policies(request):
+    terms = Policy.objects.all()
+    if request.user.is_authenticated:
+        cart_items = CartItem.objects.filter(user=request.user)
+        total_price = sum(item.total_price() for item in cart_items)
+        cart_count = cart_items.count()
+    else:
+        total_price = 0
+        cart_count = 0
+    return render(request, 'websiteuser/policies.html',{'terms':terms, 'cart_count':cart_count, 'total_price':total_price}) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     # if request.method=='POST':

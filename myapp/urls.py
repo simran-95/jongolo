@@ -76,10 +76,10 @@ urlpatterns=[
     path('completed/<int:id>',vender_views.product_completed,name='completed'),
 
     #//////// for Website and user /////////
+    path('',website_views.dashboard2,name='dashboard-web'),
     path('product',website_views.product,name='product'),
     path('product/<int:categoryid>',website_views.product_cat),
     path('details/<int:id>',website_views.product_single,name='details'),
-    path('',website_views.dashboard2,name='dashboard-web'),
     path('header',website_views.header,name='header'),
     # path('cart/<int:product_id>/', website_views.cart, name='view_cart'),
     # path('view_cart/', website_views.view_cart, name='view_cart'),
@@ -89,14 +89,20 @@ urlpatterns=[
     path('checkout', website_views.checkout, name='checkout'),
     path('order',website_views.Order_view,name='order'),
     # path('payment_form', website_views.HomePageView.as_view(), name='payment_form'),
-    path('payment_form/<int:order_id>/<str:total_price>/', website_views.PaymentFormView.as_view(), name='payment_form'),
     path('cancel_order/<int:order_id>/', website_views.cancel_order, name='cancel_order'),
+    path('rating/<int:order_id>/', website_views.rating_products, name='rating'),
+    path('payment_form/<int:order_id>/<str:total_price>/', website_views.PaymentFormView.as_view(), name='payment_form'),
+    
     path('sign-in1', website_views.user_sign_in, name='sign-in1'),
 
     path('blog1',website_views.website_blog,name='blog1'),
     path('contact',website_views.contact,name='contact'),
     path('about',website_views.about,name='about'),
+        # ////////// website footer pages//////////
+    path('terms_conditions',website_views.website_terms,name='terms_conditions'),
+    path('policies',website_views.policies,name='policies'),
    
+
     # path('payment/', website_views.initiate_payment, name='payment'),
     
 ]

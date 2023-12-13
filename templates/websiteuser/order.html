@@ -48,23 +48,65 @@
     ul li.cancellation-reasons input[type="radio"] {
         margin-right: 10px;
     }
+
     .modal-title {
-    margin-bottom: 0;
-    line-height: 1.5;
-    font-weight: 400;
-    color: #ffffff;
-    text-transform: uppercase;
-    font-family: "Poppins", Arial, sans-serif;
+        margin-bottom: 0;
+        line-height: 1.5;
+        font-weight: 400;
+        color: #ffffff;
+        text-transform: uppercase;
+        font-family: "Poppins", Arial, sans-serif;
+    }
+
+    button.btn.btn-primary {
+        width: 100%;
+        padding: 0px 0px;
+    }
+
+    .badge-warning {
+        color: #ffffff;
+        background-color: #000000;
+        padding: 8px 9px;
+    }
+    
+
+.btn-success {
+    color: #fff;
+    background-color: #af6b14;
+    border-color: #af6b14;
 }
-button.btn.btn-primary {
-    width: 100%;
-    padding: 0px 0px;
+/* START RATING POPUP FORM  CSS START START RATING POPUP FORM  CSS START  */
+.rate {
+    display: inline-block;
+    border: 0;
 }
-.badge-warning {
-    color: #ffffff;
-    background-color: #000000;
-    padding: 8px 9px;
+.rate > input {
+    display: none;
 }
+.rate > label {
+    float: right;
+}
+.rate > label:before {
+    display: inline-block;
+    font-size: 2rem;
+    padding: .3rem .2rem;
+    margin: 0;
+    cursor: pointer;
+    font-family: FontAwesome;
+    content: "\f005 ";
+}
+.rate .half:before {
+    content: "\f089 "; 
+    position: absolute;
+    padding-right: 0;
+}
+input:checked ~ label, 
+label:hover, label:hover ~ label { color: goldenrod;  }
+
+input:checked + label:hover, input:checked ~ label:hover,
+input:checked ~ label:hover ~ label,
+label:hover ~ input:checked ~ label  { color: goldenrod;  } 
+
 </style>
 
 <div class="hero-wrap hero-bread" style="background-image: url(/static/images/banner/footer-bg.png);">
@@ -106,7 +148,6 @@ button.btn.btn-primary {
                     <table class="table">
                         <thead class="thead-primary">
                             <tr class="text-center">
-                                <!-- <th>&nbsp;</th> -->
                                 <th>Product Image</th>
                                 <th>Product name</th>
                                 <th>Order Date</th>
@@ -141,14 +182,10 @@ button.btn.btn-primary {
                                 <td class="total">${{ order.total_price }}</td>
 
                                 <td>
-                                    {% if item.status %}
-                                <small class="badge badge-success">Completed</small></td>
-                                {% else %}
-                                <small class="badge badge-warning">Pending</small></td>
-                                {% endif %}
+                                  
+                                    <small class="badge badge-warning">{{ order.status }}</small>
                                 </td>
-
-
+                               
 
                                 <td>
                                     <!-- <p>Status: {{ order.status }}</p> -->
@@ -168,7 +205,10 @@ button.btn.btn-primary {
 
                                     {% else %}
                                     <!-- Display a message or something else for orders that can't be canceled -->
-                                    <p>This order cannot be canceled.</p>
+                                    <!-- <p>This order cannot be canceled.</p> -->
+                                    <button type="button" id="ratingButton" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-order-id="{{order.id}}">
+                                        Rating
+                                    </button>
                                     {% endif %}
                                 </td>
                             </tr>
@@ -198,7 +238,7 @@ button.btn.btn-primary {
                         <div class="overlay" id="confirmationOverlay" style="display: block !important;">
                             <div class="dialog" id="confirmationDialog">
                                 <p>Are you sure you want to cancel this product? if Yes Select Reason </p>
-<hr>
+                                <hr>
                                 <form method="post" id="cancellationForm" action="{% url 'cancel_order' order_id=0 %}">
                                     {% csrf_token %}
 
@@ -249,69 +289,133 @@ button.btn.btn-primary {
                             </div>
                         </div>
                         <!-- <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div> -->
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                    </div> -->
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <br><br><br><br><br><br>
+
+
+            <div class="modal-content" style="border: 5px solid gray;border-radius: 10px;">
+                <div class="modal-header" style="background-color: #af6b14">
+                    <h5 class="modal-title"><b style="color: #fff;">Rating And Review</b></h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body" style="padding: 0 30px 0 30px;">
+                    <form method="post" action=""  id="rating">
+                        {% csrf_token %}
+
+                        <!-- <div class="form-group mt-2">
+                            <input type="text" name="rating" class="form-control"
+                                placeholder="Share your experience with us by rating" required style="width:100%;">
+                        </div> -->
+                        <div class="form-group mt-2">
+                            <h6>Share Your Experience with us by Rating</h6>
+                            <div class="half-star-ratings border">
+                                <fieldset class="rate">
+                                    <input type="radio" id="rating10" name="rating" value="10" /><label for="rating10" title="5 stars"></label>
+                                    <input type="radio" id="rating9" name="rating" value="9" /><label class="half" for="rating9" title="4 1/2 stars"></label>
+                                    <input type="radio" id="rating8" name="rating" value="8" /><label for="rating8" title="4 stars"></label>
+                                    <input type="radio" id="rating7" name="rating" value="7" /><label class="half" for="rating7" title="3 1/2 stars"></label>
+                                    <input type="radio" id="rating6" name="rating" value="6" /><label for="rating6" title="3 stars"></label>
+                                    <input type="radio" id="rating5" name="rating" value="5" /><label class="half" for="rating5" title="2 1/2 stars"></label>
+                                    <input type="radio" id="rating4" name="rating" value="4" /><label for="rating4" title="2 stars"></label>
+                                    <input type="radio" id="rating3" name="rating" value="3" /><label class="half" for="rating3" title="1 1/2 stars"></label>
+                                    <input type="radio" id="rating2" name="rating" value="2" /><label for="rating2" title="1 star"></label>
+                                    <input type="radio" id="rating1" name="rating" value="1" /><label class="half" for="rating1" title="1/2 star"></label>
+                                
+                                </fieldset>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                          
+                            <textarea name="review" id="" placeholder="Review" cols="55" rows="10"></textarea>
+                        </div>
+
+                        <center>
+                            <h3><input type="submit" class="btn btn-success loginbtn" name="ratings" value="Rating" style="background-color: #af6b14"onclick="submitRating()" /></h3>
+                        </center>
+                
+                    </form>
+                </div>
+             
+            </div>
+
+        </div>
+    </div>
 </section>
-<!-- 
-<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script >$(document).ready(function () {
-    const confirmationOverlay = document.getElementById("confirmationOverlay");
-    const confirmationDialog = document.getElementById("confirmationDialog");
-    confirmationOverlay.style.display = "none";
 
-    let finalOrderID = '';
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $('#myModal').on('show.bs.modal', function (event) { alert("rating")
+        var button = $(event.relatedTarget);  // Button that triggered the modal
+        var order_id = button.data('order-id');  // Extract the order_id from data-* attributes
+        var modal = $(this);
 
-    function showConfirmationDialog(orderId) {
-        confirmationOverlay.style.display = "flex";
-        finalOrderID = orderId;
-    }
+        // Check if order_id is defined and not empty
+        if (order_id !== undefined && order_id !== '') {
+            var form = modal.find('form');
+            var url = form.data('action-url').replace('0', order_id);
+            form.attr('action', url);
+        }
+    });
 
-    function closeConfirmationDialog() {
-        confirmationOverlay.style.display = "none";
-    }
 
-    function submitCancellationForm() {
-        const selectedReason = $("input[name='reason']:checked").val();
+    //=-======  submit rating =========== 
 
+
+
+    function submitRating() {
+        // Get the order ID from the button's data-order-id attribute
+        var orderId = document.getElementById('ratingButton').getAttribute('data-order-id');
+
+        // Get the rating and review from the form
+        var rating = document.getElementsByName('rating')[0].value;
+        var review = document.getElementsByName('review')[0].value;
+
+        alert(orderId)
+        alert(rating)
+        alert(review)
+
+        // Prepare data to send in the AJAX request
+        var data = {
+            'order_id': orderId,
+            'rating': rating,
+            'review': review,
+            'csrfmiddlewaretoken': '{{ csrf_token }}'
+        };
+
+        // Make an AJAX request to submit the rating
         $.ajax({
-            url: `/cancel_order/${finalOrderID}/`,
-            method: 'POST',
-            data: { cancel_reason: selectedReason },
-            success: function (data) {
-                if (data.success) {
-                    alert(data.message);
-                    location.reload();
-                } else {
-                    alert(data.message);
-                }
+            url: '/rating/',
+            method: 'POST', // Replace with the actual URL to submit the rating
+            data: data,
+            success: function(response) {
+                // Handle the success response, e.g., show a success message
+                // alert('Rating submitted successfully');
+                console.log('Rating submitted successfully');
+                console.log(response); 
             },
-            error: function () {
-                alert('An error occurred.');
+            error: function(error) {
+                // Handle the error response, e.g., show an error message
+                // console.log('Error submitting rating');
+                // console.log(data); 
+                alert(data)
             }
         });
-
-        closeConfirmationDialog();
     }
 
-    // Attach the event handler when the document is ready
-    $("#cancellationForm").submit(function (event) {
-        event.preventDefault();
-    });
-
-    // Attach the event handler dynamically after the form is inserted into the DOM
-    $("#confirmationDialog").on("submit", "#cancellationForm", function (event) {
-        submitCancellationForm();
-    });
-});</script> -->
-
-<!--  -->
 
 
-
+</script>
 
 <script>
     const confirmationOverlay = document.getElementById("confirmationOverlay");
@@ -370,34 +474,68 @@ button.btn.btn-primary {
     });
 
 
-
-
-    // function showCancellationDialog1(orderId) {
-
-    //     // Prevent the default behavior of the anchor element
-    //     event.preventDefault();
-
-    //     // Send the orderId and reason to the server using AJAX
-    //     $.ajax({
-    //         type: "POST",
-    //         url: "order_history.php", // Use the same URL as the current page
-    //         data: {
-    //             orderId: orderId,
-    //             reason: reason
-    //         },
-    //         success: function (response) {
-    //             $("#successMessage").removeClass("d-none");
-    //             $("#errorMessage").addClass("d-none");
-    //             location.reload();
-    //         },
-    //         error: function (xhr, status, error) {
-    //             $("#errorMessage").removeClass("d-none");
-    //             $("#successMessage").addClass("d-none");
-    //         }
-    //     });
-
-
-    // }
 </script>
-
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script >$(document).ready(function () {
+    const confirmationOverlay = document.getElementById("confirmationOverlay");
+    const confirmationDialog = document.getElementById("confirmationDialog");
+    confirmationOverlay.style.display = "none";
+
+    let finalOrderID = '';
+
+    function showConfirmationDialog(orderId) {
+        confirmationOverlay.style.display = "flex";
+        finalOrderID = orderId;
+    }
+
+    function closeConfirmationDialog() {
+        confirmationOverlay.style.display = "none";
+    }
+
+    function submitCancellationForm() {
+        const selectedReason = $("input[name='reason']:checked").val();
+
+        $.ajax({
+            url: `/cancel_order/${finalOrderID}/`,
+            method: 'POST',
+            data: { cancel_reason: selectedReason },
+            success: function (data) {
+                if (data.success) {
+                    alert(data.message);
+                    location.reload();
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function () {
+                alert('An error occurred.');
+            }
+        });
+
+        closeConfirmationDialog();
+    }
+
+    // Attach the event handler when the document is ready
+    $("#cancellationForm").submit(function (event) {
+        event.preventDefault();
+    });
+
+    // Attach the event handler dynamically after the form is inserted into the DOM
+    $("#confirmationDialog").on("submit", "#cancellationForm", function (event) {
+        submitCancellationForm();
+    });
+});
+</script> -->

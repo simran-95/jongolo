@@ -94,7 +94,7 @@
                             <div class="w-100"></div>
                             <div class="col-md-12">
                                 <div class="form-group mt-4">
-                                    <!-- <div class="radio">
+                                <!-- <div class="radio">
                                         <label for="tab1" class="mr-3">Create an Account?</label>
                                             <input id="tab1" type="radio" name="optradio"> 
                                              
@@ -107,7 +107,7 @@
                                                 <article>
                                                   <h2>article2</h2>
                                                 </article>
-                                      </div> -->
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -169,9 +169,7 @@
 
 
 
-                            <div class="carts-details p-3 p-md-4" style="
-  width: 100%;
-">
+                            <div class="carts-details p-3 p-md-4" style="width: 100%;">
                                 <h3 class="billing-heading mb-4">Payment Method</h3>
                                 <div class="form-group">
 
@@ -179,22 +177,21 @@
                                 <div class="form-group">
                                     <div class="col-md-12">
                                         <div class="radio">
-                                            <label><input type="radio" name="optradio" class="mr-2"> Check
-                                                Payment</label>
+                                            <label><input type="radio" name="payment_mode" value="cash on delivery" class="mr-2"> Cash on Delivery </label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-12">
                                         <div class="radio">
-                                            <label><input type="radio" name="optradio" class="mr-2"> Paypal</label>
+                                            <label><input type="radio" name="payment_mode" value="stripe" class="mr-2"> Stripe</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <div class="col-md-12">
+                                    <div class="col-md-12 mt-5">
                                         <div class="checkbox">
-                                            <label><input type="checkbox" value="" class="mr-2"> I have read and accept
+                                            <label><input type="checkbox" value="" class="mr-2" required> I have read and accept
                                                 the terms and conditions</label>
                                         </div>
                                     </div>

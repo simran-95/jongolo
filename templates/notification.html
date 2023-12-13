@@ -18,39 +18,73 @@
                             </div>
                             <div class="user-box">
                                 <div class="datatables">
-                                    <form id="notificationForm" action="{% url 'super_admin/notification' %}" class=" row">
+                                    <form id="notificationForm" action="{% url 'super_admin/notification' %}"
+                                        class=" row">
 
                                         <div class="form-group col-sm-12">
                                             <label>Select Title</label>
-                                            <select name="title" class="form-control" id="title">
-                                                <option value="firtitle">Titles 1</option>
-                                                <option value="firtitle">Titles 1</option>
-                                                <option value="firtitle">Titles 1</option>
-                                                <option value="firtitle">Titles 1</option>
-                                                <option value="firtitle">Titles 1</option>
-                                            </select>
+                                            <div class="dropdown" class="form-control" data-control="checkbox-dropdown">
+                                                <label class="dropdown-label">Select</label>
+
+                                                <div class="dropdown-list">
+                                                    <a href="#" data-toggle="check-all" class="dropdown-option">
+                                                        Check All
+                                                    </a>
+
+                                                    <label class="dropdown-option">
+                                                        <input type="checkbox" name="dropdown-group"
+                                                            value="Selection 1" />
+                                                        Selection One
+                                                    </label>
+
+                                                    <label class="dropdown-option">
+                                                        <input type="checkbox" name="dropdown-group"
+                                                            value="Selection 2" />
+                                                        Selection Two
+                                                    </label>
+
+                                                    <label class="dropdown-option">
+                                                        <input type="checkbox" name="dropdown-group"
+                                                            value="Selection 3" />
+                                                        Selection Three
+                                                    </label>
+
+                                                    <label class="dropdown-option">
+                                                        <input type="checkbox" name="dropdown-group"
+                                                            value="Selection 4" />
+                                                        Selection Four
+                                                    </label>
+
+                                                    <label class="dropdown-option">
+                                                        <input type="checkbox" name="dropdown-group"
+                                                            value="Selection 5" />
+                                                        Selection Five
+                                                    </label>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="form-group col-sm-12">
                                             <label>Title</label>
-                                            <input type="text" name="title" class="form-control" placeholder="Title">
+                                            <input type="text" class="form-control" placeholder="Title">
                                         </div>
                                         <div class="form-group col-sm-12">
                                             <label> Discription</label>
-                                            <textarea type="text" class="form-control" name="description" placeholder="Discription"
+                                            <textarea type="text" class="form-control" placeholder="Discription"
                                                 style="height: 58px;"></textarea>
                                         </div>
                                         <div class="form-group col-sm-12">
                                             <div class="submit">
-                                                <a href="#" class="form-control bg-submits" onclick="submitForm()">
-                                                    Submit</a>
+                                                <a href="#" class="form-control bg-submits"> Submit</a>
                                             </div>
+
                                         </div>
+                                    </form>
                                     </form>
                                 </div>
                             </div>
                         </div>
                         <!--  -->
-                        <div class="full-editor mt-3">
+                        <!-- <div class="full-editor mt-3">
                             <div class="users">
                                 <h3 class="page-title">Notification Detail</h3>
                             </div>
@@ -95,7 +129,7 @@
 
                                 </tbody>
                             </table>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -114,6 +148,16 @@
 
 </div>
 <!-- /Main Wrapper -->
+<script src="{% static 'admin/js/jquery-3.6.0.min.js' %}"></script>
+
+	<!-- Bootstrap Core JS -->
+	<script src="{% static 'admin/js/bootstrap.bundle.min.js' %}"></script>
+
+	<!-- Slimscroll JS -->
+	<script src="{% static 'admin/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+
+	<!-- Custom JS -->
+	<script src="{% static 'admin/js/script.js' %}"></script>
 
 <!--DATATABLES SCRIPT START DATATABLES SCRIPT START DATATABLES SCRIPT START DATATABLES SCRIPT START -->
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
@@ -134,22 +178,99 @@
         });
     });
 </script>
+<!-- SELECT DROPDOWN CHECKBOX SCRIPT START  -->
 <script>
-    function submitForm() {
-      // Get the selected users
-      const selectedUsers = Array.from(document.querySelectorAll('input[name="select_user"]:checked')).map(checkbox => checkbox.value);
-  
-      // Add the selected users to the form data
-      selectedUsers.forEach(userId => {
-        const hiddenInput = document.createElement('input');
-        hiddenInput.type = 'hidden';
-        hiddenInput.name = 'selected_users';
-        hiddenInput.value = userId;
-        document.getElementById('notificationForm').appendChild(hiddenInput);
-      });
-  
-      // Submit the form
-      document.getElementById('notificationForm').submit();
-    }
-  </script>
+    (function ($) {
+        var CheckboxDropdown = function (el) {
+            var _this = this;
+            this.isOpen = false;
+            this.areAllChecked = false;
+            this.$el = $(el);
+            this.$label = this.$el.find('.dropdown-label');
+            this.$checkAll = this.$el.find('[data-toggle="check-all"]').first();
+            this.$inputs = this.$el.find('[type="checkbox"]');
+
+            this.onCheckBox();
+
+            this.$label.on('click', function (e) {
+                e.preventDefault();
+                _this.toggleOpen();
+            });
+
+            this.$checkAll.on('click', function (e) {
+                e.preventDefault();
+                _this.onCheckAll();
+            });
+
+            this.$inputs.on('change', function (e) {
+                _this.onCheckBox();
+            });
+        };
+
+        CheckboxDropdown.prototype.onCheckBox = function () {
+            this.updateStatus();
+        };
+
+        CheckboxDropdown.prototype.updateStatus = function () {
+            var checked = this.$el.find(':checked');
+
+            this.areAllChecked = false;
+            this.$checkAll.html('Check All');
+
+            if (checked.length <= 0) {
+                this.$label.html('Select Options');
+            }
+            else if (checked.length === 1) {
+                this.$label.html(checked.parent('label').text());
+            }
+            else if (checked.length === this.$inputs.length) {
+                this.$label.html('All Selected');
+                this.areAllChecked = true;
+                this.$checkAll.html('Uncheck All');
+            }
+            else {
+                this.$label.html(checked.length + ' Selected');
+            }
+        };
+
+        CheckboxDropdown.prototype.onCheckAll = function (checkAll) {
+            if (!this.areAllChecked || checkAll) {
+                this.areAllChecked = true;
+                this.$checkAll.html('Uncheck All');
+                this.$inputs.prop('checked', true);
+            }
+            else {
+                this.areAllChecked = false;
+                this.$checkAll.html('Check All');
+                this.$inputs.prop('checked', false);
+            }
+
+            this.updateStatus();
+        };
+
+        CheckboxDropdown.prototype.toggleOpen = function (forceOpen) {
+            var _this = this;
+
+            if (!this.isOpen || forceOpen) {
+                this.isOpen = true;
+                this.$el.addClass('on');
+                $(document).on('click', function (e) {
+                    if (!$(e.target).closest('[data-control]').length) {
+                        _this.toggleOpen();
+                    }
+                });
+            }
+            else {
+                this.isOpen = false;
+                this.$el.removeClass('on');
+                $(document).off('click');
+            }
+        };
+
+        var checkboxesDropdowns = document.querySelectorAll('[data-control="checkbox-dropdown"]');
+        for (var i = 0, length = checkboxesDropdowns.length; i < length; i++) {
+            new CheckboxDropdown(checkboxesDropdowns[i]);
+        }
+    })(jQuery);
+</script>
 {% endblock %}
