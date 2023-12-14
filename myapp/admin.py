@@ -36,6 +36,10 @@ admin.site.register(Product)
 admin.site.register(CartItem)
 admin.site.register(Blog)
 
+admin.site.register(Country)
+admin.site.register(State)
+admin.site.register(City)
+
 admin.site.register(Adres)
 admin.site.register(Order)
 admin.site.register(OrderItem)

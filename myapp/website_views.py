@@ -70,7 +70,6 @@ def base(request):
     return render(request, 'websiteuser/base.html')
 
 
-
 def product(request):
     product=Product.objects.all()
     categories=Category.objects.all()
@@ -195,7 +194,6 @@ def cart_view(request):
     return render(request, 'websiteuser/cart.html', {'cart_items': cart_items, 'total_price': total_price, 'delivery_charge1':delivery_charge1, 'discount1':discount1, 'total':total, 'total_price_formatted':total_price_formatted,'cart_count':cart_count})
 
 
-
 @login_required (login_url='/login1')
 def remove_from_cart(request, item_id):
     cart_item = get_object_or_404(CartItem, id=item_id, user=request.user)
@@ -203,8 +201,6 @@ def remove_from_cart(request, item_id):
     return redirect('cart_view')
 
 
-# def checkout(request):
-#     return render(request, 'websiteuser/checkout.html')
 
 @login_required (login_url='/login1')
 def checkout(request: HttpRequest):
@@ -243,29 +239,36 @@ def checkout(request: HttpRequest):
         }
 
     if request.method == 'POST' and request.user.is_authenticated:
-        country = request.POST.get('country')
-        state = request.POST.get('state')
-        city = request.POST.get('city')
-        street_address = request.POST.get('street_address')
-        postal_code = request.POST.get('postal_code')
-        payment_mode = request.POST.get('payment_mode')
+        country_id = request.POST.get('country')
+        state_id = request.POST.get('state')
+        city_id = request.POST.get('city')
+        street_address = request.POST.get('street_address')  # Add this line
+        postal_code = request.POST.get('postal_code')  # Add this line
+        payment_mode = request.POST.get('payment_mode')  # Add this line
+
+        try:
+            country1 = Country.objects.get(id=country_id)
+            state1 = State.objects.get(id=state_id)
+            city1 = City.objects.get(id=city_id)
+        except (Country.DoesNotExist, State.DoesNotExist, City.DoesNotExist):
+            # Handle the case where one of the instances is not found
+            messages.error(request, 'Invalid country, state, or city selected.')
+            return redirect('checkout')
 
         # Create a new address for the user
-        new_address = Adres.objects.create(
+        new_address = Address.objects.create(
             user=request.user,
             street_address=street_address,
-            country=country,
-            state=state,
-            city=city,
+            country=country1,
+            state=state1,
+            city=city1,
             postal_code=postal_code,
             payment_mode=payment_mode
-            
         )
 
-       # Create an order with the new address
+        # Create an order with the new address
         order = Order.objects.create(user=request.user, shipping_address=new_address, total_price=total_price)
 
-        # Add order items to the order (assuming you have a way to get cart items)
         cart_items = CartItem.objects.filter(user=request.user)
         for cart_item in cart_items:
             OrderItem.objects.create(
@@ -275,20 +278,35 @@ def checkout(request: HttpRequest):
                 unit_price=cart_item.product.price
             )
 
-        # Optionally, you may want to clear the user's cart after creating the order
         cart_items.delete()
 
-        # Redirect to payment_form with the required arguments
         if payment_mode == 'stripe':
             return redirect('payment_form', order_id=order.id, total_price=total_price)
         else:
-            # Payment method is cash on delivery, show success message and redirect to order page
-            messages.success(request, 'Your booking was successful done.')
+      
+            messages.success(request, 'Your booking was successfully done.')
             return redirect('order')
 
-    # If it's a GET request or shipping address is not provided, render the checkout page with address form
-    return render(request, 'websiteuser/checkout.html', {'user_data': user_data, 'total_price':total_price,'cart_items':cart_items})
+    country2=Country.objects.all()
 
+    return render(request, 'websiteuser/checkout.html', {'user_data': user_data, 'total_price':total_price,'cart_items':cart_items,'country2':country2})
+
+
+@login_required (login_url='/login1')
+def states(request):
+    country_id = request.GET.get('country_id')
+    # get_country= Country.objects.get(id=country_id)
+    states = State.objects.filter(country_id=country_id).all()
+    return render(request, 'websiteuser/states_dropdown_list_options.html', {'states': states})
+    
+
+@login_required (login_url='/login1')
+def cities(request):
+    state_id = request.GET.get('state_id')
+    # get_state= State.objects.get(id=state_id)
+    cities = City.objects.filter(state_id=state_id).all()
+    return render(request, 'websiteuser/cities_dropdown_list_options.html', {'cities': cities})
+   
 
 
 class PaymentFormView(View):
@@ -419,7 +437,6 @@ def website_blog(request):
 
 
 
-
 def user_sign_in(request):
     userForm=Adduser()
     receptionForm=AddUserForm()
@@ -443,7 +460,6 @@ def user_sign_in(request):
             print(receptionForm.errors)
         
     return render(request, 'websiteuser/register.html', context=mydict)
-
 
 
 

@@ -587,7 +587,7 @@
                                     <a href="/product">Home</a>
                                 </li>
                                 {% for c in categories %}
-                                <li >
+                                <li>
                                     <a href="/product/{{ c.pk }}"> {{ c.name }}</a>
                                 </li>
                                 {% endfor %}
@@ -679,24 +679,15 @@
 
 
 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var widgetContainers = document.querySelectorAll('.widgets_inner');
+    $(document).ready(function () {
+        $('.list li').on('click', function () {
+            // Remove the 'active' class from all list items
+            $('.list li').removeClass('active');
 
-        widgetContainers.forEach(function (container) {
-            var categoryLinks = container.querySelectorAll('ul.list li');
-
-            categoryLinks.forEach(function (link) {
-                link.addEventListener('click', function (event) {
-                    // Remove 'active' class from all category links within the same container
-                    categoryLinks.forEach(function (link) {
-                        link.classList.remove('active');
-                    });
-
-                    // Add 'active' class to the clicked category link
-                    event.target.classList.add('active');
-                });
-            });
+            // Add the 'active' class to the clicked list item
+            $(this).addClass('active');
         });
     });
 </script>

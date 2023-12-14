@@ -153,7 +153,7 @@ class ContactForm(forms.ModelForm):
 
     name = forms.CharField( label='Name',required=True)
     email = forms.EmailField(label='Email',required=True)
-    subject = forms.CharField( label='Subject',required=True)
+    subject = forms.CharField(label='Subject',required=True)
     message = forms.CharField(widget=forms.Textarea(attrs={'rows': 3, 'cols': 30}))
    
     class Meta:
