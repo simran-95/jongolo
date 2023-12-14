@@ -436,4 +436,4 @@ def notification(request):
     else:
         form = NotificationForm()
 
-    return render(request, 'notification1.html', {'form': form})
+    return render(request, 'notification.html', {'form': form})

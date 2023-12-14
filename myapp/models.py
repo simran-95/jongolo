@@ -266,7 +266,21 @@ class Adres(models.Model):
     payment_mode = models.CharField(max_length=20,default='Cash on delivery')
 
     def __str__(self):
-        return self.payment_mode
+        return f"{self.user.username}'s Address ({self.city}, {self.country})"
+
+
+class Address(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    country=models.ForeignKey(Country, on_delete=models.CASCADE)
+    state=models.ForeignKey(State, on_delete=models.CASCADE)
+    city=models.ForeignKey(City, on_delete=models.CASCADE)
+    street_address = models.CharField(max_length=255)
+    city = models.CharField(max_length=100)
+    postal_code = models.CharField(max_length=20)
+    payment_mode = models.CharField(max_length=20,default='Cash on delivery')
+
+    def __str__(self):
+        return f"{self.user.username}'s Address ({self.city}, {self.country})"
 
 
 class CartItem(models.Model):
@@ -276,8 +290,8 @@ class CartItem(models.Model):
 
     def total_price(self):
         return self.quantity * self.product.price
-    
-  
+
+
     def image_url(self):
         return self.product.image.url
 
@@ -286,12 +300,12 @@ class CartItem(models.Model):
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
-    shipping_address = models.ForeignKey(Adres, on_delete=models.SET_NULL, null=True, blank=True)
+    shipping_address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True, blank=True)
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
     status = models.CharField(max_length=20,default='pending')
 
-    # def __str__(self):
-    #     return self.order
+    def __str__(self):
+        return self.status
   
 
 class OrderItem(models.Model):
@@ -301,7 +315,7 @@ class OrderItem(models.Model):
     unit_price = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
-        return self.order
+        return f"{self.product.name} - Quantity: {self.quantity}"
 
     def total_earnings(self):
         order_items = OrderItem.objects.filter(product=self)
@@ -365,15 +379,6 @@ class Notification(models.Model):
 
 
         
-# class Address(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     country=models.ForeignKey(Country, on_delete=models.CASCADE)
-#     state=models.ForeignKey(State, on_delete=models.CASCADE)
-#     city=models.ForeignKey(City, on_delete=models.CASCADE)
-#     street_address = models.CharField(max_length=255)
-#     city = models.CharField(max_length=100)
-#     postal_code = models.CharField(max_length=20)
-
 
 # class OrderProduct(models.Model): 
 #     user = models.ForeignKey(User, on_delete=models.CASCADE)

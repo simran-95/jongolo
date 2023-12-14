@@ -73,7 +73,7 @@ urlpatterns=[
     path('confirmed/<int:id>',vender_views.product_confirm, name='confirmed'),
     path('placed/<int:id>',vender_views.product_placed, name='placed'),
     path('completed/<int:id>',vender_views.product_completed,name='completed'),
-    path('completed/<int:id>',vender_views.product_completed,name='completed'),
+    path('cancel/<int:id>',vender_views.product_completed,name='cancel'),
 
     #//////// for Website and user /////////
     path('',website_views.dashboard2,name='dashboard-web'),

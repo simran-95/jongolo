@@ -60,18 +60,9 @@ def earning(request):
 
 
 # ///////// Orders ///////////
-from django.apps import apps
 
-# def calculate_total_quantity(order):
-#     order_items = OrderItem.objects.filter(order=order)
-#     total_quantity = sum(item.quantity for item in order_items)
-#     return total_quantity
 
-# def calculate_total_price(request):
-#     order_items = OrderItem.objects.filter(user=request.user)
-#     # total_price1 = sum(item.unit_price * item.quantity for item in order_items)
-#     # return total_price1
-#     return render(request, 'vender/order_vender.html',{'order_items':order_items})
+
 
 def order_status(request):
     # user_orders = Order.objects.filter(user=request.user)
@@ -106,6 +97,7 @@ def product_placed(request, id):
 def product_completed(request, id):
     developer=Order.objects.get(id=id)
     developer.status = 'completed'
+    developer.save()
     return redirect('order1')
 
 def product_cancel(request, id):
@@ -176,3 +168,16 @@ def profile(request):
     return render(request, 'vender/profile.html', {'form': form, 'fm':fm, 'user_orders':user_orders})
 
 
+
+
+
+# def calculate_total_quantity(order):
+#     order_items = OrderItem.objects.filter(order=order)
+#     total_quantity = sum(item.quantity for item in order_items)
+#     return total_quantity
+
+# def calculate_total_price(request):
+#     order_items = OrderItem.objects.filter(user=request.user)
+#     # total_price1 = sum(item.unit_price * item.quantity for item in order_items)
+#     # return total_price1
+#     return render(request, 'vender/order_vender.html',{'order_items':order_items})

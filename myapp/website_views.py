@@ -12,6 +12,7 @@ from .models import Order as OrderModel
 from django.core.mail import send_mail
 from django.core.mail import EmailMultiAlternatives
 from django.contrib.auth import update_session_auth_hash
+from django.http import JsonResponse
 
 
 stripe.api_key = 'sk_test_51OITjfSGqeyhk1pWAkeGPNjEevcHkTLHgSa56PfMqWH1ik4v6UbVv82jd4HYyXSNjGVlwl6vvwPfI8skyrpNdmke00zEEvqqu1'
@@ -374,29 +375,33 @@ def cancel_order(request, order_id):
     return redirect('order')
     
 
-@login_required (login_url='/login1')
+@login_required(login_url='/login1')
 def rating_products(request, order_id):
     if request.method == 'POST':
         order = get_object_or_404(Order, id=order_id)
 
         if order.status in ['shipped', 'completed']:
-            rating, created = Rating.objects.get_or_create(order=order, user=request.user)
+            # Assuming each order has only one product
+            product = order.orderitem_set.first().product
+
+            rating, created = Rating.objects.get_or_create(order=order, user=request.user, product=product)
 
             if not created:
                 messages.error(request, 'You rated already to this product!!.')
-                return redirect('order')
+                return JsonResponse({'status': 'error', 'message': 'Already rated'})
 
-            # Assuming you have a 'reason' field in your Rating model
-            rating.reason = request.POST.get('reason')
+            rating.rating = request.POST.get('rating')
+            rating.review = request.POST.get('review')
             rating.save()
 
             messages.success(request, 'Rated successfully.')
-            return redirect('order')
+            return JsonResponse({'status': 'success', 'message': 'Rating submitted successfully'})
+
         else:
             messages.error(request, 'This order cannot be Rated.')
+            return JsonResponse({'status': 'error', 'message': 'Order cannot be rated'})
 
-    return redirect('order')
-
+    return JsonResponse({'status': 'error', 'message': 'Invalid request'})
 
 
 def website_blog(request):
