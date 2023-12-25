@@ -34,10 +34,10 @@ class UserChangeForm(UserChangeForm):
 
 
 class Adduser(forms.ModelForm):
-   
-    username = forms.CharField( label='UserName',required=True)
+    # name =  forms.CharField(label=('Name'),widget=forms.TextInput(attrs={'class':'form-control','form-label':'User Name','placeholder': 'Enter Your Name'}))
+    username = forms.CharField( label='UserName',widget=forms.TextInput(attrs={'class':'form-control','form-label':'User Name','placeholder': 'Enter Your Name'}),required=True)
     email = forms.EmailField(label='Email',required=True)
-    password = forms.CharField(label='Password',required=False)
+    # password = forms.CharField(label='Password',required=False)
 
     class Meta:
         model=User
@@ -84,9 +84,9 @@ class AddVenderForm(forms.ModelForm):
 
 class Addblogger(forms.ModelForm):
    
-    username = forms.CharField( label='UserName',required=True)
-    email = forms.EmailField(label='Email',required=True)
-    password = forms.CharField( label='Password',required=False)
+    username = forms.CharField( label='UserName',widget=forms.TextInput(attrs={'class':'form-control','placeholder': 'Enter Your Name'}))
+    email = forms.EmailField(label='Email',widget=forms.TextInput(attrs={'class':'form-control','placeholder': 'Enter Your Email'}))
+    password = forms.CharField(label='Password',widget=forms.TextInput(attrs={'class':'form-control','placeholder': 'Enter Your Password'}))
 
     class Meta:
         model=User

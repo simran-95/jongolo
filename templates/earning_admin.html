@@ -31,11 +31,12 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                         {% for order in user_orders %}
+                                            {% for item in order.orderitem_set.all %}
                                         <tr class="even">
                                             <!-- earnings_summary.html -->
                                             <!-- <h2>Total Earnings: ${{ total_earnings }}</h2> -->
-                                            {% for order in user_orders %}
-                                            {% for item in order.orderitem_set.all %}
+                                           
                                             <td>{{ order.id }}</td>
                                             <td>{{item.product.name}}</td>
                                             <td><img class="rounded-circle" src="{{item.product.image.url}}" width="31"
@@ -48,37 +49,11 @@
                                             <td>
                                                 <div class="badge badge-success">{{order.total_price}}</div>
                                             </td>
-                                            <!-- <td>Lorem Ipsum is simply dummy text.</td> -->
-                                            <!-- <td>
-														<button class="btn btn-primary"><a class="edit-btn"
-																href="#">Edit</a></button>
-														<button class="btn btn-primary"><a class="edit-btn"
-																href="#">Delete</a></button>
-													</td> -->
-
+                                    
                                         </tr>
                                         {% endfor %}
                                         {% endfor %}
-                                        <!-- <tr class="odd">
-													<td>2</td>
-													<td>Earning Clothes</td>
-													<td><img class="rounded-circle"
-															src="assets/img/profiles/avatar-01.jpg" width="31"
-															alt="Ryan Taylor"></td>
-													<td>Size xl</td>
-													<td>3</td>
-													<td>
-														<div class="badge badge-success">Medium</div>
-													</td>
-
-													<td>Lorem Ipsum is simply dummy text.</td>
-													<td>
-														<button class="btn btn-primary"><a class="edit-btn"
-																href="#">Edit</a></button>
-														<button class="btn btn-primary"><a class="edit-btn"
-																href="#">Delete</a></button>
-													</td>
-												</tr> -->
+                                    
 
                                     </tbody>
                                 </table>

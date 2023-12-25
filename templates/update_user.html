@@ -5,26 +5,20 @@
 
 
 
-{% if messages %}
-{% for message in messages %}
-{% if message.tags == 'error'%}
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
-    {{message}}
+<style>
+	.error-list {
+		color: red;
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+</style>
 
-</div>
-{% endif %}
-{% endfor %}
-{% endif %}
-{% if messages %}
 {% for message in messages %}
-{% if message.tags == 'success'%}
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
-    {{message}}
-
+<div class="alert alert-{{ message.tags }} alert-dismissible text-center mb-5" role="alert">
+	<span>{{ message }}</span>
 </div>
-{% endif %}
 {% endfor %}
-{% endif %}
 <!-- Page Wrapper -->
 <div class="page-wrapper">
     <div class="content container-fluid">
@@ -52,32 +46,42 @@
                                     <label for="{{ userForm.email.id_for_label }}">Enter Email</label>
                                     {% render_field userForm.email class="form-control" placeholder="Enter Your Email" %}
                                 </div>
-                                <!-- <div class="form-group col-sm-12">
+
+                                <div class="form-group col-sm-12" style="display: none;">
                                    
                                         <label for="{{ userForm.password.id_for_label }}">Password </label>
-                                        {% render_field userForm.password class="form-control" placeholder="Full name" %}
-                                </div> -->
+                                        {% render_field userForm.password class="form-control" placeholder="Full Password" %}
+                                </div>
+                                
                                 <div class="form-group col-sm-12">
 
                                     <label for="{{ adduserForm.contact.id_for_label }}">Contact Number </label>
-                                    {% render_field adduserForm.contact class="form-control" placeholder="Full name" %}
+                                    {% render_field adduserForm.contact class="form-control" placeholder="Full Contact Details" %}
                                 </div>
+
                                 <div class="form-group col-sm-12">
 
                                     <label for="{{ adduserForm.city.id_for_label }}">City Name </label>
                                     {% render_field adduserForm.city class="form-control" placeholder="Enter City Name" %}
                                 </div>
+
                                 <div class="form-group col-sm-12">
 
                                     <label for="{{ adduserForm.address.id_for_label }}">Address</label>
                                     {% render_field adduserForm.address class="form-control" placeholder="Enter Your Address" %}
                                 </div>
                                 <div class="form-group col-sm-12">
-
                                     <label for="{{ adduserForm.profile_pic.id_for_label }}">Profile Picture </label>
-                                    {% render_field adduserForm.profile_pic class="form-control" %}
+                                    
+                                    {% if adduserForm.instance.profile_pic %}
+                                        <img src="{{ adduserForm.instance.profile_pic.url }}" alt="Current Image" style="max-width: 100px;">
+                                        <br>
+                                    {% endif %}
+                                <br><br>
+                                    
+                                    <input type="file" name="{{ adduserForm.profile_pic.name }}" class="form-control" accept="image/*">
                                 </div>
-
+                                
                                 <div class="form-group col-sm-12">
                                     <div class="submit">
                                         <button type="submit" class="form-control bg-submits">Submit</button>

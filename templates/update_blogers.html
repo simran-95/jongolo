@@ -5,26 +5,11 @@
 {% block content%}
 
 	
-{% if messages %}
 {% for message in messages %}
-{% if message.tags == 'error'%}
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-    {{message}}
-    
+    <div class="alert alert-{{ message.tags }} alert-dismissible text-center mb-5" role="alert">
+        <span>{{ message }}</span>
     </div>
-{% endif %}
 {% endfor %}
-{% endif %}
-{% if messages %}
-{% for message in messages %}
-{% if message.tags == 'success'%}
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-    {{message}}
-    
-    </div>
-{% endif %}
-{% endfor %}
-{% endif %}
 <!-- Page Wrapper -->
     <div class="page-wrapper">
         <div class="content container-fluid">
@@ -53,7 +38,11 @@
                                         {% render_field userForm.email class="form-control" placeholder="Enter Your Email" %}
                                 </div>
 
-                             
+                                <div class="form-group col-sm-12" style="display: none;">
+                                   
+                                    <label for="{{ userForm.password.id_for_label }}">Password </label>
+                                    {% render_field userForm.password class="form-control" placeholder="Enter Password" %}
+                                </div>
 
                                 <div class="form-group col-sm-12">
                             

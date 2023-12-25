@@ -146,8 +146,9 @@ def add_user(request):
             reception.save()
             return redirect('super_admin/view_user')
         else:
-            print(userForm.errors)
-            print(receptionForm.errors)
+            # messages.error(request, 'Error in the form submission. Please correct the errors.')
+            mydict['userForm'] = userForm
+            mydict['receptionForm'] = receptionForm
         
     return render(request, 'add_user.html', context=mydict)
 
@@ -172,16 +173,17 @@ def update_user(request,pk):
         adduserForm = AddUserForm(request.POST, request.FILES, instance=vender, prefix='vender1')
         
         if userForm.is_valid() and adduserForm.is_valid():
-            password = userForm.cleaned_data.get('password')
-            if password:
-                user.set_password(password)
-                update_session_auth_hash(request, user)
             userForm.save()
             adduserForm.save()
+
+            messages.success(request, 'User updated successfully.')
+
             return redirect('super_admin/view_user')  # Replace 'success_url' with the desired URL
         else:
+            messages.error(request, 'Error updating User. Please check the form.')
             print(userForm.errors)
             print(adduserForm.errors)
+            return render(request,'update_user.html',{'adduserForm': adduserForm, 'userForm': userForm})
     else:
         userForm = Adduser(instance=user, prefix='vender_user')
         adduserForm = AddUserForm(instance=vender, prefix='vender1')
@@ -235,17 +237,29 @@ def update_vender(request,pk):
         pharmacist_user_form = Addvender(request.POST, instance=user, prefix='vender_user')
         pharmacist_form = AddVenderForm(request.POST, request.FILES, instance=vender, prefix='vender1')
         
+        # if pharmacist_user_form.is_valid() and pharmacist_form.is_valid():
+        #     password = pharmacist_user_form.cleaned_data.get('password')
+        #     if password:
+        #         user.set_password(password)
+        #         update_session_auth_hash(request, user)
+        #     pharmacist_user_form.save()
+        #     pharmacist_form.save()
+        #     return redirect('super_admin/view_vender')  # Replace 'success_url' with the desired URL
+
         if pharmacist_user_form.is_valid() and pharmacist_form.is_valid():
-            password = pharmacist_user_form.cleaned_data.get('password')
-            if password:
-                user.set_password(password)
-                update_session_auth_hash(request, user)
             pharmacist_user_form.save()
             pharmacist_form.save()
-            return redirect('super_admin/view_vender')  # Replace 'success_url' with the desired URL
+
+            messages.success(request, 'Vender updated successfully.')
+            return redirect('super_admin/view_vender') 
+        # else:
+        #     print(pharmacist_user_form.errors)
+        #     print(pharmacist_form.errors)
         else:
+            messages.error(request, 'Error updating vender. Please check the form.')
             print(pharmacist_user_form.errors)
             print(pharmacist_form.errors)
+            return render(request, 'update_vender.html', {'pharmacist_user_form': pharmacist_user_form, 'pharmacist_form': pharmacist_form})
     else:
         pharmacist_user_form = Addvender(instance=user, prefix='vender_user')
         pharmacist_form = AddVenderForm(instance=vender, prefix='vender1')
@@ -269,17 +283,16 @@ def add_blogger(request):
             user.set_password(user.password)
             user.save()
 
-            # Fix the indentation here
             reception = bloggerForm.save(commit=False)
             reception.user = user
             reception.save()
 
             return redirect('super_admin/view_bloger')
         else:
-            print(userForm.errors)
-            print(bloggerForm.errors)
-            return render(request, 'add_bloger.html', context=mydict)
-    
+            messages.error(request, 'Error in the form submission. Please correct the errors.')
+            mydict['userForm'] = userForm
+            mydict['bloggerForm'] = bloggerForm
+
     return render(request, 'add_bloger.html', context=mydict)
 
 @login_required(login_url='/login')

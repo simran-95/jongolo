@@ -1,29 +1,22 @@
 {% extends 'base.html'%}
 {% load widget_tweaks %}
+{% load crispy_forms_tags %} 
 {% load static %}
 {% block content%}
+<style>
+	.error-list {
+		color: red;
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+</style>
 
-
-{% if messages %}
 {% for message in messages %}
-{% if message.tags == 'error'%}
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-    {{message}}
-    
+    <div class="alert alert-{{ message.tags }} alert-dismissible text-center mb-5" role="alert">
+        <span>{{ message }}</span>
     </div>
-{% endif %}
 {% endfor %}
-{% endif %}
-{% if messages %}
-{% for message in messages %}
-{% if message.tags == 'success'%}
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-    {{message}}
-    
-    </div>
-{% endif %}
-{% endfor %}
-{% endif %}
 <!-- Page Wrapper -->
 <div class="page-wrapper">
     <div class="content container-fluid">
@@ -42,33 +35,100 @@
                                 {% csrf_token %}
 
                                 <div class="form-group col-sm-12">
-                                    <label for="{{ userForm.username.id_for_label }}">UserName </label>
-                                    {% render_field userForm.username class="form-control" placeholder="Enter Full Name" %}
+                                    <label >UserName </label>
+                                    <!-- {% render_field userForm.username class="form-control" placeholder="Enter Full Name" %} -->
+                                    {{ userForm.username }}
+                                    {% if userForm.username.errors %}
+                                    <ul class="error-list">
+                                        {% for error in userForm.username.errors %}
+                                            <li>{{ error }}</li>
+                                            
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %}
                                 </div>
 
                                 <div class="form-group col-sm-12">
                                     <label for="{{ userForm.email.id_for_label }}">Enter Email</label>
-                                    {% render_field userForm.email class="form-control" placeholder="Enter Your Email" %}
+                                    <!-- {% render_field userForm.email class="form-control" placeholder="Enter Your Email" %} -->
+                                    {{ userForm.email }}
+                                    {% if userForm.email.errors %}
+                                    <ul class="error-list">
+                                        {% for error in userForm.email.errors %}
+                                            <li>{{ error }}</li>
+                                            
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %}
                                 </div>
                                 <div class="form-group col-sm-12">
                                     <label for="{{ userForm.password.id_for_label }}">Password </label>
-                                    {% render_field userForm.password class="form-control" placeholder="Enter a stronge password" %}
+                                    {{ userForm.password }}
+                                    {% if userForm.password.errors %}
+                                    <ul class="error-list">
+                                        {% for error in userForm.password.errors %}
+                                            <li>{{ error }}</li>
+                                            
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %}
+                                    <!-- {% render_field userForm.password class="form-control" placeholder="Enter a stronge password" %} -->
                                 </div>
                                 <div class="form-group col-sm-12">
                                     <label for="{{ bloggerForm.contact.id_for_label }}">Contact Number </label>
                                     {% render_field bloggerForm.contact class="form-control" placeholder="Contact Number" %}
+                                    <!-- {{ bloggerForm.contact }} -->
+                                    {% if bloggerForm.contact.errors %}
+                                    <ul class="error-list">
+                                        {% for error in bloggerForm.contact.errors %}
+                                            <li>{{ error }}</li>
+                                            
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %}
+                                  
                                 </div>
                                 <div class="form-group col-sm-12">
                                     <label for="{{ bloggerForm.city.id_for_label }}">City Name </label>
+                                    <!-- {{ bloggerForm.city }} -->
                                     {% render_field bloggerForm.city class="form-control" placeholder="Enter City Name" %}
+                                    {% if bloggerForm.city.errors %}
+                                    <ul class="error-list">
+                                        {% for error in bloggerForm.city.errors %}
+                                            <li>{{ error }}</li>
+                                            
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %}
+                                    
                                 </div>
                                 <div class="form-group col-sm-12">
                                     <label for="{{ bloggerForm.address.id_for_label }}">Address</label>
+                                    <!-- {{ bloggerForm.address }} -->
                                     {% render_field bloggerForm.address class="form-control" placeholder="Enter Your Address" %}
+                                    {% if bloggerForm.address.errors %}
+                                    <ul class="error-list">
+                                        {% for error in bloggerForm.address.errors %}
+                                            <li>{{ error }}</li>
+                                            
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %}
+                                  
                                 </div>
                                 <div class="form-group col-sm-12">
                                     <label for="{{ bloggerForm.profile_pic.id_for_label }}">Profile Picture </label>
-                                    {% render_field bloggerForm.profile_pic class="form-control" %}
+                                    <!-- {{ bloggerForm.profile_pic }} -->
+                                    {% render_field bloggerForm.profile_pic class="form-control" %} 
+                                    {% if bloggerForm.profile_pic.errors %}
+                                    <ul class="error-list">
+                                        {% for error in bloggerForm.profile_pic.errors %}
+                                            <li>{{ error }}</li>
+                                            
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %}
+
                                 </div>
                                 <div class="form-group col-sm-12">
                                     <div class="submit">

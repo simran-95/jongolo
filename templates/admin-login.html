@@ -25,6 +25,7 @@
         .form-control {
             padding-left: 40px;
         }
+
     </style>
 </head>
 
@@ -33,6 +34,12 @@
 
 
 
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper login-body">
+        <div class="login-wrapper" style="background: black;">
+            <div class="container">
+                
     {% if messages %}
     {% for message in messages %}
     {% if message.tags == 'error'%}
@@ -53,11 +60,6 @@
     {% endif %}
     {% endfor %}
 {% endif %}
-
-    <!-- Main Wrapper -->
-    <div class="main-wrapper login-body">
-        <div class="login-wrapper" style="background: black;">
-            <div class="container">
                 <div class="loginbox">
                     <div class="login-left" style="background: url(/static/admin/img/banners/banners-2.jpg);">
 
