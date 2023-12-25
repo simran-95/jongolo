@@ -204,7 +204,9 @@ def remove_from_cart(request, item_id):
 
 @login_required (login_url='/login1')
 def checkout(request: HttpRequest):
+    print("Entering checkout view")
     print(request.user)
+    total_price = 0.00
     
     try:
         add_user_instance = AddUser.objects.get(user=request.user)
@@ -228,6 +230,7 @@ def checkout(request: HttpRequest):
         print(total_price)
         total_price = "{:.2f}".format(total_price)
     except AddUser.DoesNotExist:
+        print(f"AddUser does not exist: {e}")
         # Handle the case when AddUser instance does not exist for the user
         user_data = {
             'username': request.user.username,
@@ -239,6 +242,7 @@ def checkout(request: HttpRequest):
         }
 
     if request.method == 'POST' and request.user.is_authenticated:
+        print("Processing POST request")
         country_id = request.POST.get('country')
         state_id = request.POST.get('state')
         city_id = request.POST.get('city')
@@ -251,6 +255,7 @@ def checkout(request: HttpRequest):
             state1 = State.objects.get(id=state_id)
             city1 = City.objects.get(id=city_id)
         except (Country.DoesNotExist, State.DoesNotExist, City.DoesNotExist):
+            
             # Handle the case where one of the instances is not found
             messages.error(request, 'Invalid country, state, or city selected.')
             return redirect('checkout')
