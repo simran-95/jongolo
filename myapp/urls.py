@@ -41,7 +41,7 @@ urlpatterns=[
     path('super_admin/add_bloger',views.add_blogger,name='super_admin/add_bloger'),
     path('super_admin/view_bloger',views.view_blogger,name='super_admin/view_bloger'),
     path('delete_bloger/<int:id>/',views.delete_blogger, name='delete_bloger'),
-    path('update_bloger/<int:pk>',views.update_blogger,name='update_bloger'),
+    path('update_bloger/<int:id>',views.update_blogger,name='update_bloger'),
 
     #//////// blogs views  /////////
     path('blog',blogs_views.blogs,name='blog'),

@@ -37,6 +37,7 @@ class Adduser(forms.ModelForm):
    
     username = forms.CharField( label='UserName',required=True)
     email = forms.EmailField(label='Email',required=True)
+    password = forms.CharField(label='Password',required=False)
 
     class Meta:
         model=User
@@ -60,6 +61,7 @@ class Addvender(forms.ModelForm):
    
     username = forms.CharField( label='UserName',required=True)
     email = forms.EmailField(label='Email',required=True)
+    password = forms.CharField( label='Password',required=False)
 
     class Meta:
         model=User
@@ -84,6 +86,7 @@ class Addblogger(forms.ModelForm):
    
     username = forms.CharField( label='UserName',required=True)
     email = forms.EmailField(label='Email',required=True)
+    password = forms.CharField( label='Password',required=False)
 
     class Meta:
         model=User

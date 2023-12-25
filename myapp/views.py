@@ -294,9 +294,10 @@ def delete_blogger(request,id):
     return redirect('super_admin/view_bloger')   
 
 @login_required(login_url='/login')
-def update_blogger(request,pk):
+def update_blogger(request,id):
 
-    vender = Blogger.objects.get(id=pk)
+    vender = get_object_or_404(Blogger, pk=id)
+
     user = vender.user
 
     if request.method == 'POST':
@@ -304,17 +305,18 @@ def update_blogger(request,pk):
         adduserForm = AddBlogerForm(request.POST, request.FILES, instance=vender, prefix='vender1')
 
         if userForm.is_valid() and adduserForm.is_valid():
-            password = userForm.cleaned_data.get('password')
-            if password:
-                user.set_password(password)
-                update_session_auth_hash(request, user)
-
             userForm.save()
             adduserForm.save()
+
+            messages.success(request, 'Bloger updated successfully.')
+
             return redirect('super_admin/view_bloger')  # Replace 'success_url' with the desired URL
         else:
+            messages.error(request, 'Error updating property owner. Please check the form.')
             print(userForm.errors)
             print(adduserForm.errors)
+            return render(request,'update_blogers.html',{'adduserForm': adduserForm, 'userForm': userForm})
+            
     else:
         userForm = Addblogger(instance=user, prefix='vender_user')
         adduserForm = AddBlogerForm(instance=vender, prefix='vender1')
