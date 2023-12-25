@@ -52,11 +52,18 @@
                                         <label for="{{ userForm.email.id_for_label }}">Enter Email</label>
                                         {% render_field userForm.email class="form-control" placeholder="Enter Your Email" %}
                                 </div>
+
                                 <div class="form-group col-sm-12">
-                                   
-                                        <label for="{{ userForm.password.id_for_label }}">Password </label>
+                                    <label for="{{ userForm.password.id_for_label }}">Password </label>
+                                    {% if userForm.instance.id %}
+                                        <!-- Render password field only for existing users -->
                                         {% render_field userForm.password class="form-control" placeholder="Full name" %}
+                                    {% else %}
+                                        <!-- Do not render password field for new users -->
+                                        <input type="hidden" name="{{ userForm.password.name }}" value="{{ userForm.password.value }}">
+                                    {% endif %}
                                 </div>
+
                                 <div class="form-group col-sm-12">
                             
 

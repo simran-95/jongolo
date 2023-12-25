@@ -9,8 +9,6 @@ from django.contrib.auth import update_session_auth_hash
 
 # Create your views here.
 
-
-
 # def login(request):
 #     return render(request, 'admin-login.html')
 
@@ -166,26 +164,27 @@ def delete_user(request,id):
 
 @login_required(login_url='/login')
 def update_user(request,pk):
-    add=AddUser.objects.get(id=pk)
-    user=User.objects.get(id=add.user_id)
+    vender = AddUser.objects.get(id=pk)
+    user = vender.user
 
-    userForm=Adduser(instance=user)
-    adduserForm=AddUserForm(request.FILES,instance=add)
-    mydict={'userForm':userForm,'adduserForm':adduserForm}
-    if request.method=='POST':
-        userForm=Adduser(request.POST,instance=user)
-        adduserForm=AddUserForm(request.POST,request.FILES,instance=add)
+    if request.method == 'POST':
+        userForm = Adduser(request.POST, instance=user, prefix='vender_user')
+        adduserForm = AddUserForm(request.POST, request.FILES, instance=vender, prefix='vender1')
+        
         if userForm.is_valid() and adduserForm.is_valid():
-            user=userForm.save()
-            user.set_password(user.password)
-            user.save()
-            add=adduserForm.save(commit=False)
-            add.status=True
-            add.save()
-            return redirect('super_admin/view_user')
+            password = userForm.cleaned_data.get('password')
+            if password:
+                user.set_password(password)
+                update_session_auth_hash(request, user)
+            userForm.save()
+            adduserForm.save()
+            return redirect('super_admin/view_user')  # Replace 'success_url' with the desired URL
         else:
-            userForm = Adduser(instance=user)
-            adduserForm = AddUserForm(instance=add)
+            print(userForm.errors)
+            print(adduserForm.errors)
+    else:
+        userForm = Adduser(instance=user, prefix='vender_user')
+        adduserForm = AddUserForm(instance=vender, prefix='vender1')
     return render(request,'update_user.html',{'adduserForm': adduserForm, 'userForm': userForm})
 
 
@@ -253,7 +252,7 @@ def update_vender(request,pk):
     
     return render(request, 'update_vender.html', {'pharmacist_user_form': pharmacist_user_form, 'pharmacist_form': pharmacist_form})
 
-
+    
 @login_required(login_url='/login')
 def add_blogger(request):
     userForm = Addblogger()
@@ -296,27 +295,31 @@ def delete_blogger(request,id):
 
 @login_required(login_url='/login')
 def update_blogger(request,pk):
-    add=Blogger.objects.get(id=pk)
-    user=User.objects.get(id=add.user_id)
 
-    userForm=Addblogger(instance=user)
-    adduserForm=AddBlogerForm(request.FILES,instance=add)
-    mydict={'userForm':userForm,'adduserForm':adduserForm}
-    if request.method=='POST':
-        userForm=Addblogger(request.POST,instance=user)
-        adduserForm=AddBlogerForm(request.POST,request.FILES,instance=add)
+    vender = Blogger.objects.get(id=pk)
+    user = vender.user
+
+    if request.method == 'POST':
+        userForm = Addblogger(request.POST, instance=user, prefix='vender_user')
+        adduserForm = AddBlogerForm(request.POST, request.FILES, instance=vender, prefix='vender1')
+
         if userForm.is_valid() and adduserForm.is_valid():
-            user=userForm.save()
-            user.set_password(user.password)
-            user.save()
-            add=adduserForm.save(commit=False)
-            add.status=True
-            add.save()
-            return redirect('super_admin/view_user')
+            password = userForm.cleaned_data.get('password')
+            if password:
+                user.set_password(password)
+                update_session_auth_hash(request, user)
+
+            userForm.save()
+            adduserForm.save()
+            return redirect('super_admin/view_bloger')  # Replace 'success_url' with the desired URL
         else:
-            userForm = Addblogger(instance=user)
-            adduserForm = AddBlogerForm(instance=add)
+            print(userForm.errors)
+            print(adduserForm.errors)
+    else:
+        userForm = Addblogger(instance=user, prefix='vender_user')
+        adduserForm = AddBlogerForm(instance=vender, prefix='vender1')
     return render(request,'update_blogers.html',{'adduserForm': adduserForm, 'userForm': userForm})
+ 
 
 
 @login_required(login_url='/login')
