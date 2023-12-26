@@ -2,6 +2,14 @@
 {% load widget_tweaks %}
 {% load static %}
 {% block content%}
+<style>
+	.error-list {
+		color: red;
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+</style>
 
 
 <div class="hero-wrap hero-bread" style="background-image: url(/static/images/banner/footer-bg.png);">
@@ -16,6 +24,12 @@
     </div>
 </div>
 
+
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }} alert-dismissible text-center mb-5" role="alert">
+	<span>{{ message }}</span>
+</div>
+{% endfor %}
 <section class="ftco-section  checkout-form">
     <div class="container">
         <div class="row justify-content-center">
@@ -179,7 +193,6 @@
                             </div>
 
 
-
                             <div class="carts-details p-3 p-md-4" style="width: 100%;">
                                 <h3 class="billing-heading mb-4">Payment Method</h3>
                                 <div class="form-group">
@@ -255,7 +268,6 @@
         $('article').eq(i).addClass('on');
     });
 </script>
-
 
 <!-- loader -->
 <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">

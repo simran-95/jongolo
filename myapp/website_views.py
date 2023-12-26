@@ -243,30 +243,46 @@ def checkout(request: HttpRequest):
 
     if request.method == 'POST' and request.user.is_authenticated:
         print("Processing POST request")
-        country_id = request.POST.get('country')
-        state_id = request.POST.get('state')
-        city_id = request.POST.get('city')
+        # country_id = request.POST.get('country')
+        country = request.POST.get('country')
+        state = request.POST.get('state')
+        city = request.POST.get('city')
+        # state_id = request.POST.get('state')
+        # city_id = request.POST.get('city')
         street_address = request.POST.get('street_address')  # Add this line
         postal_code = request.POST.get('postal_code')  # Add this line
         payment_mode = request.POST.get('payment_mode')  # Add this line
 
-        try:
-            country1 = Country.objects.get(id=country_id)
-            state1 = State.objects.get(id=state_id)
-            city1 = City.objects.get(id=city_id)
-        except (Country.DoesNotExist, State.DoesNotExist, City.DoesNotExist):
+        # try:                                  //// for dependant dropdown country, states, cites ////
+        #     country1 = Country.objects.get(id=country_id)
+        #     state1 = State.objects.get(id=state_id)
+        #     city1 = City.objects.get(id=city_id)
+        # except (Country.DoesNotExist, State.DoesNotExist, City.DoesNotExist):
             
             # Handle the case where one of the instances is not found
-            messages.error(request, 'Invalid country, state, or city selected.')
-            return redirect('checkout')
+            # if not country_id or not state_id or not city_id:
+            #     messages.error(request, 'Please select a country, state, and city.')
+            #     return redirect('checkout')
+            # messages.error(request, 'Invalid country, state, or city selected.')
+            # return redirect('checkout')
 
         # Create a new address for the user
+        # new_address = Address.objects.create(
+        #     user=request.user,
+        #     street_address=street_address,
+        #     country=country1,
+        #     state=state1,
+        #     city=city1,
+        #     postal_code=postal_code,
+        #     payment_mode=payment_mode
+        # )
+
         new_address = Address.objects.create(
             user=request.user,
             street_address=street_address,
-            country=country1,
-            state=state1,
-            city=city1,
+            country=country,
+            state=state,
+            city=city,
             postal_code=postal_code,
             payment_mode=payment_mode
         )
@@ -292,9 +308,9 @@ def checkout(request: HttpRequest):
             messages.success(request, 'Your booking was successfully done.')
             return redirect('order')
 
-    country2=Country.objects.all()
+    # country2=Country.objects.all()
 
-    return render(request, 'websiteuser/checkout.html', {'user_data': user_data, 'total_price':total_price,'cart_items':cart_items,'country2':country2})
+    return render(request, 'websiteuser/checkout.html', {'user_data': user_data, 'total_price':total_price,'cart_items':cart_items})
 
 
 @login_required (login_url='/login1')
